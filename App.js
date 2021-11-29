@@ -11,6 +11,12 @@ import SplashScreen from './src/Screen/SplashScreen';
 import LoginScreen from './src/Screen/LoginScreen';
 import RegisterScreen from './src/Screen/RegisterScreen';
 import DrawerNavigationRoutes from './src/Screen/DrawerNavigationRoutes';
+import informationScreenStack from './src/Screen/InformationScreen';
+import settingScreenStack from './src/Screen/SettingsScreen';
+import bottomTab from './src/navigation/bottomTab';
+import homeScreenStack from './src/Screen/HomeScreen';
+import userScreenStack from './src/Screen/UserScreen';
+
 //DrawerNavigationRoutes
 const Stack = createStackNavigator();
 
@@ -44,7 +50,7 @@ const Auth = () => {
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SplashScreen">
+      <Stack.Navigator initialRouteName="SplashScreen" >
         {/* SplashScreen which will come once for 5 Seconds */}
         <Stack.Screen
           name="SplashScreen"
@@ -63,6 +69,21 @@ const App = () => {
           name="DrawerNavigationRoutes"
           component={DrawerNavigationRoutes}
           // Hiding header for Navigation Drawer
+          options={{headerShown: false}}
+        />
+        {/* <Stack.Screen 
+          name="bottomTab"
+          component={bottomTab} 
+          options={{headerShown: false}}
+        /> */}
+        <Stack.Screen 
+          name="InformationScreen"
+          component={informationScreenStack} 
+          options={{headerShown: false}}
+        />
+        <Stack.Screen 
+          name="UserScreen"
+          component={userScreenStack} 
           options={{headerShown: false}}
         />
       </Stack.Navigator>

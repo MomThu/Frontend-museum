@@ -6,11 +6,10 @@ import {View, Text, SafeAreaView} from 'react-native';
 
 // Import Navigators from React Navigation
 import {createStackNavigator} from '@react-navigation/stack';
-import NavigationDrawerHeader from './NavigationDrawerHeader';
 
 const Stack = createStackNavigator();
 
-const SettingsScreen = () => {
+const UserScreen = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1, padding: 16}}>
@@ -27,24 +26,22 @@ const SettingsScreen = () => {
               marginBottom: 16,
             }}>
             
-            This is the Settings Screen
+            This is the User Screen
           </Text>
         </View>
-        
-        
       </View>
     </SafeAreaView>
   );
 };
 
-const settingScreenStack = ({navigation}) => {
+const userScreenStack = ({navigation}) => {
     return (
       <Stack.Navigator
-        initialRouteName="SettingsScreen"
+        initialRouteName="UserScreen"
         screenOptions={{
-          headerRight: () => (
-            <NavigationDrawerHeader navigationProps={navigation} />
-          ),
+          // headerRight: () => (
+          //   <NavigationDrawerHeader navigationProps={navigation} />
+          // ),
           headerStyle: {
             backgroundColor: '#F9A606', //Set Header color
           },
@@ -54,14 +51,14 @@ const settingScreenStack = ({navigation}) => {
           },
         }}>
         <Stack.Screen
-          name="SettingsScreen"
-          component={SettingsScreen}
+          name="UserScreen"
+          component={UserScreen}
           options={{
-            title: 'Setting', //Set Header Title
+            title: 'User', //Set Header Title
           }}
         />
       </Stack.Navigator>
     );
   };
 
-export default settingScreenStack;
+export default userScreenStack;

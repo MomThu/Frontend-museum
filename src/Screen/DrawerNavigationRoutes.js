@@ -4,73 +4,22 @@
 import React from 'react';
 
 // Import Navigators from React Navigation
-import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
-// Import Screens
-import HomeScreen from './HomeScreen';
-import SettingsScreen from './SettingsScreen';
-import CustomSidebarMenu from './CustomSidebarMenu';
-import NavigationDrawerHeader from './NavigationDrawerHeader';
 
-const Stack = createStackNavigator();
+// Import Screens
+import homeScreenStack from './HomeScreen';
+import settingScreenStack from './SettingsScreen';
+import informationScreenStack from './InformationScreen';
+import CustomSidebarMenu from './CustomSidebarMenu';
+import bottomTab from '../navigation/bottomTab';
+
 const Drawer = createDrawerNavigator();
 
-const homeScreenStack = ({navigation}) => {
-  return (
-    <Stack.Navigator initialRouteName="HomeScreen">
-      <Stack.Screen
-        name="HomeScreen"
-        component={HomeScreen}
-        options={{
-          title: 'Home', //Set Header Title
-          headerLeft: () => (
-            <NavigationDrawerHeader navigationProps={navigation} />
-          ),
-          headerStyle: {
-            backgroundColor: '#F9A606', //Set Header color
-          },
-          headerTintColor: '#fff', //Set Header text color
-          headerTitleStyle: {
-            fontWeight: 'bold', //Set Header text style
-          },
-        }}
-      />
-    </Stack.Navigator>
-  );
-};
-
-const settingScreenStack = ({navigation}) => {
-  return (
-    <Stack.Navigator
-      initialRouteName="SettingsScreen"
-      screenOptions={{
-        headerLeft: () => (
-          <NavigationDrawerHeader navigationProps={navigation} />
-        ),
-        headerStyle: {
-          backgroundColor: '#F9A606', //Set Header color
-        },
-        headerTintColor: '#fff', //Set Header text color
-        headerTitleStyle: {
-          fontWeight: 'bold', //Set Header text style
-        },
-      }}>
-      <Stack.Screen
-        name="SettingsScreen"
-        component={SettingsScreen}
-        options={{
-          title: 'Settings', //Set Header Title
-        }}
-      />
-    </Stack.Navigator>
-  );
-};
-
-const DrawerNavigatorRoutes = (props) => {
+const DrawerNavigationRoutes = (props) => {
   return (
     <Drawer.Navigator
-      drawerContentOptions={{
+      screenOptions={{
         activeTintColor: '#cee1f2',
         color: '#cee1f2',
         itemStyle: {marginVertical: 5, color: 'white'},
@@ -80,18 +29,29 @@ const DrawerNavigatorRoutes = (props) => {
       }}
       screenOptions={{headerShown: false}}
       drawerContent={CustomSidebarMenu}>
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="homeScreenStack"
         options={{drawerLabel: 'Home Screen'}}
         component={homeScreenStack}
+      /> */}
+      <Drawer.Screen
+        name="homeScreenStack"
+        options={{drawerLabel: 'Home Screen'}}
+        component={bottomTab}
       />
       <Drawer.Screen
         name="settingScreenStack"
         options={{drawerLabel: 'Setting Screen'}}
         component={settingScreenStack}
       />
+      <Drawer.Screen
+        name="informationScreenStack"
+        options={{drawerLabel: 'Information Screen'}}
+        component={informationScreenStack}
+      />
     </Drawer.Navigator>
   );
 };
 
-export default DrawerNavigatorRoutes;
+
+export default DrawerNavigationRoutes;

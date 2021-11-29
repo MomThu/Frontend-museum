@@ -8,9 +8,11 @@ import {View, Text, SafeAreaView} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import NavigationDrawerHeader from './NavigationDrawerHeader';
 
+import bottomTab from '../navigation/bottomTab';
+
 const Stack = createStackNavigator();
 
-const SettingsScreen = () => {
+const InformationScreen = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1, padding: 16}}>
@@ -27,20 +29,18 @@ const SettingsScreen = () => {
               marginBottom: 16,
             }}>
             
-            This is the Settings Screen
+            This is the Information Screen
           </Text>
         </View>
-        
-        
       </View>
     </SafeAreaView>
   );
 };
 
-const settingScreenStack = ({navigation}) => {
+const informationScreenStack = ({navigation}) => {
     return (
       <Stack.Navigator
-        initialRouteName="SettingsScreen"
+        initialRouteName="InformationScreen"
         screenOptions={{
           headerRight: () => (
             <NavigationDrawerHeader navigationProps={navigation} />
@@ -54,14 +54,14 @@ const settingScreenStack = ({navigation}) => {
           },
         }}>
         <Stack.Screen
-          name="SettingsScreen"
-          component={SettingsScreen}
+          name="InformationScreen"
+          component={InformationScreen}
           options={{
-            title: 'Setting', //Set Header Title
+            title: 'Information', //Set Header Title
           }}
         />
       </Stack.Navigator>
     );
   };
 
-export default settingScreenStack;
+export default informationScreenStack;
