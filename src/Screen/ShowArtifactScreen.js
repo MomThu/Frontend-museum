@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
-import EventComponent from '../components/EventComponent';
+import ArtifactComponent from '../components/ArtifactComponent';
 
 // Import Navigators from React Navigation
 import {createStackNavigator} from '@react-navigation/stack';
@@ -27,7 +27,7 @@ class ShowArtifactScreen extends React.Component {
     return (
       <ScrollView>
       {artifacts.map(artifact => (
-          <EventComponent key = {artifact.id} artifact = {artifacts} />
+          <ArtifactComponent key = {artifact.id} artifact = {artifact} />
       ))}
       </ScrollView>
       

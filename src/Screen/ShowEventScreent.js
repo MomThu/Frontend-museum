@@ -8,6 +8,7 @@ import NavigationDrawerHeader from './NavigationDrawerHeader';
 import HomeButton from '../components/homeButton';
 import UserButton from '../components/userButton';
 import TicketButton from '../components/ticketButton';
+import EventComponent from '../components/EventComponent';
 
 const Stack = createStackNavigator();
 
