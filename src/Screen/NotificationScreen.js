@@ -8,13 +8,13 @@ import {View, Text, SafeAreaView} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import NavigationDrawerHeader from './NavigationDrawerHeader';
 import Header from '../components/HeaderComponent';
+import UserButton from '../components/userButton';
 
 const Stack = createStackNavigator();
 
 const NotificationScreen = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Header />
       <View style={{flex: 1, padding: 16}}>
         <View
           style={{
@@ -44,10 +44,13 @@ const notificationScreenStack = ({navigation}) => {
     <Stack.Navigator
       initialRouteName="NotificationScreen"
       screenOptions={{
-        headerRight: () => (
+        headerLeft: () => (
           <NavigationDrawerHeader navigationProps={navigation} />
         ),
-        headerShown: false,
+        headerRight: () => (
+          <UserButton navigationProps={navigation} />
+        ),
+        //headerShown: false,
         headerStyle: {
           backgroundColor: '#F9A606', //Set Header color
         },
@@ -55,6 +58,7 @@ const notificationScreenStack = ({navigation}) => {
         headerTitleStyle: {
           fontWeight: 'bold', //Set Header text style
         },
+        headerTitleAlign: 'center',
       }}>
       <Stack.Screen
         name="NotificationScreen"

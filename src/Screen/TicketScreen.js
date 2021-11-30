@@ -2,53 +2,42 @@
 
 // Import React and Component
 import React from 'react';
-import {View, Text, SafeAreaView} from 'react-native';
+import {View, Text, SafeAreaView, Image} from 'react-native';
+//import CalendarPicker from 'react-native-calendar-picker';
 
 // Import Navigators from React Navigation
 import {createStackNavigator} from '@react-navigation/stack';
 import NavigationDrawerHeader from './NavigationDrawerHeader';
-import UserButton from '../components/userButton';
+import HomeButton from '../components/homeButton';
 
 const Stack = createStackNavigator();
 
-const SettingsScreen = () => {
+const TicketScreen = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1, padding: 16}}>
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <Text
-            style={{
-              fontSize: 20,
-              textAlign: 'center',
-              marginBottom: 16,
-            }}>
-            
-            This is the Settings Screen
+        <View>
+          <Text>
+            Event Ticket
           </Text>
+          
         </View>
-        
         
       </View>
     </SafeAreaView>
   );
 };
 
-const settingScreenStack = ({navigation}) => {
+const ticketScreenStack = ({navigation}) => {
     return (
       <Stack.Navigator
-        initialRouteName="SettingsScreen"
+        initialRouteName="TicketScreen"
         screenOptions={{
-          headerLeft: () => (
-            <NavigationDrawerHeader navigationProps={navigation} />
-          ),
           headerRight: () => (
-            <UserButton navigationProps={navigation} />
+            //<NavigationDrawerHeader navigationProps={navigation} />
+            <HomeButton navigationProps={navigation} />
           ),
+         
           headerStyle: {
             backgroundColor: '#F9A606', //Set Header color
           },
@@ -60,14 +49,14 @@ const settingScreenStack = ({navigation}) => {
 
         }}>
         <Stack.Screen
-          name="SettingsScreen"
-          component={SettingsScreen}
+          name="TicketScreenChild"
+          component={TicketScreen}
           options={{
-            title: 'Setting', //Set Header Title
+            title: 'Ticket', //Set Header Title
           }}
         />
       </Stack.Navigator>
     );
   };
 
-export default settingScreenStack;
+export default ticketScreenStack;

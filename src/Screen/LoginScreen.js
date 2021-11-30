@@ -12,7 +12,9 @@ import {
   KeyboardAvoidingView,
   ImageBackground,
 } from 'react-native';
-
+import {
+  GoogleSignin, GoogleSigninButton, statusCodes
+} from '@react-native-community/google-signin';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import Loader from './Loader';
@@ -22,8 +24,11 @@ const LoginScreen = ({navigation}) => {
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
-
+  
   const passwordInputRef = createRef();
+
+  const [loggedInGG, setloggedInGG] = useState(false);
+  const [userInfoGG, setuserInfoGG] = useState([]);
 
   // const handleSubmitPress = () => {
   //   setErrortext('');

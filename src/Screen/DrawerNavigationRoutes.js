@@ -10,6 +10,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 // Import Screens
 import homeScreenStack from './HomeScreen';
 import settingScreenStack from './SettingsScreen';
+import userScreenStack from './UserScreen';
 import informationScreenStack from './InformationScreen';
 import CustomSidebarMenu from './CustomSidebarMenu';
 import bottomTab from '../navigation/bottomTab';
@@ -44,11 +45,16 @@ const DrawerNavigationRoutes = (props) => {
         options={{drawerLabel: 'Setting Screen'}}
         component={settingScreenStack}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
+        name="userScreenStack"
+        options={{drawerLabel: 'User Screen'}}
+        component={userScreenStack}
+      /> */}
+      {/* <Drawer.Screen
         name="informationScreenStack"
-        options={{drawerLabel: 'Information Screen'}}
+        options={{drawerLabel: () => null}}
         component={informationScreenStack}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 };

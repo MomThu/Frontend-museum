@@ -8,6 +8,7 @@ import {View, Text, SafeAreaView} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import NavigationDrawerHeader from './NavigationDrawerHeader';
 import UserButton from '../components/userButton';
+import TicketButton from '../components/ticketButton';
 
 const Stack = createStackNavigator();
 
@@ -43,11 +44,14 @@ const cartScreenStack = ({navigation}) => {
     <Stack.Navigator
       initialRouteName="CartScreen"
       screenOptions={{
-        headerRight: () => (
+        headerLeft: () => (
           <NavigationDrawerHeader navigationProps={navigation} />
         ),
-        headerLeft: () => (
-          <UserButton navigationProps={navigation} />
+        headerRight: () => (
+          <View>
+              <UserButton navigationProps={navigation} />
+              <TicketButton navigationProps={navigation} />
+          </View>
         ),
         headerStyle: {
           backgroundColor: '#F9A606', //Set Header color
@@ -56,6 +60,8 @@ const cartScreenStack = ({navigation}) => {
         headerTitleStyle: {
           fontWeight: 'bold', //Set Header text style
         },
+        headerTitleAlign: 'center',
+
       }}>
       <Stack.Screen
         name="CartScreen"
@@ -68,3 +74,4 @@ const cartScreenStack = ({navigation}) => {
   );
 };
 export default cartScreenStack;
+

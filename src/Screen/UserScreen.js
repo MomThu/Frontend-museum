@@ -6,6 +6,8 @@ import {View, Text, SafeAreaView} from 'react-native';
 
 // Import Navigators from React Navigation
 import {createStackNavigator} from '@react-navigation/stack';
+import NavigationDrawerHeader from './NavigationDrawerHeader';
+import HomeButton from '../components/homeButton';
 
 const Stack = createStackNavigator();
 
@@ -39,9 +41,11 @@ const userScreenStack = ({navigation}) => {
       <Stack.Navigator
         initialRouteName="UserScreen"
         screenOptions={{
-          // headerRight: () => (
-          //   <NavigationDrawerHeader navigationProps={navigation} />
-          // ),
+          headerRight: () => (
+            //<NavigationDrawerHeader navigationProps={navigation} />
+            <HomeButton navigationProps={navigation} />
+          ),
+         
           headerStyle: {
             backgroundColor: '#F9A606', //Set Header color
           },
@@ -49,9 +53,11 @@ const userScreenStack = ({navigation}) => {
           headerTitleStyle: {
             fontWeight: 'bold', //Set Header text style
           },
+          headerTitleAlign: 'center',
+
         }}>
         <Stack.Screen
-          name="UserScreen"
+          name="UserScreenChild"
           component={UserScreen}
           options={{
             title: 'User', //Set Header Title

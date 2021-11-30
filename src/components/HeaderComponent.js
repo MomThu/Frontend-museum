@@ -3,28 +3,34 @@
 // Import React and Component
 import React from 'react';
 import {View, Text, SafeAreaView, Button} from 'react-native';
+import NavigationDrawerHeader from '../Screen/NavigationDrawerHeader';
+import UserButton from './userButton';
 
 const Header = () => {
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={{flex: 1}}>
-        <View
-          style={{
-            width: '100%',
-            height: 50,
-            flexDirection: 'row', 
-            flexWrap: 'wrap',
-            backgroundColor: '#FBCF8DD9',
-          }}>
-          <Button title="Trái" />
-          <Text>My museum</Text>
-          <Button title="Phải" />
+    // <SafeAreaView style={{flex: 1}}>
+    //   <View style={{flex: 1}}>
+    //     <View
+    //       style={{
+    //         width: '100%',
+    //         height: 50,
+    //         flexDirection: 'row', 
+    //         flexWrap: 'wrap',
+    //         backgroundColor: '#FBCF8DD9',
+    //       }}>
+    //       <Button title="Trái" />
+    //       <Text>My museum</Text>
+    //       <NavigationDrawerHeader navigationProps={navigation} />
 
-        </View>
+    //     </View>
         
         
-      </View>
-    </SafeAreaView>
+    //   </View>
+    // </SafeAreaView>
+    <View>
+     
+
+    </View>
   );
 };
 

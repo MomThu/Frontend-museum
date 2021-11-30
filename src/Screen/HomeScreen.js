@@ -8,6 +8,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 // Import Navigators from React Navigation
 import {createStackNavigator} from '@react-navigation/stack';
 import NavigationDrawerHeader from './NavigationDrawerHeader';
+import UserButton from '../components/userButton';
+import TicketButton from '../components/ticketButton';
 
 const Stack = createStackNavigator();
 
@@ -17,7 +19,7 @@ const HomeScreen = ({navigation}) => {
       <ScrollView>
       <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>
         {/* <SearchBar placeholder="Search"/> */}
-        <TouchableOpacity style={styles.ContentStyle} onPress={() => navigation.navigate("informationScreenStack")}>
+        <TouchableOpacity style={styles.ContentStyle} onPress={() => navigation.navigate("InformationScreen")}>
           <Image style={styles.ImageStyle} source={require("../assets/anh1.jpg")} />
           <Text
             style={styles.TextStyle}>
@@ -33,7 +35,7 @@ const HomeScreen = ({navigation}) => {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.ContentStyle} onPress={() => navigation.navigate("InformationScreen")}>
+        <TouchableOpacity style={styles.ContentStyle} onPress={() => navigation.navigate("ShowEventScreen")}>
           <Image style={styles.ImageStyle} source={require("../assets/anh1.jpg")} />
           <Text
             style={styles.TextStyle}>
@@ -41,7 +43,7 @@ const HomeScreen = ({navigation}) => {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.ContentStyle} onPress={() => navigation.navigate("InformationScreen")}>
+        <TouchableOpacity style={styles.ContentStyle} onPress={() => navigation.navigate("ShowArtifactScreen")}>
           <Image style={styles.ImageStyle} source={require("../assets/anh1.jpg")} />
           <Text
             style={styles.TextStyle}>
@@ -52,65 +54,6 @@ const HomeScreen = ({navigation}) => {
     </ScrollView>
     </SafeAreaView>
   );
-
-  
-  const featuresData = [
-    {
-        id: 1,
-        color: "purple",
-        backgroundColor: "lightpurple",
-        description: "Top Up"
-    },
-    // {
-    //     id: 2,
-    //     icon: icons.send,
-    //     color: COLORS.yellow,
-    //     backgroundColor: COLORS.lightyellow,
-    //     description: "Transfer"
-    // },
-    // {
-    //     id: 3,
-    //     icon: icons.internet,
-    //     color: COLORS.primary,
-    //     backgroundColor: COLORS.lightGreen,
-    //     description: "Internet"
-    // },
-    // {
-    //     id: 4,
-    //     icon: icons.wallet,
-    //     color: COLORS.red,
-    //     backgroundColor: COLORS.lightRed,
-    //     description: "Wallet"
-    // },
-    // {
-    //     id: 5,
-    //     icon: icons.bill,
-    //     color: COLORS.yellow,
-    //     backgroundColor: COLORS.lightyellow,
-    //     description: "Bill"
-    // },
-    // {
-    //     id: 6,
-    //     icon: icons.game,
-    //     color: COLORS.primary,
-    //     backgroundColor: COLORS.lightGreen,
-    //     description: "Games"
-    // },
-    // {
-    //     id: 7,
-    //     icon: icons.phone,
-    //     color: COLORS.red,
-    //     backgroundColor: COLORS.lightRed,
-    //     description: "Mobile Prepaid"
-    // },
-    // {
-    //     id: 8,
-    //     icon: icons.more,
-    //     color: COLORS.purple,
-    //     backgroundColor: COLORS.lightpurple,
-    //     description: "More"
-    // },
-]
 };
 
 const homeScreenStack = ({navigation}) => {
@@ -121,10 +64,15 @@ const homeScreenStack = ({navigation}) => {
         component={HomeScreen}
         options={{
           title: 'Home', //Set Header Title
-          headerRight: () => (
+          headerLeft: () => (
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
-          
+          headerRight: () => (
+            <View style={styles.HeaderStyle}>
+              <UserButton navigationProps={navigation} />
+              <TicketButton navigationProps={navigation} />
+            </View>
+          ),
           headerStyle: {
             backgroundColor: '#F9A606', //Set Header color
           },
@@ -132,6 +80,8 @@ const homeScreenStack = ({navigation}) => {
           headerTitleStyle: {
             fontWeight: 'bold', //Set Header text style
           },
+          headerTitleAlign: 'center',
+
         }}
       />
     </Stack.Navigator>
@@ -149,6 +99,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: 10,
     marginTop: 20
+  },
+  HeaderStyle: {
+    flexDirection: 'row'
   },
   TextStyle: {
     fontSize: 15,
