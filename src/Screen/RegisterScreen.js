@@ -16,12 +16,21 @@ import {
 
 import Loader from './Loader';
 
+const required = (val) => val && val.length;
+const maxLength = (len) => (val) => !(val) || (val.length <= len);
+const minLength = (len) => (val) => val && (val.length >= len);
+const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
+const validUsername = (val) => /^[a-zA-Z][a-zA-Z0-9]+$/.test(val);
+const validPasword = (val) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{0,}$/.test(val);
+
+
 const RegisterScreen = (props) => {
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userAge, setUserAge] = useState('');
   const [userAddress, setUserAddress] = useState('');
   const [userPassword, setUserPassword] = useState('');
+  const [userPassword2, setUserPassword2] = useState('');
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
   const [
@@ -34,78 +43,90 @@ const RegisterScreen = (props) => {
   const addressInputRef = createRef();
   const passwordInputRef = createRef();
 
-  // const handleSubmitButton = () => {
-  //   setErrortext('');
-  //   if (!userName) {
-  //     alert('Please fill Name');
-  //     return;
-  //   }
-  //   if (!userEmail) {
-  //     alert('Please fill Email');
-  //     return;
-  //   }
-  //   if (!userAge) {
-  //     alert('Please fill Age');
-  //     return;
-  //   }
-  //   if (!userAddress) {
-  //     alert('Please fill Address');
-  //     return;
-  //   }
-  //   if (!userPassword) {
-  //     alert('Please fill Password');
-  //     return;
-  //   }
-  //   //Show Loader
-  //   setLoading(true);
-  //   var dataToSend = {
-  //     name: userName,
-  //     email: userEmail,
-  //     age: userAge,
-  //     address: userAddress,
-  //     password: userPassword,
-  //   };
-  //   var formBody = [];
-  //   for (var key in dataToSend) {
-  //     var encodedKey = encodeURIComponent(key);
-  //     var encodedValue = encodeURIComponent(dataToSend[key]);
-  //     formBody.push(encodedKey + '=' + encodedValue);
-  //   }
-  //   formBody = formBody.join('&');
-
-  //   fetch('http://localhost:3000/api/user/register', {
-  //     method: 'POST',
-  //     body: formBody,
-  //     headers: {
-  //       //Header Defination
-  //       'Content-Type':
-  //       'application/x-www-form-urlencoded;charset=UTF-8',
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((responseJson) => {
-  //       //Hide Loader
-  //       setLoading(false);
-  //       console.log(responseJson);
-  //       // If server response message same as Data Matched
-  //       if (responseJson.status === 'success') {
-  //         setIsRegistraionSuccess(true);
-  //         console.log(
-  //           'Registration Successful. Please Login to proceed'
-  //         );
-  //       } else {
-  //         setErrortext(responseJson.msg);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       //Hide Loader
-  //       setLoading(false);
-  //       console.error(error);
-  //     });
-  // };
   const handleSubmitButton = () => {
-    setIsRegistraionSuccess(true);
-  }
+    setErrortext('');
+  
+    if (!required(userEmail)) {
+      alert('Please fill email')
+      return;
+    }
+    if (!validEmail(userEmail)) {
+      alert('Địa chỉ Email không đúng');
+      return;
+    }
+    if (!required(userPassword)) {
+      alert('Please fill password')
+      return;
+    }
+    
+    if (!validPasword(userPassword)) {
+      alert('Mật khẩu chứa ít nhất 1 chữ viết hoa, 1 chữ viết thường và 1 chữ số');
+      return;
+    }
+    if (!required(userPassword)) {
+      alert('Please type password again')
+      return;
+    }
+    if (userPassword2 !== userPassword) {
+      alert('Sai mật khẩu');
+      return;
+    }
+    
+    //Show Loader
+    setLoading(true);
+    var dataToSend = {
+      name: userName,
+      email: userEmail,
+      age: userAge,
+      address: userAddress,
+      password: userPassword,
+    };
+    // var formBody = [];
+    // for (var key in dataToSend) {
+    //   var encodedKey = encodeURIComponent(key);
+    //   var encodedValue = encodeURIComponent(dataToSend[key]);
+    //   formBody.push(encodedKey + '=' + encodedValue);
+    // }
+    // formBody = formBody.join('&');
+
+    fetch('http://10.0.3.2:5000/register', {
+      method: 'POST',
+      body: JSON.stringify(dataToSend),
+      headers: {
+        //Header Defination
+        'Content-Type': 'application/json',
+      },
+      credentials: 'same-origin'
+    })
+    .then(response => {
+      setLoading(false);
+      console.log(response.status);
+      if (response.ok) {
+        console.log(response.body);
+        return response;
+      } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          console.log(error);
+          error.response = response;
+          throw error;
+      }
+    }, error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(() => {
+      setIsRegistraionSuccess(true);
+      console.log('Registration Successful. Please Login to proceed');
+    })
+    .catch(error =>  
+      { setLoading(false);
+        console.log('Registration Unsuccessful', error.message); 
+        alert('Registration Unsuccessful '+error.message); 
+      });
+  };
+  // const handleSubmitButton = () => {
+  //   setIsRegistraionSuccess(true);
+  // }
   if (isRegistraionSuccess) {
     return (
       <View
@@ -148,21 +169,7 @@ const RegisterScreen = (props) => {
         <View>
         
         <KeyboardAvoidingView enabled>
-          <View style={styles.SectionStyle}>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(UserName) => setUserName(UserName)}
-              underlineColorAndroid="#f000"
-              placeholder="Enter Name"
-              placeholderTextColor="#8b9cb5"
-              autoCapitalize="sentences"
-              returnKeyType="next"
-              onSubmitEditing={() =>
-                emailInputRef.current && emailInputRef.current.focus()
-              }
-              blurOnSubmit={false}
-            />
-          </View>
+          
           <View style={styles.SectionStyle}>
             <TextInput
               style={styles.inputStyle}
@@ -195,6 +202,42 @@ const RegisterScreen = (props) => {
               onSubmitEditing={() =>
                 ageInputRef.current &&
                 ageInputRef.current.focus()
+              }
+              blurOnSubmit={false}
+            />
+          </View>
+
+          <View style={styles.SectionStyle}>
+            <TextInput
+              style={styles.inputStyle}
+              onChangeText={(UserPassword) =>
+                setUserPassword2(UserPassword)
+              }
+              underlineColorAndroid="#f000"
+              placeholder="Enter Password again"
+              placeholderTextColor="#8b9cb5"
+              ref={passwordInputRef}
+              returnKeyType="next"
+              secureTextEntry={true}
+              onSubmitEditing={() =>
+                ageInputRef.current &&
+                ageInputRef.current.focus()
+              }
+              blurOnSubmit={false}
+            />
+          </View>
+
+          <View style={styles.SectionStyle}>
+            <TextInput
+              style={styles.inputStyle}
+              onChangeText={(UserName) => setUserName(UserName)}
+              underlineColorAndroid="#f000"
+              placeholder="Enter Name"
+              placeholderTextColor="#8b9cb5"
+              autoCapitalize="sentences"
+              returnKeyType="next"
+              onSubmitEditing={() =>
+                emailInputRef.current && emailInputRef.current.focus()
               }
               blurOnSubmit={false}
             />

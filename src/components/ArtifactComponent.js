@@ -2,15 +2,15 @@ import React from "react";
 import { Image, Text, View, StyleSheet, TouchableOpacity, Alert} from 'react-native'
 import DieuKhacImage from '../assets/anh1.jpg'
 
-export default function CategoryList(props){
-    const { category } = props;
+export default function ArtifactComponent(props){
+    const { artifact } = props;
     return (
         <TouchableOpacity activeOpacity= {0.5} onPress={()=>{
             Alert.alert('Click!')
         }}>
             <View style = {styles.container}>
                 <Image style={styles.DieuKhacImage} source = {DieuKhacImage}/>
-                <Text style={styles.title}>{category.name}</Text>
+                <Text style={styles.title}>{artifact.name}</Text>
             </View>
         </TouchableOpacity>
 

@@ -2,34 +2,63 @@
 
 // Import React and Component
 import React from 'react';
-import {View, Text, SafeAreaView} from 'react-native';
+import {View, Text, SafeAreaView, TouchableOpacity, Alert, Image, StyleSheet} from 'react-native';
 
 // Import Navigators from React Navigation
 import {createStackNavigator} from '@react-navigation/stack';
 import NavigationDrawerHeader from './NavigationDrawerHeader';
 import HomeButton from '../components/homeButton';
 
+import AsyncStorage from '@react-native-community/async-storage';
+
 const Stack = createStackNavigator();
 
-const UserScreen = () => {
+const UserScreen = ({navigation}) => {
+  const logout = () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure? You want to logout?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => {
+            return null;
+          },
+        },
+        {
+          text: 'Confirm',
+          onPress: () => {
+            AsyncStorage.clear();
+            navigation.replace('Auth');
+          },
+        },
+      ],
+      {cancelable: false},
+    );
+  }
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1, padding: 16}}>
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
+        <View style={{alignItems: 'center'}}>
+          <Image style={styles.imageStyle} source={require('../assets/icons/user.png')} />
           <Text
             style={{
               fontSize: 20,
               textAlign: 'center',
-              marginBottom: 16,
             }}>
-            
-            This is the User Screen
+              User
           </Text>
+        </View>
+        <View style={styles.contentStyle}>
+          <TouchableOpacity onPress={() => navigation.replace("InfoUserScreen")}>
+            <Text>Thông tin cá nhân</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.replace("InfoUserScreen")}>
+            <Text>Yêu thích</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={logout}>
+            <Text>Logout</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
@@ -68,3 +97,14 @@ const userScreenStack = ({navigation}) => {
   };
 
 export default userScreenStack;
+
+const styles = StyleSheet.create({
+  imageStyle: {
+    width: 100,
+    height: 100,
+  },
+  contentStyle: {
+    margin: 20,
+    borderBottomColor: '#000'
+  }
+})

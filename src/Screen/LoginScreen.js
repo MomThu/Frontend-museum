@@ -19,71 +19,139 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import Loader from './Loader';
 
+const required = (val) => val && val.length;
+
+
 const LoginScreen = ({navigation}) => {
-  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
   
   const passwordInputRef = createRef();
 
-  const [loggedInGG, setloggedInGG] = useState(false);
-  const [userInfoGG, setuserInfoGG] = useState([]);
+  const [loggedIn, setloggedIn] = useState(false);
+  const [userInfo, setuserInfo] = useState([]);
 
-  // const handleSubmitPress = () => {
-  //   setErrortext('');
-  //   if (!userEmail) {
-  //     alert('Please fill Email');
-  //     return;
-  //   }
-  //   if (!userPassword) {
-  //     alert('Please fill Password');
-  //     return;
-  //   }
-  //   setLoading(true);
-  //   let dataToSend = {email: userEmail, password: userPassword};
-  //   let formBody = [];
-  //   for (let key in dataToSend) {
-  //     let encodedKey = encodeURIComponent(key);
-  //     let encodedValue = encodeURIComponent(dataToSend[key]);
-  //     formBody.push(encodedKey + '=' + encodedValue);
-  //   }
-  //   formBody = formBody.join('&');
-
-  //   fetch('http://localhost:3000/api/user/login', {
-  //     method: 'POST',
-  //     body: formBody,
-  //     headers: {
-  //       //Header Defination
-  //       'Content-Type':
-  //       'application/x-www-form-urlencoded;charset=UTF-8',
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((responseJson) => {
-  //       //Hide Loader
-  //       setLoading(false);
-  //       console.log(responseJson);
-  //       // If server response message same as Data Matched
-  //       if (responseJson.status === 'success') {
-  //         AsyncStorage.setItem('user_id', responseJson.data.email);
-  //         console.log(responseJson.data.email);
-  //         navigation.replace('DrawerNavigationRoutes');
-  //       } else {
-  //         setErrortext(responseJson.msg);
-  //         console.log('Please check your email id or password');
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       //Hide Loader
-  //       setLoading(false);
-  //       console.error(error);
-  //     });
-  // };
   const handleSubmitPress = () => {
-    navigation.replace('DrawerNavigationRoutes');
-  }
+    setErrortext('');
+    if (!required(userEmail)) {
+      alert('Please fill Email');
+      return;
+    }
+    if (!required(userPassword)) {
+      alert('Please fill Password');
+      return;
+    }
+    setLoading(true);
+    const dataToSend = {email: userEmail, password: userPassword};
+    // let formBody = [];
+    // for (let key in dataToSend) {
+    //   let encodedKey = encodeURIComponent(key);
+    //   let encodedValue = encodeURIComponent(dataToSend[key]);
+    //   formBody.push(encodedKey + '=' + encodedValue);
+    // }
+    // formBody = formBody.join('&');
 
+    fetch('http://10.0.3.2:5000/login', {
+      method: 'POST',
+      body: JSON.stringify(dataToSend),
+      headers: {
+        //Header Defination
+        'Content-Type': 'application/json',
+      },
+      credentials: "same-origin"
+    })
+      // .then((response) => {
+      //   response.json();
+      // })
+      // .then((responseJson) => {
+      //   //Hide Loader
+      //   setLoading(false);
+      //   console.log(responseJson);
+      //   // If server response message same as Data Matched
+      //   if (responseJson.ok) {
+      //     AsyncStorage.setItem('email', responseJson.data.email);
+      //     console.log(responseJson.data.email);
+      //     navigation.replace('DrawerNavigationRoutes');
+      //   } else {
+      //     setErrortext(responseJson.message);
+      //     console.log('Please check your email id or password');
+      //   }
+      // })
+      // .catch((error) => {
+      //   //Hide Loader
+      //   setLoading(false);
+      //   console.error(error);
+      // });
+      .then(response => {
+        setLoading(false);
+        if (response.ok) {
+          return response;
+        } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            console.log(error);
+            error.response = response;
+            throw error;
+        }
+      }, error => {
+          var errmess = new Error(error.message);
+          throw errmess;
+      })
+      .then(response => response.json())
+      .then((user) => {
+          AsyncStorage.setItem('login', 'true');
+          AsyncStorage.setItem('token', user['access_token']);
+          //console.log(user['access_token']);
+          navigation.replace('DrawerNavigationRoutes');
+      })
+      .catch(error =>  
+        { setLoading(false);
+          console.log('Please check your email or password', error.message); 
+          alert('Please check your email or password '+error.message); 
+        });
+  };
+  // const handleSubmitPress = () => {
+  //   navigation.replace('DrawerNavigationRoutes');
+  // }
+  const _signIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const {accessToken, idToken} = await GoogleSignin.signIn();
+      setloggedIn(true);
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+        alert('Cancel');
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        alert('Signin in progress');
+        // operation (f.e. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        alert('PLAY_SERVICES_NOT_AVAILABLE');
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+  };
+  // const useEffect = () => {
+  //   GoogleSignin.configure({
+  //     scopes: ['email'], // what API you want to access on behalf of the user, default is email and profile
+  //     webClientId:
+  //       '596103486514-r7alopf3vgk17cov7nq8bcao1dqmaqt6.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+  //     offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+  //   });
+  // }, [];
+  // const signOut = async () => {
+  //   try {
+  //     await GoogleSignin.revokeAccess();
+  //     await GoogleSignin.signOut();
+  //     setloggedIn(false);
+  //     setuserInfo([]);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
   return (
     <View style={styles.mainBody}>
       
@@ -103,10 +171,10 @@ const LoginScreen = ({navigation}) => {
             <View style={styles.SectionStyle}>
               <TextInput
                 style={styles.inputStyle}
-                onChangeText={(UserName) =>
-                  setUserName(UserName)
+                onChangeText={(UserEmail) => 
+                  setUserEmail(UserEmail)
                 }
-                placeholder="Username" 
+                placeholder="UserEmail" 
                 placeholderTextColor="#8b9cb5"
                 autoCapitalize="none"
                 keyboardType="email-address"
@@ -117,6 +185,7 @@ const LoginScreen = ({navigation}) => {
                 }
                 underlineColorAndroid="#f000"
                 blurOnSubmit={false}
+                autoComplete='email'
               />
             </View>
             <View style={styles.SectionStyle}>
@@ -152,6 +221,13 @@ const LoginScreen = ({navigation}) => {
               onPress={() => navigation.navigate('RegisterScreen')}>
               <Text style={styles.buttonTextStyle}>REGISTER</Text>
             </TouchableOpacity>
+            <Text style={{textAlign: 'center'}} >OR</Text>
+            {/* <GoogleSigninButton 
+              style={{ width: 192, height: 48, alignItems: 'center' }}
+              size={GoogleSigninButton.Size.Wide}
+              color={GoogleSigninButton.Color.Dark}>
+              onPress={_signIn}
+            </GoogleSigninButton> */}
           </KeyboardAvoidingView>
           
         </View>
