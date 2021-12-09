@@ -9,8 +9,8 @@ import NumericInput from 'react-native-numeric-input';
 import {createStackNavigator} from '@react-navigation/stack';
 import NavigationDrawerHeader from './NavigationDrawerHeader';
 import HomeButton from '../components/homeButton';
-
-import { LocalNotification } from '../services/PushNotification';
+import PushNotification from 'react-native-push-notification';
+//import { LocalNotification } from '../services/PushNotification';
 
 const Stack = createStackNavigator();
 
@@ -32,7 +32,14 @@ class TicketScreen extends Component {
     this.setState({ selectedDate: selectedDate });
   }
   handleClick = () => {
-    LocalNotification();
+    PushNotification.localNotification({
+      channelId: "test-channel",
+      title: "Museum",
+      message: "Bạn đã đặt vé thành công",
+      bigText: "Tham quan bảo tàng online.",
+      color: "red",
+      //id: 1 
+  });
   }
   
 render() {
@@ -72,7 +79,10 @@ render() {
               }}>
               <Text>09:00</Text>
             </Pressable>
-            <Pressable style={styles.ButtonStyle}>
+            <Pressable style={styles.ButtonStyle} onPress={() => {
+              this.setModalVisible(!modalVisible)
+              this.setState({selectedTime: '9:00'})
+              }}>
               <Text>09:30</Text>
             </Pressable>
             <Pressable style={styles.ButtonStyle}>
@@ -162,9 +172,12 @@ render() {
               <Text>Giá tiền: {65*this.state.amountTicket}000đ</Text>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
-                onPress={() => this.setModal2Visible(!this.state.modal2Visible)}
+                onPress={() => {
+                  this.setModal2Visible(!this.state.modal2Visible)
+                  
+                }}
               >
-                <Text style={styles.textStyle}>Hide Modal</Text>
+                <Text style={styles.textStyle}>CLOSE</Text>
               </Pressable>
             </View>
         </Modal>
@@ -227,7 +240,7 @@ const styles = StyleSheet.create({
   modalView: {
     marginVertical: '100%',
     backgroundColor: "white",
-    height: '20%',
+    height: '50%',
     borderRadius: 20,
     padding: 35,
     alignItems: "center",

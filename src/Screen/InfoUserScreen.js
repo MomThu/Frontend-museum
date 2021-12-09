@@ -1,23 +1,40 @@
 
 
 // Import React and Component
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {View, Text, SafeAreaView, TouchableOpacity} from 'react-native';
 
 // Import Navigators from React Navigation
 import {createStackNavigator} from '@react-navigation/stack';
 import NavigationDrawerHeader from './NavigationDrawerHeader';
 import HomeButton from '../components/homeButton';
+import ArtifactComponent from '../components/ArtifactComponent';
 
 const Stack = createStackNavigator();
 
-const InfoUserScreen = ({navigation}) => {
-  
+const InfoUserScreen = () => {
+  const [artifacts, setArtifacts] = useState([]);
+
+  useEffect( () => {
+    async function getSouvenir() {
+      var artifact = await AsyncStorage.getItem('artifact');
+      artifact = JSON.parse(artifact);
+      console.log(artifact);
+      setArtifacts(artifact);
+      console.log(artifacts);
+    }
+    getSouvenir()
+  }, []);
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1, padding: 16}}>
         <View>
-          
+          {artifacts.map(artifact => 
+          <View>
+            <Text>{artifact.Name}</Text>
+          </View>
+          )}
         </View>
       </View>
     </SafeAreaView>
@@ -48,7 +65,7 @@ const infoUserScreenStack = ({navigation}) => {
           name="InfoUserScreenChild"
           component={InfoUserScreen}
           options={{
-            title: 'Thông tin cá nhân', //Set Header Title
+            title: 'Yêu thích', //Set Header Title
           }}
         />
       </Stack.Navigator>

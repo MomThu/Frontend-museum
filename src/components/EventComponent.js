@@ -1,19 +1,45 @@
-import React from "react";
-import { Image, Text, View, StyleSheet, TouchableOpacity, Alert} from 'react-native'
-import DieuKhacImage from '../assets/anh1.jpg'
+import React, { useState } from "react";
+import { Image, Text, View, StyleSheet, TouchableOpacity, Alert, Modal, Pressable, ScrollView } from 'react-native'
 
-export default function EventComponent(props){
-    const { event } = props;
+export default function EventComponent(props) {
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const event = props.event;
     return (
-        <TouchableOpacity activeOpacity= {0.5} onPress={()=>{Alert.alert('Click!')}}>
-            <View style = {styles.container}>
-                <Image style={styles.DieuKhacImage} source = {DieuKhacImage}/>
-                <Text style={styles.title}>{event.name}</Text>
+        <TouchableOpacity activeOpacity={0.5} onPress={() => setModalVisible(true)}>
+            <View style={styles.container}>
+                <Image style={styles.DieuKhacImage} source={props.image.url} />
+
+                <Text style={styles.title}>{event.Name}</Text>
             </View>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                }}
+            >
+                <ScrollView>
+                    <View style={styles.modalView}>
+                        <Text>Event: {event.Name}</Text>
+                        <Text>Thời gian mở: {event.OpenTime}</Text>
+                        <Text>Thời gian đóng: {event.CloseTime}</Text>
+                        <Text>Ngày diễn ra: {event.EventDate}</Text>
+                        <Pressable
+                            style={[styles.button, styles.buttonClose]}
+                            onPress={() => setModalVisible(!modalVisible)}
+                        >
+                            <Text style={styles.textStyle}>Hide Modal</Text>
+                        </Pressable>
+
+                    </View>
+                </ScrollView>
+            </Modal>
         </TouchableOpacity>
 
     )
-        
+
 }
 
 const styles = StyleSheet.create({
@@ -23,7 +49,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fbfbfb',
         marginBottom: 16,
     },
-    DieuKhacImage:{
+    DieuKhacImage: {
         width: 336,
         height: 148,
         borderRadius: 10
@@ -31,7 +57,22 @@ const styles = StyleSheet.create({
     title: {
         textTransform: 'uppercase',
         marginBottom: 8,
-        fontWeight: '700' 
+        fontWeight: '700'
     },
-    
+    modalView: {
+        marginVertical: '50%',
+        backgroundColor: "white",
+        flexWrap: 'wrap',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+      },
 });

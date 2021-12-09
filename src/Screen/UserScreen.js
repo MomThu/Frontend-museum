@@ -28,7 +28,8 @@ const UserScreen = ({navigation}) => {
         {
           text: 'Confirm',
           onPress: () => {
-            AsyncStorage.clear();
+            //AsyncStorage.clear();
+            AsyncStorage.removeItem('login');
             navigation.replace('Auth');
           },
         },
@@ -50,9 +51,9 @@ const UserScreen = ({navigation}) => {
           </Text>
         </View>
         <View style={styles.contentStyle}>
-          <TouchableOpacity onPress={() => navigation.replace("InfoUserScreen")}>
+          {/* <TouchableOpacity onPress={() => navigation.replace("InfoUserScreen")}>
             <Text>Thông tin cá nhân</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity onPress={() => navigation.replace("InfoUserScreen")}>
             <Text>Yêu thích</Text>
           </TouchableOpacity>

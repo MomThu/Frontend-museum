@@ -1,5 +1,5 @@
 // Import React and Component
-import React, {useState, createRef} from 'react';
+import React, { useState, createRef, useEffect } from 'react';
 import {
   StyleSheet,
   TextInput,
@@ -16,23 +16,35 @@ import {
   GoogleSignin, GoogleSigninButton, statusCodes
 } from '@react-native-community/google-signin';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import PushNotification from 'react-native-push-notification';
 import Loader from './Loader';
 
 const required = (val) => val && val.length;
 
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
-  
+
   const passwordInputRef = createRef();
 
   const [loggedIn, setloggedIn] = useState(false);
   const [userInfo, setuserInfo] = useState([]);
 
+  useEffect(() => {
+    createChannels();
+  }, [])
+  const createChannels = () => {
+    PushNotification.createChannel(
+        {
+            channelId: "test-channel",
+            channelName: "Test Channel"
+        },
+        (created) => console.log(`createChannel returned '${created}'`)
+    )
+}
   const handleSubmitPress = () => {
     setErrortext('');
     if (!required(userEmail)) {
@@ -44,7 +56,7 @@ const LoginScreen = ({navigation}) => {
       return;
     }
     setLoading(true);
-    const dataToSend = {email: userEmail, password: userPassword};
+    const dataToSend = { email: userEmail, password: userPassword };
     // let formBody = [];
     // for (let key in dataToSend) {
     //   let encodedKey = encodeURIComponent(key);
@@ -62,62 +74,38 @@ const LoginScreen = ({navigation}) => {
       },
       credentials: "same-origin"
     })
-      // .then((response) => {
-      //   response.json();
-      // })
-      // .then((responseJson) => {
-      //   //Hide Loader
-      //   setLoading(false);
-      //   console.log(responseJson);
-      //   // If server response message same as Data Matched
-      //   if (responseJson.ok) {
-      //     AsyncStorage.setItem('email', responseJson.data.email);
-      //     console.log(responseJson.data.email);
-      //     navigation.replace('DrawerNavigationRoutes');
-      //   } else {
-      //     setErrortext(responseJson.message);
-      //     console.log('Please check your email id or password');
-      //   }
-      // })
-      // .catch((error) => {
-      //   //Hide Loader
-      //   setLoading(false);
-      //   console.error(error);
-      // });
       .then(response => {
         setLoading(false);
         if (response.ok) {
           return response;
         } else {
-            var error = new Error('Error ' + response.status + ': ' + response.statusText);
-            console.log(error);
-            error.response = response;
-            throw error;
+          throw response;
         }
-      }, error => {
-          var errmess = new Error(error.message);
-          throw errmess;
       })
       .then(response => response.json())
       .then((user) => {
-          AsyncStorage.setItem('login', 'true');
-          AsyncStorage.setItem('token', user['access_token']);
-          //console.log(user['access_token']);
-          navigation.replace('DrawerNavigationRoutes');
+        AsyncStorage.setItem('login', 'true');
+        AsyncStorage.setItem('token', user['access_token']);
+        //console.log(user['access_token']);
+        navigation.replace('DrawerNavigationRoutes');
       })
-      .catch(error =>  
-        { setLoading(false);
-          console.log('Please check your email or password', error.message); 
-          alert('Please check your email or password '+error.message); 
-        });
+      .catch(error => {
+        setLoading(false);
+        error.json()
+          .then(body => {
+            console.log(body.message);
+            alert(body.message);
+          })
+
+      });
   };
-  // const handleSubmitPress = () => {
-  //   navigation.replace('DrawerNavigationRoutes');
-  // }
+  const handleSubmitPresstest = () => {
+    navigation.replace('DrawerNavigationRoutes');
+  }
   const _signIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
-      const {accessToken, idToken} = await GoogleSignin.signIn();
+      const { accessToken, idToken } = await GoogleSignin.signIn();
       setloggedIn(true);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -154,84 +142,84 @@ const LoginScreen = ({navigation}) => {
   // };
   return (
     <View style={styles.mainBody}>
-      
+
       <Loader loading={loading} />
       <ImageBackground source={require('../assets/anh2.png')} style={styles.image}>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{
-          flex: 1,
-          justifyContent: 'center',
-          alignContent: 'center',
-        }}>
-        <View>
-        
-          <KeyboardAvoidingView enabled>
-            
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(UserEmail) => 
-                  setUserEmail(UserEmail)
-                }
-                placeholder="UserEmail" 
-                placeholderTextColor="#8b9cb5"
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current &&
-                  passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-                autoComplete='email'
-              />
-            </View>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(UserPassword) =>
-                  setUserPassword(UserPassword)
-                }
-                placeholder="Enter Password" //12345
-                placeholderTextColor="#8b9cb5"
-                keyboardType="default"
-                ref={passwordInputRef}
-                onSubmitEditing={Keyboard.dismiss}
-                blurOnSubmit={false}
-                secureTextEntry={true}
-                underlineColorAndroid="#f000"
-                returnKeyType="next"
-              />
-            </View>
-            {errortext != '' ? (
-              <Text style={styles.errorTextStyle}>
-                {errortext}
-              </Text>
-            ) : null}
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              activeOpacity={0.5}
-              onPress={handleSubmitPress}>
-              <Text style={styles.buttonTextStyle}>LOGIN</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.registerStyle}
-              onPress={() => navigation.navigate('RegisterScreen')}>
-              <Text style={styles.buttonTextStyle}>REGISTER</Text>
-            </TouchableOpacity>
-            <Text style={{textAlign: 'center'}} >OR</Text>
-            {/* <GoogleSigninButton 
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{
+            flex: 1,
+            justifyContent: 'center',
+            alignContent: 'center',
+          }}>
+          <View>
+
+            <KeyboardAvoidingView enabled>
+
+              <View style={styles.SectionStyle}>
+                <TextInput
+                  style={styles.inputStyle}
+                  onChangeText={(UserEmail) =>
+                    setUserEmail(UserEmail)
+                  }
+                  placeholder="UserEmail"
+                  placeholderTextColor="#8b9cb5"
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                  returnKeyType="next"
+                  onSubmitEditing={() =>
+                    passwordInputRef.current &&
+                    passwordInputRef.current.focus()
+                  }
+                  underlineColorAndroid="#f000"
+                  blurOnSubmit={false}
+                  autoComplete='email'
+                />
+              </View>
+              <View style={styles.SectionStyle}>
+                <TextInput
+                  style={styles.inputStyle}
+                  onChangeText={(UserPassword) =>
+                    setUserPassword(UserPassword)
+                  }
+                  placeholder="Enter Password" //12345
+                  placeholderTextColor="#8b9cb5"
+                  keyboardType="default"
+                  ref={passwordInputRef}
+                  onSubmitEditing={Keyboard.dismiss}
+                  blurOnSubmit={false}
+                  secureTextEntry={true}
+                  underlineColorAndroid="#f000"
+                  returnKeyType="next"
+                />
+              </View>
+              {errortext != '' ? (
+                <Text style={styles.errorTextStyle}>
+                  {errortext}
+                </Text>
+              ) : null}
+              <TouchableOpacity
+                style={styles.buttonStyle}
+                activeOpacity={0.5}
+                onPress={handleSubmitPress}>
+                <Text style={styles.buttonTextStyle}>LOGIN</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.registerStyle}
+                onPress={() => navigation.navigate('RegisterScreen')}>
+                <Text style={styles.buttonTextStyle}>REGISTER</Text>
+              </TouchableOpacity>
+              {/* <Text style={{textAlign: 'center'}} >OR</Text> */}
+              {/* <GoogleSigninButton 
               style={{ width: 192, height: 48, alignItems: 'center' }}
               size={GoogleSigninButton.Size.Wide}
               color={GoogleSigninButton.Color.Dark}>
               onPress={_signIn}
             </GoogleSigninButton> */}
-          </KeyboardAvoidingView>
-          
-        </View>
-      </ScrollView>
+            </KeyboardAvoidingView>
+
+          </View>
+        </ScrollView>
       </ImageBackground>
     </View>
   );

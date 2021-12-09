@@ -102,17 +102,10 @@ const RegisterScreen = (props) => {
       setLoading(false);
       console.log(response.status);
       if (response.ok) {
-        console.log(response.body);
         return response;
       } else {
-          var error = new Error('Error ' + response.status + ': ' + response.statusText);
-          console.log(error);
-          error.response = response;
-          throw error;
+          throw response;
       }
-    }, error => {
-        var errmess = new Error(error.message);
-        throw errmess;
     })
     .then(() => {
       setIsRegistraionSuccess(true);
@@ -120,8 +113,12 @@ const RegisterScreen = (props) => {
     })
     .catch(error =>  
       { setLoading(false);
-        console.log('Registration Unsuccessful', error.message); 
-        alert('Registration Unsuccessful '+error.message); 
+        error.json()
+          .then(body => {
+            console.log(body.message); 
+            alert(body.message); 
+          }) 
+        
       });
   };
   // const handleSubmitButton = () => {

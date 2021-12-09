@@ -20,15 +20,15 @@ const HomeScreen = ({navigation}) => {
       <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>
         {/* <SearchBar placeholder="Search"/> */}
         <TouchableOpacity style={styles.ContentStyle} onPress={() => navigation.navigate("InformationScreen")}>
-          <Image style={styles.ImageStyle} source={require("../assets/anh1.jpg")} />
+          <Image style={styles.ImageStyle} source={require("../assets/thongtin.jpg")} />
           <Text
             style={styles.TextStyle}>
             Thông tin
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.ContentStyle} onPress={() => navigation.navigate("InformationScreen")}>
-          <Image style={styles.ImageStyle} source={require("../assets/anh1.jpg")} />
+        <TouchableOpacity style={styles.ContentStyle} onPress={() => navigation.navigate("ShowArtifactScreen")}>
+          <Image style={styles.ImageStyle} source={require("../assets/hienvat.jpeg")} />
           <Text
             style={styles.TextStyle}>
             Hiện vật
@@ -36,15 +36,15 @@ const HomeScreen = ({navigation}) => {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.ContentStyle} onPress={() => navigation.navigate("ShowEventScreen")}>
-          <Image style={styles.ImageStyle} source={require("../assets/anh1.jpg")} />
+          <Image style={styles.ImageStyle} source={require("../assets/sukien.jpg")} />
           <Text
             style={styles.TextStyle}>
               Sự kiện
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.ContentStyle} onPress={() => navigation.navigate("ShowArtifactScreen")}>
-          <Image style={styles.ImageStyle} source={require("../assets/anh1.jpg")} />
+        <TouchableOpacity style={styles.ContentStyle} onPress={() => navigation.navigate("ShowSouvenirScreen")}>
+          <Image style={styles.ImageStyle} source={require("../assets/luuniem.png")} />
           <Text
             style={styles.TextStyle}>
             Lưu niệm
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   ContentStyle: {
     width: '40%',
     height: 150,
-    backgroundColor: 'blue',
+    backgroundColor: '#fff',
     alignItems: "center",
     margin: 10,
     marginTop: 20

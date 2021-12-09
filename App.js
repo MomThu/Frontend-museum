@@ -1,6 +1,8 @@
 import 'react-native-gesture-handler';
 // Import React and Component
 import React from 'react';
+import { LogBox } from 'react-native';
+
 
 // Import Navigators from React Navigation
 import {NavigationContainer} from '@react-navigation/native';
@@ -20,9 +22,13 @@ import infoUserScreenStack from './src/Screen/InfoUserScreen';
 import ticketScreenStack from './src/Screen/TicketScreen';
 import showEventScreenStack from './src/Screen/ShowEventScreent';
 import showArtifactScreenStack from './src/Screen/ShowArtifactScreen';
+import showSouvenirScreenStack from './src/Screen/SouvenirScreen';
 
 //DrawerNavigationRoutes
 const Stack = createStackNavigator();
+
+LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreAllLogs();
 
 const Auth = () => {
   // Stack Navigator for Login and Sign up Screen
@@ -108,6 +114,11 @@ const App = () => {
         <Stack.Screen 
           name="ShowArtifactScreen"
           component={showArtifactScreenStack} 
+          options={{headerShown: false}}
+        />
+        <Stack.Screen 
+          name="ShowSouvenirScreen"
+          component={showSouvenirScreenStack} 
           options={{headerShown: false}}
         />
       </Stack.Navigator>

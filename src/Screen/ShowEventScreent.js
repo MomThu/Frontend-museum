@@ -17,20 +17,46 @@ class ShowEventScreen extends React.Component {
       super(props);
       this.state = {
         events: [
-        {id: 1, name: 'Event1'},
-        {id: 2, name: 'Event2'},
-        {id: 3, name: 'Event3'},
-        {id: 4, name: 'Event4'}
+          
+        ],
+        image: [
+          {url: require('../assets/event/1.jpg')},
+          {url: require('../assets/event/2.jpg')},
+          {url: require('../assets/event/3.jpg')},
         ]
       };
     }
   
+    componentDidMount = () => {
+      fetch('http://10.0.3.2:5000/events')
+        .then((res) => {
+          if(res.ok) {
+            return res;
+          } else {
+            throw res;
+          }
+        })
+        .then((res) => res.json())
+        .then((res) => {
+          this.setState({events: res['events']})
+        })
+        .catch(error =>  
+          {
+            error.json()
+              .then(body => {
+                console.log(body.message); 
+                alert(body.message); 
+              })
+            
+          });
+    }
+
     render() {
-      const { events } = this.state;
+      const events = this.state.events;
       return (
             <ScrollView>
-                {events.map(event => (
-                    <EventComponent key = {event.id} event = {event} />
+                {events.map((event, index) => (
+                    <EventComponent key = {event.EventId} event = {event} image={this.state.image[index]} />
                 ))}
             </ScrollView>
       );

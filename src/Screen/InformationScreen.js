@@ -2,10 +2,10 @@
 
 // Import React and Component
 import React from 'react';
-import {View, Text, SafeAreaView, Image, StyleSheet} from 'react-native';
+import { View, Text, SafeAreaView, Image, StyleSheet } from 'react-native';
 
 // Import Navigators from React Navigation
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import NavigationDrawerHeader from './NavigationDrawerHeader';
 import Header from '../components/HeaderComponent';
 import UserButton from '../components/userButton';
@@ -16,18 +16,17 @@ const Stack = createStackNavigator();
 
 const InformationScreen = () => {
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={{flex: 1, padding: 16}}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1, padding: 16 }}>
         <View>
           <Text>
             Thông tin
           </Text>
         </View>
         <View>
-          <Image style={styles.ImageStyle} source={require('../assets/anh1.jpg')} />
+          <Image style={styles.ImageStyle} source={require('../assets/thongtin.jpg')} />
           <Text>
-            Bảo tàng Lịch sử quốc gia là công trình văn hóa tọa lạc ở khu vực trung tâm của Thủ đô Hà Nội, gần với nhiều di tích linh thiêng của Thủ đô như Tháp Rùa - Hồ Gươm; Cầu Thê Húc - Đền Ngọc Sơn - Bút tháp… Xem thêm
-          </Text>
+            Bảo tàng Lịch sử quốc gia là công trình văn hóa tọa lạc ở khu vực trung tâm của Thủ đô Hà Nội, gần với nhiều di tích linh thiêng của Thủ đô như Tháp Rùa - Hồ Gươm; Cầu Thê Húc - Đền Ngọc Sơn - Bút tháp… Bảo tàng lưu giữ, trưng bày, giới thiệu lịch sử Việt Nam từ thời Tiền sử đến ngày nay thông qua hệ thống tài liệu, hiện vật vô cùng đồ sộ, quý giá, trong đó có nhiều hiện vật là Bảo vật quốc gia.          </Text>
         </View>
         <View>
           <Text>Đánh giá</Text>
@@ -37,38 +36,38 @@ const InformationScreen = () => {
   );
 };
 
-const informationScreenStack = ({navigation}) => {
-    return (
-      <Stack.Navigator
-        initialRouteName="InformationScreen"
-        screenOptions={{
-          headerLeft: () => (
-            <HomeButton navigationProps={navigation} />
-          ),
-          headerRight: () => (
-            <UserButton navigationProps={navigation} />
-          ),
-          headerStyle: {
-            backgroundColor: '#F9A606', //Set Header color
-          },
-          headerTintColor: '#fff', //Set Header text color
-          headerTitleStyle: {
-            fontWeight: 'bold', //Set Header text style
-            //textAlign: 'center'
-          },
-          headerTitleAlign: 'center',
+const informationScreenStack = ({ navigation }) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="InformationScreen"
+      screenOptions={{
+        headerLeft: () => (
+          <HomeButton navigationProps={navigation} />
+        ),
+        headerRight: () => (
+          <UserButton navigationProps={navigation} />
+        ),
+        headerStyle: {
+          backgroundColor: '#F9A606', //Set Header color
+        },
+        headerTintColor: '#fff', //Set Header text color
+        headerTitleStyle: {
+          fontWeight: 'bold', //Set Header text style
+          //textAlign: 'center'
+        },
+        headerTitleAlign: 'center',
 
-        }}>
-        <Stack.Screen
-          name="InformationScreenChild"
-          component={InformationScreen}
-          options={{
-            title: "My museum"
-          }}
-        />
-      </Stack.Navigator>
-    );
-  };
+      }}>
+      <Stack.Screen
+        name="InformationScreenChild"
+        component={InformationScreen}
+        options={{
+          title: "My museum"
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 export default informationScreenStack;
 
