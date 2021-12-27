@@ -85,9 +85,14 @@ const LoginScreen = ({ navigation }) => {
       .then(response => response.json())
       .then((user) => {
         AsyncStorage.setItem('login', 'true');
+        AsyncStorage.setItem('role',JSON.stringify(user['role']));
         AsyncStorage.setItem('token', user['access_token']);
-        //console.log(user['access_token']);
-        navigation.replace('DrawerNavigationRoutes');
+        console.log(user['role']);
+        if(user['role'] == 0) {
+          navigation.replace('DrawerNavigationRoutesAdmin');
+        } else {
+          navigation.replace('DrawerNavigationRoutes');
+        }
       })
       .catch(error => {
         setLoading(false);
@@ -204,6 +209,7 @@ const LoginScreen = ({ navigation }) => {
                 onPress={handleSubmitPress}>
                 <Text style={styles.buttonTextStyle}>LOGIN</Text>
               </TouchableOpacity>
+              <Text style={styles.quen}>Quên mật khẩu?</Text>
               <TouchableOpacity
                 style={styles.registerStyle}
                 onPress={() => navigation.navigate('RegisterScreen')}>
@@ -296,5 +302,9 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     justifyContent: "center"
+  },
+  quen: {
+    marginLeft: '60%',
+    marginBottom: 20,
   }
 });

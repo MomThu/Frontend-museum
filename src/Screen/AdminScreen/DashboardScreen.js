@@ -7,35 +7,15 @@ import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
 // Import Navigators from React Navigation
 import {createStackNavigator} from '@react-navigation/stack';
 import NavigationDrawerHeader from './NavigationDrawerHeader';
-import UserButton from '../components/userButton';
-import TicketButton from '../components/ticketButton';
-import SouvenirComponent from '../components/SouvenirComponent';
 
 const Stack = createStackNavigator();
 
-const CartScreen = () => {
-  const [souvenirs, setSouvenirs] = useState([])
-  useEffect( () => {
-    async function getSouvenir() {
-      var souvenir = await AsyncStorage.getItem('souvenir');
-      souvenir = JSON.parse(souvenir);
-      console.log(souvenir);
-      setSouvenirs(souvenir);
-      console.log(souvenirs);
-    }
-    getSouvenir()
-  }, []);
-  
+const DashboardScreen = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1, padding: 16}}>
         <View>
-          {souvenirs.map(souvenir => 
-          <View style={styles.souvenir}>
-            <Text>{souvenir.Name}</Text>
-            <Text style={styles.text}>{souvenir.Price}$</Text>
-          </View>
-          )}
+          <Text>Dashboard</Text>
         </View>
         
         
@@ -44,19 +24,13 @@ const CartScreen = () => {
   );
 };
 
-const cartScreenStack = ({navigation}) => {
+const dashboardScreenStack = ({navigation}) => {
   return (
     <Stack.Navigator
-      initialRouteName="CartScreen"
+      initialRouteName="DashboardScreen"
       screenOptions={{
         headerLeft: () => (
           <NavigationDrawerHeader navigationProps={navigation} />
-        ),
-        headerRight: () => (
-          <View>
-              <UserButton navigationProps={navigation} />
-              <TicketButton navigationProps={navigation} />
-          </View>
         ),
         headerStyle: {
           backgroundColor: '#F9A606', //Set Header color
@@ -69,16 +43,16 @@ const cartScreenStack = ({navigation}) => {
 
       }}>
       <Stack.Screen
-        name="CartScreen"
-        component={CartScreen}
+        name="DashboardScreen"
+        component={DashboardScreen}
         options={{
-          title: 'Cart', //Set Header Title
+          title: 'Dashboard', //Set Header Title
         }}
       />
     </Stack.Navigator>
   );
 };
-export default cartScreenStack;
+export default dashboardScreenStack;
 
 const styles = StyleSheet.create({
   souvenir: {

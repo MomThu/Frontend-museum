@@ -20,10 +20,18 @@ const SplashScreen = ({navigation}) => {
       //Check if user_id is set or not
       //If not then send for Authentication
       //else send to Home Screen
-      AsyncStorage.getItem('login').then((value) =>
-        navigation.replace(
-          value === null ? 'Auth' : 'DrawerNavigationRoutes'
-        ),
+      AsyncStorage.getItem('role').then((value) => {
+        if(value === null) navigation.replace('Auth');
+        else {
+          console.log(value);
+          if(value === '0') navigation.replace('DrawerNavigationRoutesAdmin');
+          else if(value === '1') navigation.replace('DrawerNavigationRoutes');
+          
+        }
+      }
+        // navigation.replace(
+        //   value === null ? 'Auth' : 'DrawerNavigationRoutes'
+        // ),
       );
     }, 5000);
   }, []);

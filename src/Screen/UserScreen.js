@@ -28,8 +28,7 @@ const UserScreen = ({navigation}) => {
         {
           text: 'Confirm',
           onPress: () => {
-            //AsyncStorage.clear();
-            AsyncStorage.removeItem('login');
+            AsyncStorage.clear();
             navigation.replace('Auth');
           },
         },

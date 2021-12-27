@@ -1,35 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { Image, Text, View, StyleSheet, TouchableOpacity, Alert, Modal, Pressable, ScrollView } from 'react-native'
-import DieuKhacImage from '../assets/anh1.jpg'
+import { baseUrl } from "../../config";
 
 export default ArtifactComponent = (props) => {
-    // const [imageUrl, setImageUrl] = useState('../assets/anh1.jpg');
-
-    // useEffect(() => {
-    //     fetch('http://10.0.3.2:5000/image/' + props.artifact.ImageId)
-    //   .then((res) => {
-    //     if (res.ok) {
-    //       return res;
-    //     } else {
-    //       throw res;
-    //     }
-    //   })
-    //   .then((res) => res.json())
-    //   .then((res) => {
-    //     console.log(res);
-    //     //setImageUrl(res.Path + '/' + res.Url);
-    //     console.log(res.Path + '/' + res.Url);
-    //   })
-    //   .catch(error => {
-    //     error.json()
-    //       .then(body => {
-    //         console.log(body.message);
-    //         alert(body.message);
-    //       })
-
-    //   });
-    // },[])
+    const [imageUrl, setImageUrl] = useState({});
     const [modalVisible, setModalVisible] = useState(false);
+
+    useEffect(() => {
+        fetch(baseUrl + 'image/' + props.artifact.ImageId)
+      .then((res) => {
+        if (res.ok) {
+          return res;
+        } else {
+          throw res;
+        }
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        setImageUrl({uri: baseUrl + res.Path});
+        console.log(imageUrl);
+      })
+      .catch(error => {
+        error.json()
+          .then(body => {
+            console.log(body.message);
+            alert(body.message);
+          })
+
+      });
+    },[])
 
     const artifact = props.artifact;
 
@@ -41,9 +41,7 @@ export default ArtifactComponent = (props) => {
             setModalVisible(true);
         }}>
             <View style={styles.container}>
-                {/* <Image style={styles.DieuKhacImage} source = {DieuKhacImage}/> */}
-
-                <Image style={styles.DieuKhacImage} source={props.image.url} />
+                <Image style={styles.DieuKhacImage} source={imageUrl} />
                 <Text style={styles.title}>{artifact.Name}</Text>
             </View>
             <Modal
@@ -62,7 +60,7 @@ export default ArtifactComponent = (props) => {
                         >
                             <Text style={styles.textStyle}>X</Text>
                         </Pressable>
-                        <Image style={styles.DieuKhacImage} source={props.image.url} />
+                        <Image style={styles.DieuKhacImage} source={imageUrl} />
                         <Text>{artifact.Description}</Text>
                         <TouchableOpacity >
                             <Image style={styles.heart} onPress={handleClick()} source={require('../assets/icons/heart.png')} />

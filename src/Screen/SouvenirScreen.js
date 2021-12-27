@@ -15,17 +15,7 @@ class ShowSouvenirScreen extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            souvenirs: [
-                
-            ],
-            image: [
-              {url: require('../assets/souvenir/1.jpg')},
-              {url: require('../assets/souvenir/2.jpg')},
-              {url: require('../assets/souvenir/3.jpg')},
-              {url: require('../assets/souvenir/4.jpg')},
-              {url: require('../assets/souvenir/5.jpg')},
-              {url: require('../assets/souvenir/6.jpg')},
-            ]
+            souvenirs: [],
         }
     }
 
@@ -40,6 +30,7 @@ class ShowSouvenirScreen extends React.Component {
             })
             .then((res) => res.json())
             .then((res) => {
+              console.log(res);
                 this.setState({ souvenirs: res['souvenirs']})
             })
             .catch(error =>  
@@ -53,22 +44,7 @@ class ShowSouvenirScreen extends React.Component {
                 });
     }
 
-    handleClick = async (event, souvenir) => {
-      console.log(souvenir);
-      //AsyncStorage.setItem('souvenir', souvenir)
-      var souvenirs = await AsyncStorage.getItem('souvenir');
-      //console.log(souvenirs);
-      if(souvenirs === null) {
-        souvenirs = [];
-      } else {
-        souvenirs = JSON.parse(souvenirs);
-      }
-      souvenirs.push(souvenir);
-      await AsyncStorage.setItem('souvenir', JSON.stringify(souvenirs));
-      souvenirs = await AsyncStorage.getItem('souvenir');
-      console.log(JSON.parse(souvenirs));
-      //console.log(AsyncStorage.getItem('souvenir'))
-    }
+    
 
     render() {
         const souvenirs = this.state.souvenirs;
@@ -80,8 +56,8 @@ class ShowSouvenirScreen extends React.Component {
             //     }
             //     keyExtrator={(item) => '${item.id}'} />
             <ScrollView>
-              {souvenirs.map((souvenir, index) => 
-                  <SouvenirComponent key={souvenir.SouvenirId} souvenir={souvenir} image={this.state.image[index]} cart={(event) => this.handleClick(event, souvenir)}/>
+              {souvenirs.map((souvenir) => 
+                  <SouvenirComponent key={souvenir.SouvenirId} souvenir={souvenir} cart={(event) => this.handleClick(event, souvenir)}/>
               )}
             </ScrollView>
         );

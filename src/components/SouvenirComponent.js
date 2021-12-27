@@ -8,7 +8,7 @@ export default function SouvenirComponent(props) {
     return (
         <View style = {styles.shadow}>
             <View style = {styles.container}>
-                <Image style = {styles.img} source ={props.image.url} />
+                
                 <View style = {styles.info}>
                     <Text style = {styles.name}> {product.Name}</Text>
                     <View style = {styles.priceRow}>

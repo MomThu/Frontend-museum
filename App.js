@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 // Import React and Component
 import React from 'react';
 import { LogBox } from 'react-native';
-
+import { Provider} from 'react-native-paper';
 
 // Import Navigators from React Navigation
 import {NavigationContainer} from '@react-navigation/native';
@@ -23,6 +23,7 @@ import ticketScreenStack from './src/Screen/TicketScreen';
 import showEventScreenStack from './src/Screen/ShowEventScreent';
 import showArtifactScreenStack from './src/Screen/ShowArtifactScreen';
 import showSouvenirScreenStack from './src/Screen/SouvenirScreen';
+import DrawerNavigationRoutesAdmin from './src/Screen/AdminScreen/DrawerNavigationRoutesAdmin';
 
 //DrawerNavigationRoutes
 const Stack = createStackNavigator();
@@ -59,6 +60,7 @@ const Auth = () => {
 
 const App = () => {
   return (
+    <Provider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="SplashScreen" >
         {/* SplashScreen which will come once for 5 Seconds */}
@@ -121,8 +123,14 @@ const App = () => {
           component={showSouvenirScreenStack} 
           options={{headerShown: false}}
         />
+        <Stack.Screen 
+          name="DrawerNavigationRoutesAdmin"
+          component={DrawerNavigationRoutesAdmin} 
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
+    </Provider>
   );
 };
 

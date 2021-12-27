@@ -11,7 +11,7 @@ import {
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-const CustomSidebarMenu = (props) => {
+const CustomSidebarMenuAdmin = (props) => {
   return (
     <View style={stylesSidebar.sideMenuContainer}>
       <View style={stylesSidebar.profileHeader}>
@@ -63,7 +63,7 @@ const CustomSidebarMenu = (props) => {
   );
 };
 
-export default CustomSidebarMenu;
+export default CustomSidebarMenuAdmin;
 
 const stylesSidebar = StyleSheet.create({
   sideMenuContainer: {

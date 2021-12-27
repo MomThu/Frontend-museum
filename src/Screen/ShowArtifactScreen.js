@@ -14,15 +14,8 @@ class ShowArtifactScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      artifacts: [
-
-      ],
-      image: [
-        {url: require('../assets/artifact/1.jpg')},
-        {url: require('../assets/artifact/2.jpg')},
-        {url: require('../assets/artifact/3.jpg')},
-        {url: require('../assets/artifact/4.png')},
-      ]
+      artifacts: [],
+      
     };
   }
 
@@ -42,38 +35,19 @@ class ShowArtifactScreen extends React.Component {
       .catch(error => {
         error.json()
           .then(body => {
-            console.log(body.message);
             alert(body.message);
           })
 
       });
   }
 
-  // handleClick = async (event, artifact) => {
-  //   console.log(artifact);
-  //   //AsyncStorage.setItem('souvenir', souvenir)
-  //   var artifacts = await AsyncStorage.getItem('artifact');
-  //   //console.log(souvenirs);
-  //   if(artifacts === null) {
-  //     artifacts = [];
-  //   } else {
-  //     artifacts = JSON.parse(artifacts);
-  //   }
-  //   artifacts.push(artifact);
-  //   await AsyncStorage.setItem('artifact', JSON.stringify(artifacts));
-  //   artifacts = await AsyncStorage.getItem('artifact');
-  //   console.log(JSON.parse(artifacts));
-  //   //console.log(AsyncStorage.getItem('souvenir'))
-  // }
-
   render() {
     const artifacts = this.state.artifacts;
 
     return (
       <ScrollView>
-        {artifacts.map((artifact, index) =>
-          <ArtifactComponent key={artifact.ArtifactId} artifact={artifact} image={this.state.image[index]} /> 
-          // <Text>{artifact.Name}</Text>
+        {artifacts.map((artifact) =>
+          <ArtifactComponent key={artifact.ArtifactId} artifact={artifact} /> 
         )}
       </ScrollView>
 
