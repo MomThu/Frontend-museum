@@ -12,6 +12,7 @@ import CustomSidebarMenuAdmin from './CustomSidebarMenuAdmin';
 import dashboardScreenStack from './DashboardScreen';
 import artifactScreenStack from './ArtifactScreen';
 import eventScreenStack from './EventScreen';
+import souvenirScreenStack from './SouvenirScreen';
 import bottomTabAdmin from '../../navigation/bottomTabAdmin';
 
 const Drawer = createDrawerNavigator();
@@ -43,6 +44,11 @@ const DrawerNavigationRoutesAdmin = (props) => {
         name="eventScreenStack"
         options={{drawerLabel: 'Quản lý sự kiện'}}
         component={eventScreenStack}
+      />
+      <Drawer.Screen
+        name="souvenirScreenStack"
+        options={{drawerLabel: 'Quản lý đồ lưu niệm'}}
+        component={souvenirScreenStack}
       />
     </Drawer.Navigator>
   );

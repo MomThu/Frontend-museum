@@ -20,7 +20,7 @@ class ShowArtifactScreen extends React.Component {
   }
 
   componentDidMount = async () => {
-    await fetch('http://10.0.3.2:5000/artifacts')
+    await fetch('http://10.0.2.2:5000/artifacts')
       .then((res) => {
         if (res.ok) {
           return res;

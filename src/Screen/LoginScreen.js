@@ -65,7 +65,7 @@ const LoginScreen = ({ navigation }) => {
     // }
     // formBody = formBody.join('&');
 
-    fetch('http://10.0.3.2:5000/login', {
+    fetch('http://10.0.2.2:5000/login', {
       method: 'POST',
       body: JSON.stringify(dataToSend),
       headers: {
