@@ -2,12 +2,13 @@
 
 // Import React and Component
 import React, { useEffect, useState } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, Modal, Pressable, TextInput, ScrollView, TimePickerAndroid, DatePickerIOSComponent, DatePickerAndroid } from 'react-native';
+import { View, Text, SafeAreaView, StyleSheet, Modal, Pressable, TextInput, ScrollView, Platform, TouchableOpacity, EditText } from 'react-native';
 // Import Navigators from React Navigation
 import { createStackNavigator } from '@react-navigation/stack';
 import NavigationDrawerHeader from './NavigationDrawerHeader';
 
 import UploadFileComponent from '../../components/UploadEventComponent';
+import UploadDateTime from '../../components/UploadDateTime';
 
 import { Searchbar, Checkbox, DataTable, Button } from 'react-native-paper';
 import DocumentPicker from 'react-native-document-picker';
@@ -31,9 +32,11 @@ const EventScreen = () => {
     const [closeTimeEvent, setCTimeEvent] = React.useState(null);
     const [openDateEvent, setODateEvent] = React.useState(null);
     const [sortAscending, setSortAscending] = React.useState(true);
+    
 
     const from = page * itemsPerPage;
     const to = Math.min((page + 1) * itemsPerPage, events.length);
+
 
     React.useEffect(() => {
         fetch(baseUrl + 'events')
@@ -114,7 +117,6 @@ const EventScreen = () => {
             })
         });
     }
-
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flex: 1, padding: 16 }}>
@@ -144,36 +146,16 @@ const EventScreen = () => {
                             style={styles.inputArea}
                             placeholder='Description'
                             multiline={true}
-                            numberOfLines={10}
+                            numberOfLines={3}
                         />
-                        <Button
-                            
-                        />
-                        <DateTimePicker
-                            value={openTimeEvent}
-                            onChangeText={setOTimeEvent}
-                            is24Hour={true}
-                            display="default"
-                        />
-                        <DateTimePicker
-                            value={closeTimeEvent}
-                            onChangeText={setCTimeEvent}
-                            is24Hour={true}
-                            display="default"
-                        />
-                        <DateTimePicker
-                            value={openDateEvent}
-                            onChangeText={setODateEvent}
-                            is24Hour={true}
-                            display="default"
-                        />
+                        <UploadDateTime />
                         <UploadFileComponent name={nameEvent} description={desEvent} openTime={openTimeEvent} closeTime={closeTimeEvent} openDate={openDateEvent} modalVisible={modalVisible} setModalVisible={setModalVisible} />
-                        <Pressable
+                        {<Pressable
                             style={[styles.button, styles.buttonClose]}
                             onPress={() => setModalVisible(!modalVisible)}
                         >
                             <Text style={styles.textStyle}>Hide Modal</Text>
-                        </Pressable>
+                        </Pressable>}
 
                     </View>
                 </Modal>
@@ -296,8 +278,64 @@ const styles = StyleSheet.create({
         marginRight: 35,
         marginTop: 15,
     },
+    buttonTextStyle: {
+        color: '#FFFFFF',
+        paddingVertical: 10,
+        fontSize: 16,
+    },
     deleteStyle: {
         backgroundColor: 'red',
         padding: 0
     }
 })
+
+/* import React, {useState} from 'react';
+import {View, Button, Platform} from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
+const eventScreenStack = ({ navigation }) => {
+  const [date, setDate] = useState(new Date(1598051730000));
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+
+  return (
+    <View>
+      <View>
+        <Button onPress={showDatepicker} title="Show date picker!" />
+      </View>
+      <View>
+        <Button onPress={showTimepicker} title="Show time picker!" />
+      </View>
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
+        />
+      )}
+    </View>
+  );
+};
+export default eventScreenStack; */
