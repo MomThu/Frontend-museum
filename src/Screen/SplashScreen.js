@@ -11,6 +11,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 
 const SplashScreen = ({navigation}) => {
+  
   //State for ActivityIndicator animation
   const [animating, setAnimating] = useState(true);
 
@@ -24,9 +25,8 @@ const SplashScreen = ({navigation}) => {
         if(value === null) navigation.replace('Auth');
         else {
           console.log(value);
-          if(value === '0') navigation.replace('DrawerNavigationRoutesAdmin');
-          else if(value === '1') navigation.replace('DrawerNavigationRoutes');
-          
+          if(value === '"0"') navigation.replace('DrawerNavigationRoutesAdmin');
+          else if(value === '"1"') navigation.replace('DrawerNavigationRoutes');
         }
       }
         // navigation.replace(

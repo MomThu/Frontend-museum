@@ -1,7 +1,7 @@
 
 
 // Import React
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 // Import Navigators from React Navigation
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -14,10 +14,12 @@ import userScreenStack from './UserScreen';
 import informationScreenStack from './InformationScreen';
 import CustomSidebarMenu from './CustomSidebarMenu';
 import bottomTab from '../navigation/bottomTab';
+import AsyncStorage from '@react-native-community/async-storage';
+import { baseUrl } from '../../config';
 
 const Drawer = createDrawerNavigator();
-
 const DrawerNavigationRoutes = (props) => {
+  
   return (
     <Drawer.Navigator
       screenOptions={{
@@ -35,11 +37,12 @@ const DrawerNavigationRoutes = (props) => {
         options={{drawerLabel: 'Home Screen'}}
         component={homeScreenStack}
       /> */}
-      <Drawer.Screen
+      <Drawer.Screen 
         name="homeScreenStack"
         options={{drawerLabel: 'Home Screen'}}
+        //component={props => <bottomTab {...props} extraData={someData}/>}
         component={bottomTab}
-      />
+      ></Drawer.Screen>
       <Drawer.Screen
         name="settingScreenStack"
         options={{drawerLabel: 'Setting Screen'}}

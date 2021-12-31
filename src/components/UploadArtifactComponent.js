@@ -53,6 +53,24 @@ const UploadFileComponent = (props) => {
                     'Content-Type': 'application/json',
                   },
             })
+            .then(res => {
+                if(res.ok) {
+                    const notification = {
+                        AccountId: 1,
+                        Title: "Đã thêm hiện vật mới",
+                        Content: props.name,
+                        Time: new Date(),
+                        Unread: 1,
+                    }
+                    fetch(baseUrl + 'notification', {
+                        method: 'post',
+                        body: JSON.stringify(notification),
+                        headers: {
+                            "Content-Type": "application/json",
+                          },
+                    })
+                }
+            })
             setSingleFile(null);
             props.setModalVisible(false);
         } else {

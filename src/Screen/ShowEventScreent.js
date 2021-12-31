@@ -8,6 +8,7 @@ import NavigationDrawerHeader from './NavigationDrawerHeader';
 import HomeButton from '../components/homeButton';
 import UserButton from '../components/userButton';
 import TicketButton from '../components/ticketButton';
+import { baseUrl } from '../../config';
 //import EventComponent from '../components/EventComponent';
 
 const Stack = createStackNavigator();
@@ -28,7 +29,7 @@ class ShowEventScreen extends React.Component {
     }
   
     componentDidMount = () => {
-      fetch('http://10.0.3.2:5000/events')
+      fetch(baseUrl + 'events')
         .then((res) => {
           if(res.ok) {
             return res;

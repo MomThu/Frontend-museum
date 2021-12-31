@@ -56,6 +56,9 @@ const UserScreen = ({navigation}) => {
           <TouchableOpacity onPress={() => navigation.replace("InfoUserScreen")}>
             <Text>Yêu thích</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.replace("OrderTicketScreen")}>
+            <Text>Danh sách vé đặt</Text>
+          </TouchableOpacity>
           <TouchableOpacity onPress={logout}>
             <Text>Logout</Text>
           </TouchableOpacity>

@@ -18,6 +18,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import PushNotification from 'react-native-push-notification';
 import Loader from './Loader';
+import { baseUrl } from '../../config';
 
 const required = (val) => val && val.length;
 
@@ -65,7 +66,7 @@ const LoginScreen = ({ navigation }) => {
     // }
     // formBody = formBody.join('&');
 
-    fetch('http://10.0.3.2:5000/login', {
+    fetch(baseUrl + 'login', {
       method: 'POST',
       body: JSON.stringify(dataToSend),
       headers: {
@@ -86,8 +87,8 @@ const LoginScreen = ({ navigation }) => {
       .then((user) => {
         AsyncStorage.setItem('login', 'true');
         AsyncStorage.setItem('role',JSON.stringify(user['role']));
-        AsyncStorage.setItem('token', user['access_token']);
-        console.log(user['role']);
+        AsyncStorage.setItem('token',user['access_token']);
+        console.log(user['access_token']);
         if(user['role'] == 0) {
           navigation.replace('DrawerNavigationRoutesAdmin');
         } else {
@@ -98,8 +99,8 @@ const LoginScreen = ({ navigation }) => {
         setLoading(false);
         error.json()
           .then(body => {
-            console.log(body.message);
-            alert(body.message);
+            console.log(body.msg);
+            alert(body.msg);
           })
 
       });

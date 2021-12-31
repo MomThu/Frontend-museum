@@ -1,40 +1,59 @@
 
 
 // Import React and Component
-import React from 'react';
-import {View, Text, SafeAreaView} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {View, Text, SafeAreaView, ScrollView} from 'react-native';
 
 // Import Navigators from React Navigation
 import {createStackNavigator} from '@react-navigation/stack';
 import NavigationDrawerHeader from './NavigationDrawerHeader';
-import Header from '../components/HeaderComponent';
 import UserButton from '../components/userButton';
+import AsyncStorage from '@react-native-community/async-storage'; 
+import { baseUrl } from '../../config';
+import NotificationComponent from '../components/NotificationComponent';
 
 const Stack = createStackNavigator();
 
+
 const NotificationScreen = () => {
+  const [notification, setNotification] = useState([]);
+
+  useEffect(() => {
+    AsyncStorage.getItem('token').then(token => {
+      fetch(baseUrl + 'notifications', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      .then((res) => {
+        if (res.ok) {
+          return res;
+        } else {
+          throw res;
+        }
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        setNotification(res['notifications']);
+        console.log(notification);
+      })
+      .catch(error => {
+        error.json()
+          .then(body => {
+            alert(body.message);
+          })
+  
+      });
+    });
+    
+  }, [])
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={{flex: 1, padding: 16}}>
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <Text
-            style={{
-              fontSize: 20,
-              textAlign: 'center',
-              marginBottom: 16,
-            }}>
-            
-            This is the Notification Screen
-          </Text>
-        </View>
-        
-        
-      </View>
+      <ScrollView>
+        {notification.map((notification) =>
+          <NotificationComponent key={notification.NotificationId} notification={notification} setNotification={setNotification} /> 
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
 };

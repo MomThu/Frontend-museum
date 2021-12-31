@@ -13,6 +13,7 @@ import {
   ScrollView,
   ImageBackground
 } from 'react-native';
+import { baseUrl } from '../../config';
 
 import Loader from './Loader';
 
@@ -75,7 +76,7 @@ const RegisterScreen = (props) => {
       password: userPassword,
     };
     
-    fetch('http://10.0.3.2:5000/register', {
+    fetch(baseUrl + 'register', {
       method: 'POST',
       body: JSON.stringify(dataToSend),
       headers: {
@@ -101,8 +102,8 @@ const RegisterScreen = (props) => {
       { setLoading(false);
         error.json()
           .then(body => {
-            console.log(body.message); 
-            alert(body.message); 
+            console.log(body.msg); 
+            alert(body.msg); 
           }) 
         
       });

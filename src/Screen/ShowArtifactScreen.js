@@ -8,6 +8,9 @@ import NavigationDrawerHeader from './NavigationDrawerHeader';
 import HomeButton from '../components/homeButton';
 import UserButton from '../components/userButton';
 import TicketButton from '../components/ticketButton';
+
+import { baseUrl } from '../../config';
+
 const Stack = createStackNavigator();
 
 class ShowArtifactScreen extends React.Component {
@@ -20,7 +23,7 @@ class ShowArtifactScreen extends React.Component {
   }
 
   componentDidMount = async () => {
-    await fetch('http://10.0.3.2:5000/artifacts')
+    await fetch(baseUrl + 'artifacts')
       .then((res) => {
         if (res.ok) {
           return res;

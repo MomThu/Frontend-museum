@@ -14,7 +14,7 @@ PushNotification.configure({
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification: function (notification) {
     console.log("NOTIFICATION:", notification);
-
+    
   
   },
   requestPermissions: Platform.OS === 'ios'

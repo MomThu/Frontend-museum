@@ -8,6 +8,7 @@ import HomeButton from '../components/homeButton';
 import UserButton from '../components/userButton';
 import TicketButton from '../components/ticketButton';
 import AsyncStorage from "@react-native-community/async-storage";
+import { baseUrl } from "../../config";
 const Stack = createStackNavigator();
 
 class ShowSouvenirScreen extends React.Component {
@@ -20,7 +21,7 @@ class ShowSouvenirScreen extends React.Component {
     }
 
     componentDidMount = () => {
-        fetch('http://10.0.3.2:5000/souvenirs')
+        fetch(baseUrl + 'souvenirs')
             .then((res) => {
                 if(res.ok) {
                     return res;
