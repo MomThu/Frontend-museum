@@ -45,6 +45,7 @@ const UserScreen = ({navigation}) => {
             style={{
               fontSize: 20,
               textAlign: 'center',
+              color: "black"
             }}>
               User
           </Text>
@@ -54,13 +55,13 @@ const UserScreen = ({navigation}) => {
             <Text>Thông tin cá nhân</Text>
           </TouchableOpacity> */}
           <TouchableOpacity onPress={() => navigation.replace("InfoUserScreen")}>
-            <Text>Yêu thích</Text>
+            <Text style={styles.textStyle}>Yêu thích</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.replace("OrderTicketScreen")}>
-            <Text>Danh sách vé đặt</Text>
+            <Text style={styles.textStyle}>Danh sách vé đặt</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={logout}>
-            <Text>Logout</Text>
+            <Text style={styles.textStyle}>Logout</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -109,5 +110,8 @@ const styles = StyleSheet.create({
   contentStyle: {
     margin: 20,
     borderBottomColor: '#000'
+  },
+  textStyle: {
+    color: 'black'
   }
 })

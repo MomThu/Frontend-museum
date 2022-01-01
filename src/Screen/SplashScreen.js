@@ -25,8 +25,9 @@ const SplashScreen = ({navigation}) => {
         if(value === null) navigation.replace('Auth');
         else {
           console.log(value);
-          if(value === '"0"') navigation.replace('DrawerNavigationRoutesAdmin');
-          else if(value === '"1"') navigation.replace('DrawerNavigationRoutes');
+          //if(value === '"0"') navigation.replace('DrawerNavigationRoutesAdmin');
+          if(value === '0') navigation.replace('DrawerNavigationRoutesAdmin');
+          else navigation.replace('DrawerNavigationRoutes');
         }
       }
         // navigation.replace(

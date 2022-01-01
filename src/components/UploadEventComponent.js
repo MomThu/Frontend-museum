@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
         marginLeft: 35,
         marginRight: 35,
         textAlign: 'center',
+        color: "black"
     },
 });
 

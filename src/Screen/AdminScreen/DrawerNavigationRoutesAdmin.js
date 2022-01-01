@@ -13,6 +13,7 @@ import dashboardScreenStack from './DashboardScreen';
 import artifactScreenStack from './ArtifactScreen';
 import eventScreenStack from './EventScreen';
 import bottomTabAdmin from '../../navigation/bottomTabAdmin';
+import QRScanScreenStack from './QRScanScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -43,6 +44,11 @@ const DrawerNavigationRoutesAdmin = (props) => {
         name="eventScreenStack"
         options={{drawerLabel: 'Quản lý sự kiện'}}
         component={eventScreenStack}
+      />
+      <Drawer.Screen
+        name="QRScanScreenStack"
+        options={{drawerLabel: 'Kiểm tra vé'}}
+        component={QRScanScreenStack}
       />
     </Drawer.Navigator>
   );

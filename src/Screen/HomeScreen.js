@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center',
     marginBottom: 16,
+    color: "black"
   },
   ImageStyle: {
     width: '100%',

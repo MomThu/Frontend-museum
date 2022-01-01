@@ -49,11 +49,11 @@ export default OrderTicketComponent = (props) => {
         }}>
             <View style={styles.container}>
                 
-                <Text>Mã vé: {ticket.OrderId}</Text>
-                <Text>Ngày đi: {ticket.OrderDate}</Text>
-                <Text>Ngày đặt: {ticket.CreatedAt}</Text>
-                <Text>Thành tiền: {ticket.TotalPrice}VNĐ</Text>
-                <Text>Mã QR</Text>
+                <Text style={styles.textStyle}>Mã vé: {ticket.OrderId}</Text>
+                <Text style={styles.textStyle}>Ngày đi: {ticket.OrderDate}</Text>
+                <Text style={styles.textStyle}>Ngày đặt: {ticket.CreatedAt}</Text>
+                <Text style={styles.textStyle}>Thành tiền: {ticket.TotalPrice}VNĐ</Text>
+                <Text style={styles.textStyle}>Mã QR</Text>
                 <Image style={{ width: 100, height: 100 }} source={imageUrl} />
             </View>
 
@@ -113,5 +113,8 @@ const styles = StyleSheet.create({
         height: 20,
         marginLeft: '90%',
         marginBottom: 10
+    },
+    textStyle: {
+        color: "black"
     }
 });

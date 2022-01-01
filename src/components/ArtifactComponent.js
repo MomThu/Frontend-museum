@@ -61,7 +61,7 @@ export default ArtifactComponent = (props) => {
                             <Text style={styles.textStyle}>X</Text>
                         </Pressable>
                         <Image style={styles.DieuKhacImage} source={imageUrl} />
-                        <Text>{artifact.Description}</Text>
+                        <Text style={styles.textStyle}>{artifact.Description}</Text>
                         <TouchableOpacity >
                             <Image style={styles.heart} onPress={handleClick()} source={require('../assets/icons/heart.png')} />
                         </TouchableOpacity>
@@ -93,7 +93,8 @@ const styles = StyleSheet.create({
     title: {
         textTransform: 'uppercase',
         marginBottom: 8,
-        fontWeight: '700'
+        fontWeight: '700',
+        color: 'black'
     },
     modalView: {
         backgroundColor: "#FFFCDC",
@@ -124,5 +125,8 @@ const styles = StyleSheet.create({
         height: 20,
         marginLeft: '90%',
         marginBottom: 10
+    },
+    textStyle: {
+        color: 'black'
     }
 });

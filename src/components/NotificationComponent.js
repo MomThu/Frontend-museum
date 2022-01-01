@@ -51,7 +51,7 @@ export default NotificationComponent = (props) => {
                     {notification.Unread && <Text style={styles.titleRead}>{notification.Title}</Text>}
                 </TouchableOpacity>
                 {read &&
-                    <Text>{notification.Content}</Text>}
+                    <Text style={styles.textStyle}>{notification.Content}</Text>}
             </View>
         </SafeAreaView>
     )
@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
         marginBottom: 8,
         fontWeight: '700',
+        color: "black"
     },
     modalView: {
         backgroundColor: "#FFFCDC",
@@ -114,5 +115,8 @@ const styles = StyleSheet.create({
         height: 20,
         marginLeft: '90%',
         marginBottom: 10
+    },
+    textStyle: {
+        color: "black"
     }
 });

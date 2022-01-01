@@ -1,5 +1,6 @@
 import React from "react";
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { black } from "react-native-paper/lib/typescript/styles/colors";
 
 export default function SouvenirComponent(props) {
     //const { product, onAddToCartClick} = props;
@@ -44,7 +45,8 @@ const styles = StyleSheet.create({
     },
     info: {
         width: '40%',
-        padding:8
+        padding:8,
+        color: 'black'
     },
     img:{
         //alignSelf: "center",
@@ -55,11 +57,13 @@ const styles = StyleSheet.create({
     },
     name: {
         fontSize: 16,
-        marginBottom:8
+        marginBottom:8,
+        color: "black"
     },
     price: {
         fontSize: 16,
         color: '#888',
-        flex:1
+        flex:1,
+        color: 'black'
     }
 }) 

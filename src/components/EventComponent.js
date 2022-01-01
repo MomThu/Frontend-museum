@@ -22,10 +22,10 @@ export default function EventComponent(props) {
             >
                 <ScrollView>
                     <View style={styles.modalView}>
-                        <Text>Event: {event.Name}</Text>
-                        <Text>Thời gian mở: {event.OpenTime}</Text>
-                        <Text>Thời gian đóng: {event.CloseTime}</Text>
-                        <Text>Ngày diễn ra: {event.EventDate}</Text>
+                        <Text style={styles.textStyle}>Event: {event.Name}</Text>
+                        <Text style={styles.textStyle}>Thời gian mở: {event.OpenTime}</Text>
+                        <Text style={styles.textStyle}>Thời gian đóng: {event.CloseTime}</Text>
+                        <Text style={styles.textStyle}>Ngày diễn ra: {event.EventDate}</Text>
                         <Pressable
                             style={[styles.button, styles.buttonClose]}
                             onPress={() => setModalVisible(!modalVisible)}
@@ -75,4 +75,7 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5
       },
+      textStyle: {
+          color: 'black'
+      }
 });

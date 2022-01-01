@@ -175,7 +175,7 @@ class TicketScreen extends Component {
       <SafeAreaView style={{ flex: 1 }}>
         <View style={{ flex: 1, padding: 16 }}>
           <View>
-            <Text>
+            <Text style={styles.textStyle}>
               Event Tickett
             </Text>
 
@@ -196,30 +196,30 @@ class TicketScreen extends Component {
           </View>
           <View>
             <View style={styles.TimeStyle}>
-              <Text>Loại vé</Text>
-              <Text>Giá vé</Text>
-              <Text>Số lượng</Text>
+              <Text style={styles.textStyle}>Loại vé</Text>
+              <Text style={styles.textStyle}>Giá vé</Text>
+              <Text style={styles.textStyle}>Số lượng</Text>
             </View>
             <View style={styles.TimeStyle}>
               <Pressable style={styles.ButtonStyle}>
-                <Text>Trẻ em</Text>
-                <Text>{this.state.ticketChildrenPrice} VNĐ</Text>
+                <Text style={styles.textStyle}>Trẻ em</Text>
+                <Text style={styles.textStyle}>{this.state.ticketChildrenPrice} VNĐ</Text>
               </Pressable>
-              <NumericInput type='up-down' minValue={0} onChange={(value) => this.setState({ amountTicket1: value })} />
+              <NumericInput iconStyle={{color: 'black'}} type='up-down' minValue={0} onChange={(value) => this.setState({ amountTicket1: value })} />
             </View>
             <View style={styles.TimeStyle}>
               <Pressable style={styles.ButtonStyle}>
-                <Text>Người lớn</Text>
-                <Text>{this.state.ticketAdultPrice} VNĐ</Text>
+                <Text style={styles.textStyle}>Người lớn</Text>
+                <Text style={styles.textStyle}>{this.state.ticketAdultPrice} VNĐ</Text>
               </Pressable>
-              <NumericInput type='up-down' minValue={0} onChange={(value) => this.setState({ amountTicket2: value })} />
+              <NumericInput iconStyle={{color: 'black'}} type='up-down' minValue={0} onChange={(value) => this.setState({ amountTicket2: value })} />
             </View>
             <View style={styles.TimeStyle}>
               <Pressable style={styles.ButtonStyle}>
-                <Text>Người già</Text>
-                <Text>{this.state.ticketElderlyPrice} VNĐ</Text>
+                <Text style={styles.textStyle}>Người già</Text>
+                <Text style={styles.textStyle}>{this.state.ticketElderlyPrice} VNĐ</Text>
               </Pressable>
-              <NumericInput type='up-down' minValue={0} onChange={(value) => this.setState({ amountTicket3: value })} />
+              <NumericInput iconStyle={{color: 'black'}} type='up-down' minValue={0} onChange={(value) => this.setState({ amountTicket3: value })} />
             </View>
           </View>
 
@@ -235,37 +235,38 @@ class TicketScreen extends Component {
                 }
 
               }}>
-                <Text>Đặt vé</Text>
+                <Text style={styles.textStyle}>Đặt vé</Text>
               </Pressable>
             </View>
           </View>
+          
           <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible}
+            visible={this.state.modalVisible}
             onRequestClose={() => {
               Alert.alert("Modal has been closed.");
-              this.setModalVisible(!modalVisible);
+              this.setModalVisible(!this.state.modalVisible);
             }}
           >
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>Thông tin vé</Text>
-              <Text>Tour tham quan bảo tàng diễn ra ngày {this.convertTime(this.state.selectedDate)}</Text>
-              <Text>Số lượng vé:</Text>
-              <Text>Trẻ em: {this.state.amountTicket1}</Text>
-              <Text>Người lớn: {this.state.amountTicket2}</Text>
-              <Text>Người già: {this.state.amountTicket3}</Text>
-              <Text>Giá tiền: {this.state.total} VNĐ</Text>
+              <Text style={styles.textStyle}>Thông tin vé</Text>
+              <Text style={styles.textStyle}>Tour tham quan bảo tàng diễn ra ngày {this.convertTime(this.state.selectedDate)}</Text>
+              <Text style={styles.textStyle}>Số lượng vé:</Text>
+              <Text style={styles.textStyle}>Trẻ em: {this.state.amountTicket1}</Text>
+              <Text style={styles.textStyle}>Người lớn: {this.state.amountTicket2}</Text>
+              <Text style={styles.textStyle}>Người già: {this.state.amountTicket3}</Text>
+              <Text style={styles.textStyle}>Giá tiền: {this.state.total} VNĐ</Text>
               <Pressable style={styles.ButtonStyle} onPress={() => {
-                this.setModalVisible(!modalVisible)
+                this.setModalVisible(!this.state.modalVisible)
                 this.setModal2Visible(!this.state.modal2Visible)
                 this.setState({ done: true })
               }}>
-                <Text>Thanh toán</Text>
+                <Text style={styles.textStyle}>Thanh toán</Text>
               </Pressable>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
-                onPress={() => this.setModalVisible(!modalVisible)}
+                onPress={() => this.setModalVisible(!this.state.modalVisible)}
               >
                 <Text style={styles.textStyle}>Hủy</Text>
               </Pressable>
@@ -282,15 +283,15 @@ class TicketScreen extends Component {
             }}
           >
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>Màn hình thanh toán</Text>
+              <Text style={styles.textStyle}>Màn hình thanh toán</Text>
               <Pressable onPress={async () => {
                 await this.handleSubmit();
                 this.handleNotification();
-                this.setModal2Visible(false);
+                this.setModal2Visible(!this.state.modal2Visible);
                 this.setModal3Visible(!this.state.modal3Visible)
 
               }}>
-                <Text>Thanh toán</Text>
+                <Text style={styles.textStyle}>Thanh toán</Text>
               </Pressable>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
@@ -314,7 +315,7 @@ class TicketScreen extends Component {
             }}
           >
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>Đây là mã QR của bạn. Vui lòng giữ mã của bạn để xác thực vé.</Text>
+              <Text style={styles.textStyle}>Đây là mã QR của bạn. Vui lòng giữ mã của bạn để xác thực vé.</Text>
               {this.state.done && <View>
                 <Image style={{ width: 100, height: 100 }} source={this.state.qrImage} />
               </View>}
@@ -324,7 +325,7 @@ class TicketScreen extends Component {
                 this.setModal3Visible(false);
                 this.props.navigation.replace("OrderTicketScreen");
               }}>
-                <Text>Đến màn hình thanh toán</Text>
+                <Text style={styles.textStyle}>Đến màn hình thanh toán</Text>
               </Pressable>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
@@ -383,7 +384,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   ButtonStyle: {
-    color: '#000',
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
@@ -409,5 +409,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5
   },
-
+  textStyle: {
+    color: '#000'
+  }
 })
