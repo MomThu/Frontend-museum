@@ -12,6 +12,7 @@ import CustomSidebarMenuAdmin from './CustomSidebarMenuAdmin';
 import dashboardScreenStack from './DashboardScreen';
 import artifactScreenStack from './ArtifactScreen';
 import eventScreenStack from './EventScreen';
+import souvenirScreenStack from './SouvenirScreen';
 import bottomTabAdmin from '../../navigation/bottomTabAdmin';
 import QRScanScreenStack from './QRScanScreen';
 

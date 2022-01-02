@@ -16,7 +16,7 @@ const UploadFileComponent = (props) => {
 
     const uploadImage = async () => {
         // Check if any file is selected or not
-        if (singleFile != null && props.name !== null && props.description !== null) {
+        if (singleFile != null && props.name !== null && props.description !== null && props.openTime != null && props.closeTime != null && props.openDate) {
             // If file selected then create FormData
             const fileToUpload = singleFile;
             console.log(fileToUpload);
@@ -42,9 +42,9 @@ const UploadFileComponent = (props) => {
             const dataToSend = {
                 Name: props.name,
                 Description: props.description,
-                OpenTime: 1,
-                CloseTime: 1,
-                EventDate: 1,
+                OpenTime: props.openTime,
+                CloseTime: props.closeTime,
+                EventDate: props.openDate,
                 Poster: responseJson.ImageId,
             }
             await fetch(baseUrl + 'event', {
