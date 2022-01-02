@@ -84,7 +84,9 @@ console.log(scanResult);
                                 
                                 <Text style={styles.textBold}>{result['msg']}</Text>
                                 <Text style={styles.textBold}>{result['order_date']}</Text>
-                                <Text style={styles.textBold}>{result['order_detail']}</Text>
+                                <Text style={styles.textBold}>Người lớn: {result['order_detail'].adult}</Text>
+                                <Text style={styles.textBold}>Trẻ em: {result['order_detail'].children}</Text>
+                                <Text style={styles.textBold}>Người già: {result['order_detail'].elderly}</Text>
                                 <TouchableOpacity onPress={() => scanAgain()} style={styles.buttonTouchable}>
                                     <Text style={styles.buttonText}>Click to Scan !</Text>
                                 </TouchableOpacity>
