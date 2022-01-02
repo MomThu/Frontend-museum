@@ -29,7 +29,7 @@ const UploadDateTime = (props) => {
   return (
     <View>
       <View>
-        <Button onPress={showTimepicker} title="Open Time" />
+        <Te onPress={showTimepicker} title="Open Time" />
       </View>
       <View>
         <Button onPress={showTimepicker} title="Close Time" />
@@ -50,4 +50,5 @@ const UploadDateTime = (props) => {
     </View>
   );
 };
+
 export default UploadDateTime;
