@@ -20,7 +20,6 @@ import homeScreenStack from './src/Screen/HomeScreen';
 import userScreenStack from './src/Screen/UserScreen';
 import infoUserScreenStack from './src/Screen/InfoUserScreen';
 import orderTicketScreenStack from './src/Screen/OrderTicketScreen';
-import momoScreenStack from './src/Screen/MomoScreen';
 import ticketScreenStack from './src/Screen/TicketScreen';
 import showEventScreenStack from './src/Screen/ShowEventScreent';
 import showArtifactScreenStack from './src/Screen/ShowArtifactScreen';
@@ -108,11 +107,6 @@ const App = () => {
         <Stack.Screen 
           name="OrderTicketScreen"
           component={orderTicketScreenStack} 
-          options={{headerShown: false}}
-        />
-         <Stack.Screen 
-          name="MomoScreen"
-          component={momoScreenStack} 
           options={{headerShown: false}}
         />
         <Stack.Screen 
