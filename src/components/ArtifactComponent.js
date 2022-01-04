@@ -82,19 +82,19 @@ const styles = StyleSheet.create({
         shadowRadius: 10,
         shadowOffset: { width: 0, height: 0 },
         borderRadius: 10,
-        backgroundColor: '#fbfbfb',
-        marginBottom: 16,
+        backgroundColor: '#fff',
+        margin: 26
     },
     DieuKhacImage: {
         width: 336,
-        height: 148,
+        height: 138,
         borderRadius: 10
     },
     title: {
-        textTransform: 'uppercase',
+        // textTransform: 'uppercase',
         marginBottom: 8,
         fontWeight: '700',
-        color: 'black'
+        color: 'black',
     },
     modalView: {
         backgroundColor: "#FFFCDC",

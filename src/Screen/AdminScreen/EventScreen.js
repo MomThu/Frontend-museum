@@ -11,8 +11,6 @@ import UploadFileComponent from '../../components/UploadEventComponent';
 import UploadDateTime from '../../components/UploadDateTime';
 
 import { Searchbar, Checkbox, DataTable, Button } from 'react-native-paper';
-import DocumentPicker from 'react-native-document-picker';
-import { DateTimePicker } from '@react-native-community/datetimepicker'
 import { baseUrl } from '../../../config';
 
 const Stack = createStackNavigator();
@@ -121,10 +119,10 @@ const EventScreen = () => {
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flex: 1, padding: 16 }}>
 
-                <View>
+                <View style={{marginBottom: 14}}>
                     <Text>Event</Text>
                 </View>
-                <Button icon="plus" mode='contained' style={{ width: 40, backgroundColor: '#F9A606' }} onPress={() => setModalVisible(true)}>ADD</Button>
+                <Button icon="plus" mode='contained' style={{ width: 40, backgroundColor: '#F9A606',borderRadius: 10, marginBottom: 12 }} onPress={() => setModalVisible(true)}>ADD</Button>
                 <Modal
                     animationType="slide"
                     transparent={true}
@@ -148,7 +146,7 @@ const EventScreen = () => {
                             multiline={true}
                             numberOfLines={3}
                         />
-                        <UploadDateTime />
+                        <UploadDateTime openTime={openTimeEvent} closeTime={closeTimeEvent} openDate={openDateEvent}/>
                         <UploadFileComponent name={nameEvent} description={desEvent} openTime={openTimeEvent} closeTime={closeTimeEvent} openDate={openDateEvent} modalVisible={modalVisible} setModalVisible={setModalVisible} />
                         {<Pressable
                             style={[styles.button, styles.buttonClose]}

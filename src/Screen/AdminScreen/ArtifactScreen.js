@@ -115,10 +115,10 @@ const ArtifactScreen = () => {
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flex: 1, padding: 16 }}>
 
-                <View>
-                    <Text>Artifactttt</Text>
+                <View style={{marginBottom: 14}}>
+                    <Text>Artifact</Text>
                 </View>
-                <Button icon="plus" mode='contained' style={{ width: 40, backgroundColor: '#F9A606' }} onPress={() => setModalVisible(true)}>ADD</Button>
+                <Button icon="plus" mode='contained' style={{ width: 40, backgroundColor: '#F9A606', borderRadius: 10, marginBottom: 12 }} onPress={() => setModalVisible(true)}>ADD</Button>
                 <Modal
                     animationType="slide"
                     transparent={true}

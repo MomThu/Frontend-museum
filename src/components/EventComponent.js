@@ -46,18 +46,19 @@ const styles = StyleSheet.create({
     container: {
         alignItems: "center",
         borderRadius: 10,
-        backgroundColor: '#fbfbfb',
-        marginBottom: 16,
+        backgroundColor: '#ffff',
+        margin: 26
     },
     DieuKhacImage: {
         width: 336,
-        height: 148,
+        height: 138,
         borderRadius: 10
     },
     title: {
-        textTransform: 'uppercase',
+        // textTransform: 'uppercase',
         marginBottom: 8,
-        fontWeight: '700'
+        fontWeight: '700',
+        color: 'black'
     },
     modalView: {
         marginVertical: '50%',

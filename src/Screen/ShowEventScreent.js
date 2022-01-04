@@ -55,7 +55,7 @@ class ShowEventScreen extends React.Component {
     render() {
       const events = this.state.events;
       return (
-            <ScrollView>
+            <ScrollView style={{backgroundColor: '#FBCF8DD9'}}>
                 {events.map((event, index) => (
                     <EventComponent key = {event.EventId} event = {event} image={this.state.image[index]} />
                 ))}

@@ -48,7 +48,7 @@ class ShowArtifactScreen extends React.Component {
     const artifacts = this.state.artifacts;
 
     return (
-      <ScrollView>
+      <ScrollView style={{backgroundColor: '#FBCF8DD9'}}>
         {artifacts.map((artifact) =>
           <ArtifactComponent key={artifact.ArtifactId} artifact={artifact} /> 
         )}

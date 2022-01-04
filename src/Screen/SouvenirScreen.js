@@ -56,7 +56,7 @@ class ShowSouvenirScreen extends React.Component {
             //         <SouvenirComponent product={item} />
             //     }
             //     keyExtrator={(item) => '${item.id}'} />
-            <ScrollView>
+            <ScrollView style={{backgroundColor: '#FBCF8DD9'}}>
               {souvenirs.map((souvenir) => 
                   <SouvenirComponent key={souvenir.SouvenirId} souvenir={souvenir} cart={(event) => this.handleClick(event, souvenir)}/>
               )}
