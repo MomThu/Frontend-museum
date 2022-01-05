@@ -20,12 +20,12 @@ import homeScreenStack from './src/Screen/HomeScreen';
 import userScreenStack from './src/Screen/UserScreen';
 import infoUserScreenStack from './src/Screen/InfoUserScreen';
 import orderTicketScreenStack from './src/Screen/OrderTicketScreen';
+import orderSouvenirScreenStack from './src/Screen/OrderSouvenirScreen';
 import ticketScreenStack from './src/Screen/TicketScreen';
 import showEventScreenStack from './src/Screen/ShowEventScreent';
 import showArtifactScreenStack from './src/Screen/ShowArtifactScreen';
 import showSouvenirScreenStack from './src/Screen/SouvenirScreen';
 import DrawerNavigationRoutesAdmin from './src/Screen/AdminScreen/DrawerNavigationRoutesAdmin';
-
 //DrawerNavigationRoutes
 const Stack = createStackNavigator();
 
@@ -107,6 +107,11 @@ const App = () => {
         <Stack.Screen 
           name="OrderTicketScreen"
           component={orderTicketScreenStack} 
+          options={{headerShown: false}}
+        />
+        <Stack.Screen 
+          name="OrderSouvenirScreen"
+          component={orderSouvenirScreenStack} 
           options={{headerShown: false}}
         />
         <Stack.Screen 

@@ -3,116 +3,121 @@ import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
 import EventComponent from '../components/EventComponent';
 
 // Import Navigators from React Navigation
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import NavigationDrawerHeader from './NavigationDrawerHeader';
 import HomeButton from '../components/homeButton';
 import UserButton from '../components/userButton';
 import TicketButton from '../components/ticketButton';
+
 import { baseUrl } from '../../config';
-//import EventComponent from '../components/EventComponent';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Stack = createStackNavigator();
 
 class ShowEventScreen extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        events: [
-          
-        ],
-        image: [
-          {url: require('../assets/event/1.jpg')},
-          {url: require('../assets/event/2.jpg')},
-          {url: require('../assets/event/3.jpg')},
-        ]
-      };
-    }
-  
-    componentDidMount = () => {
-      fetch(baseUrl + 'events')
-        .then((res) => {
-          if(res.ok) {
-            return res;
-          } else {
-            throw res;
-          }
-        })
-        .then((res) => res.json())
-        .then((res) => {
-          this.setState({events: res['events']})
-        })
-        .catch(error =>  
-          {
-            error.json()
-              .then(body => {
-                console.log(body.message); 
-                alert(body.message); 
-              })
-            
-          });
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      events: [],
+      
+    };
+  }
 
-    render() {
-      const events = this.state.events;
-      return (
-            <ScrollView style={{backgroundColor: '#FBCF8DD9'}}>
-                {events.map((event, index) => (
-                    <EventComponent key = {event.EventId} event = {event} image={this.state.image[index]} />
-                ))}
-            </ScrollView>
-      );
-    }
+  componentDidMount = async () => {
+    await AsyncStorage.getItem('token').then(token => {
+      fetch(baseUrl + 'events', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      .then((res) => {
+        if (res.ok) {
+          return res;
+        } else {
+          throw res;
+        }
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        this.setState({ events: res['events'] })
+      })
+      .catch(error => {
+        error.json()
+          .then(body => {
+            alert(body.message);
+          })
+
+      });
+    })
     
   }
 
-  
-  const showEventScreenStack = ({navigation}) => {
+  render() {
+    const events = this.state.events;
+
     return (
-      <Stack.Navigator
-        initialRouteName="ShowEventScreen"
-        screenOptions={{
-          headerLeft: () => (
-            <HomeButton navigationProps={navigation} />
-          ),
-          headerRight: () => (
-            <View style={styles.HeaderStyle}>
-              <UserButton navigationProps={navigation} />
-              <TicketButton navigationProps={navigation} />
-            </View>
-            
-          ),
-          headerStyle: {
-            backgroundColor: '#F9A606', //Set Header color
-          },
-          headerTintColor: '#fff', //Set Header text color
-          headerTitleStyle: {
-            fontWeight: 'bold', //Set Header text style
-          },
-          headerTitleAlign: 'center',
-        }}>
-        <Stack.Screen
-          name="ShowEventScreenChild"
-          component={ShowEventScreen}
-          options={{
-            title: 'Show Event', //Set Header Title
-          }}
-        />
-      </Stack.Navigator>
+      <ScrollView>
+        {events.map((event) =>
+          <EventComponent key={event.EventId} event={event} /> 
+        )}
+      </ScrollView>
+
     );
-  };
+  }
 
-  export default showEventScreenStack;
+}
 
- const styles = StyleSheet.create({
-   HeaderStyle: {
-     flexDirection: 'row'
-   },
-   container: {
+const styles = StyleSheet.create({
+  container: {
     flex: 1,
     alignItems: 'stretch',
     backgroundColor: '#fbcf8d',
     alignItems: 'center',
     justifyContent: 'center',
-    
+
   },
- })
+  HeaderStyle: {
+    flexDirection: 'row'
+  },
+  textStyle: {
+    color: 'black'
+  }
+});
+
+const showEventScreenStack = ({ navigation }) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="ShowEventScreen"
+      screenOptions={{
+        headerLeft: () => (
+          <HomeButton navigationProps={navigation} />
+        ),
+        headerRight: () => (
+          <View style={styles.HeaderStyle}>
+            <UserButton navigationProps={navigation} />
+            <TicketButton navigationProps={navigation} />
+          </View>
+
+        ),
+        headerStyle: {
+          backgroundColor: '#F9A606', //Set Header color
+        },
+        headerTintColor: '#fff', //Set Header text color
+        headerTitleStyle: {
+          fontWeight: 'bold', //Set Header text style
+        },
+        headerTitleAlign: 'center',
+      }}>
+      <Stack.Screen
+        name="ShowEventScreenChild"
+        component={ShowEventScreen}
+        options={{
+          title: 'Event', //Set Header Title
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+export default showEventScreenStack;
+

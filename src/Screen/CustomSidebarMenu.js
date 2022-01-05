@@ -1,6 +1,6 @@
 
 // Import React and Component
-import React from 'react';
+import React, { useEffect } from 'react';
 import {View, Text, Alert, StyleSheet} from 'react-native';
 
 import {
@@ -10,8 +10,30 @@ import {
 } from '@react-navigation/drawer';
 
 import AsyncStorage from '@react-native-community/async-storage';
+import { GoogleSignin } from '@react-native-community/google-signin';
 
-const CustomSidebarMenu = (props) => {
+export default CustomSidebarMenu = (props) => {
+  
+  const logout = async () => {
+    GoogleSignin.configure({
+      androidClientId: '887856300691-2gqc0lj4t22s89j7bnrcntp4170veo05.apps.googleusercontent.com',
+      //offlineAccess: true
+    });
+    const isGoogleLogin = await GoogleSignin.isSignedIn();
+    console.log(isGoogleLogin);
+    if (isGoogleLogin) {
+      try {
+        await GoogleSignin.revokeAccess();
+        await GoogleSignin.signOut();
+        console.log('vaodaychua');
+        // Removing user Info
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    AsyncStorage.clear();
+    props.navigation.replace('Auth');
+  }
   return (
     <View style={stylesSidebar.sideMenuContainer}>
       <View style={stylesSidebar.profileHeader}>
@@ -48,10 +70,7 @@ const CustomSidebarMenu = (props) => {
                 },
                 {
                   text: 'Confirm',
-                  onPress: () => {
-                    AsyncStorage.clear();
-                    props.navigation.replace('Auth');
-                  },
+                  onPress: () => logout()
                 },
               ],
               {cancelable: false},
@@ -63,7 +82,6 @@ const CustomSidebarMenu = (props) => {
   );
 };
 
-export default CustomSidebarMenu;
 
 const stylesSidebar = StyleSheet.create({
   sideMenuContainer: {

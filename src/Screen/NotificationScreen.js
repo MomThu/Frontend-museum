@@ -35,7 +35,7 @@ const NotificationScreen = () => {
       .then((res) => res.json())
       .then((res) => {
         setNotification(res['notifications']);
-        console.log(notification);
+        console.log(res['notifications']);
       })
       .catch(error => {
         error.json()

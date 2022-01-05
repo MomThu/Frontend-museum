@@ -47,6 +47,11 @@ const DrawerNavigationRoutesAdmin = (props) => {
         component={eventScreenStack}
       />
       <Drawer.Screen
+        name="souvenirScreenStack"
+        options={{drawerLabel: 'Quản lý đồ lưu niệm'}}
+        component={souvenirScreenStack}
+      />
+      <Drawer.Screen
         name="QRScanScreenStack"
         options={{drawerLabel: 'Kiểm tra vé'}}
         component={QRScanScreenStack}

@@ -24,7 +24,6 @@ export default ArtifactComponent = (props) => {
       .catch(error => {
         error.json()
           .then(body => {
-            console.log(body.message);
             alert(body.message);
           })
 
@@ -32,10 +31,6 @@ export default ArtifactComponent = (props) => {
     },[])
 
     const artifact = props.artifact;
-
-    const handleClick = () => {
-        
-    }
     return (
         <TouchableOpacity activeOpacity={0.5} onPress={() => {
             setModalVisible(true);
@@ -62,9 +57,6 @@ export default ArtifactComponent = (props) => {
                         </Pressable>
                         <Image style={styles.DieuKhacImage} source={imageUrl} />
                         <Text style={styles.textStyle}>{artifact.Description}</Text>
-                        <TouchableOpacity >
-                            <Image style={styles.heart} onPress={handleClick()} source={require('../assets/icons/heart.png')} />
-                        </TouchableOpacity>
                     </View>
                 </ScrollView>
             </Modal>
@@ -82,19 +74,19 @@ const styles = StyleSheet.create({
         shadowRadius: 10,
         shadowOffset: { width: 0, height: 0 },
         borderRadius: 10,
-        backgroundColor: '#fff',
-        margin: 26
+        backgroundColor: '#fbfbfb',
+        marginBottom: 16,
     },
     DieuKhacImage: {
         width: 336,
-        height: 138,
+        height: 148,
         borderRadius: 10
     },
     title: {
-        // textTransform: 'uppercase',
+        textTransform: 'uppercase',
         marginBottom: 8,
         fontWeight: '700',
-        color: 'black',
+        color: 'black'
     },
     modalView: {
         backgroundColor: "#FFFCDC",

@@ -20,12 +20,15 @@ export default NotificationComponent = (props) => {
             return;
         }
         setRead(true);
-        await fetch(baseUrl + 'notification/' + changeNoti.id, {
-            method: 'put',
-            body: JSON.stringify(changeNoti),
-            headers: {
-                "Content-Type": "application/json",
-            },
+        await AsyncStorage.getItem('token').then(token => {
+            fetch(baseUrl + 'notification/' + changeNoti.id, {
+                method: 'put',
+                body: JSON.stringify(changeNoti),
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`
+                },
+            })
         })
 
         AsyncStorage.getItem('token').then((token) => {
@@ -51,7 +54,12 @@ export default NotificationComponent = (props) => {
                     {notification.Unread && <Text style={styles.titleRead}>{notification.Title}</Text>}
                 </TouchableOpacity>
                 {read &&
-                    <Text style={styles.textStyle}>{notification.Content}</Text>}
+                <View>
+                    <Text style={styles.textStyle}>{notification.Time}</Text>
+                    <Text style={styles.textStyle}>{notification.Content}</Text>
+                    
+                </View>
+                    }
             </View>
         </SafeAreaView>
     )

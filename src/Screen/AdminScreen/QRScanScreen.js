@@ -12,29 +12,32 @@ import {createStackNavigator} from '@react-navigation/stack';
 import NavigationDrawerHeader from './NavigationDrawerHeader';
 import { baseUrl } from '../../../config';
 import AsyncStorage from '@react-native-community/async-storage';
+import { DataTable } from 'react-native-paper';
+
 const Stack = createStackNavigator();
 
  const QRScanScreen = () => {
    const [scan, setScan] = useState(false);
    const [result, setResult] = useState({});
    const [scanResult, setScanResult] = useState(false);
+   const [notscannedTicket, setNotScannedTicket] = useState(false);
+   const [notscannedSou, setNotScannedSou] = useState(false);
+  const [souvenirs, setSouvenirs] = useState([]);
+  
   const onSuccess = e => {
     // Linking.openURL(e.data).catch(err =>
     //   console.error('An error occured', err)
     // );
-    console.log(e.data);
-    alert(e.data);
     const dataToSend = {
         qrcode: e.data,
     };
-    console.log(dataToSend);
-    //AsyncStorage.getItem('token').then(token => {
+    AsyncStorage.getItem('token').then(token => {
         fetch(baseUrl + 'checkorder', {
             method: 'post',
             body: JSON.stringify(dataToSend),
             headers: {
                 "Content-Type": "application/json",
-                //'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`
             }
         })
         .then(res => {
@@ -44,16 +47,31 @@ const Stack = createStackNavigator();
           .then(res => res.json())
           .then(res => {
             console.log(res);
-            
+            console.log(res['order_detail']);
+            if(res['order_detail']) {
+              if(res['order_detail'].adult) setNotScannedTicket(true);
+              else {
+                setNotScannedSou(true);
+                const keys = Object.keys(res['order_detail']);
+                var objs = [];
+                keys.forEach(key => {
+                    objs.push({name: key, amount: res['order_detail'][key]})
+                });
+                console.log(objs);
+                setSouvenirs(objs);
+              }
+            }
             setResult(res);
             setScanResult(true);
             setScan(false);
-            console.log(result['msg'])
           })
           .catch(error => {
-            console.log(error);
-          })
-    //})
+            error.json()
+              .then(body => {
+                alert(body.message);
+              })
+          });
+    })
     
   };
  const activeQR = () => {
@@ -77,14 +95,39 @@ console.log(scanResult);
                         </View>
                     }
 
-{scanResult &&
+                    {scanResult &&
                         <View>
-                            <Text style={styles.textTitle1}>Result !</Text>
+                            <Text style={styles.textBold}>Kết quả!</Text>
                             <View style={scanResult ? styles.scanCardView : styles.cardView}>
                                 
                                 <Text style={styles.textBold}>{result['msg']}</Text>
-                                <Text style={styles.textBold}>{result['order_date']}</Text>
-                                <Text style={styles.textBold}>{result['order_detail']}</Text>
+                                <Text style={styles.textBold}>Ngày bạn đã đăng kí: {result['order_date']}</Text>
+                                {notscannedTicket &&
+                                <View>
+                                  <Text style={styles.textBold}>Người lớn: {result['order_detail'].adult}</Text>
+                                <Text style={styles.textBold}>Trẻ em: {result['order_detail'].children}</Text>
+                                <Text style={styles.textBold}>Người già: {result['order_detail'].elderly}</Text>
+                                </View>
+                                }
+                                {notscannedSou && 
+                                <View>
+                                <Text style={styles.labelStyle}>Đơn hàng đã đặt</Text>
+                                <DataTable>
+                                    <DataTable.Header>
+                                        <DataTable.Title style={{ flex: 6, backgroundColor: 'black'}}>Tên</DataTable.Title>
+                                        <DataTable.Title style={{ flex: 2, backgroundColor: 'black'}}>Số lượng</DataTable.Title>
+                                    </DataTable.Header>
+                                    {souvenirs.map(souvenir =>
+                                        <DataTable.Row key={souvenir.name}>
+                                            <DataTable.Cell style={{ flex: 6, backgroundColor: '#A3423C' }}>{souvenir.name}</DataTable.Cell>
+                                            <DataTable.Cell style={{ flex: 2, backgroundColor: '#A3423C' }}>
+                                                {souvenir.amount}
+                                            </DataTable.Cell>
+                                        </DataTable.Row>
+                                    )}
+                                </DataTable>
+                            </View>}
+                                
                                 <TouchableOpacity onPress={() => scanAgain()} style={styles.buttonTouchable}>
                                     <Text style={styles.buttonText}>Click to Scan !</Text>
                                 </TouchableOpacity>

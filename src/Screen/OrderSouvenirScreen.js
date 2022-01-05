@@ -11,39 +11,41 @@ import HomeButton from '../components/homeButton';
 import ArtifactComponent from '../components/ArtifactComponent';
 import { baseUrl } from '../../config';
 import AsyncStorage from '@react-native-community/async-storage';
-import OrderTicketComponent from '../components/OrderTicketComponent';
+import OrderSouvenirComponent from '../components/OrderSouvenirComponent';
+
 const Stack = createStackNavigator();
 
-const OrderTicketScreen = () => {
-    const [tickets, setTickets] = useState([]);
+const OrderSouvenirScreen = () => {
+    const [souvenirs, setSouvenirs] = useState([]);
+
     useEffect(() => {
         AsyncStorage.getItem('token').then(token => {
-            fetch(baseUrl + 'ticketorders', {
+            fetch(baseUrl + 'souvenirorders', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             })
                 .then(res => res.json())
                 .then(res => {
-                    setTickets(res['orders']);
+                    setSouvenirs(res['orders']);
                 })
         });
     }, [])
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView>
-                {tickets.map((ticket) =>
-                    <OrderTicketComponent key={ticket.OrderId} ticket={ticket} />
+                {souvenirs.map((souvenir) =>
+                    <OrderSouvenirComponent key={souvenir.OrderId} souvenir={souvenir} />
                 )}
             </ScrollView>
         </SafeAreaView>
     );
 };
 
-const orderTicketScreenStack = ({ navigation }) => {
+const orderSouvenirScreenStack = ({ navigation }) => {
     return (
         <Stack.Navigator
-            initialRouteName="OrderTicketScreen"
+            initialRouteName="OrderSouvenirScreen"
             screenOptions={{
                 headerRight: () => (
                     //<NavigationDrawerHeader navigationProps={navigation} />
@@ -61,8 +63,8 @@ const orderTicketScreenStack = ({ navigation }) => {
 
             }}>
             <Stack.Screen
-                name="OrderTicketScreenChild"
-                component={OrderTicketScreen}
+                name="OrderSouvenirScreenChild"
+                component={OrderSouvenirScreen}
                 options={{
                     title: 'Danh sách vé đặt', //Set Header Title
                 }}
@@ -71,4 +73,4 @@ const orderTicketScreenStack = ({ navigation }) => {
     );
 };
 
-export default orderTicketScreenStack;
+export default orderSouvenirScreenStack;

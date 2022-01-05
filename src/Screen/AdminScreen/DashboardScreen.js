@@ -2,24 +2,22 @@
 
 // Import React and Component
 import React, {useEffect, useState} from 'react';
-import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
-
+import {View, Text, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
 // Import Navigators from React Navigation
 import {createStackNavigator} from '@react-navigation/stack';
 import NavigationDrawerHeader from './NavigationDrawerHeader';
 
+import TicketChart from '../../components/TicketChartComponent'
+import OrderChart from '../../components/OrderChartComponent';
 const Stack = createStackNavigator();
 
 const DashboardScreen = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={{flex: 1, padding: 16}}>
-        <View>
-          <Text>Dashboard</Text>
-        </View>
-        
-        
-      </View>
+      <ScrollView style={{flex: 1, padding: 16}}>
+        <TicketChart />
+        <OrderChart />
+      </ScrollView>
     </SafeAreaView>
   );
 };

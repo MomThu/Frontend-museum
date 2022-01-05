@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   ImageBackground,
+  Modal, Pressable
 } from 'react-native';
 import {
   GoogleSignin, GoogleSigninButton, statusCodes
@@ -28,24 +29,26 @@ const LoginScreen = ({ navigation }) => {
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
-
+  const [forgotEmail, setForgotEmail] = useState('');
   const passwordInputRef = createRef();
-
-  const [loggedIn, setloggedIn] = useState(false);
-  const [userInfo, setuserInfo] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     createChannels();
+    GoogleSignin.configure({
+      androidClientId: '887856300691-2gqc0lj4t22s89j7bnrcntp4170veo05.apps.googleusercontent.com',
+      //offlineAccess: true
+    });
   }, [])
   const createChannels = () => {
     PushNotification.createChannel(
-        {
-            channelId: "test-channel",
-            channelName: "Test Channel"
-        },
-        (created) => console.log(`createChannel returned '${created}'`)
+      {
+        channelId: "test-channel",
+        channelName: "Test Channel"
+      },
+      (created) => console.log(`createChannel returned '${created}'`)
     )
-}
+  }
   const handleSubmitPress = () => {
     setErrortext('');
     if (!required(userEmail)) {
@@ -58,13 +61,6 @@ const LoginScreen = ({ navigation }) => {
     }
     setLoading(true);
     const dataToSend = { email: userEmail, password: userPassword };
-    // let formBody = [];
-    // for (let key in dataToSend) {
-    //   let encodedKey = encodeURIComponent(key);
-    //   let encodedValue = encodeURIComponent(dataToSend[key]);
-    //   formBody.push(encodedKey + '=' + encodedValue);
-    // }
-    // formBody = formBody.join('&');
 
     fetch(baseUrl + 'login', {
       method: 'POST',
@@ -86,10 +82,10 @@ const LoginScreen = ({ navigation }) => {
       .then(response => response.json())
       .then((user) => {
         AsyncStorage.setItem('login', 'true');
-        AsyncStorage.setItem('role',JSON.stringify(user['role']));
-        AsyncStorage.setItem('token',user['access_token']);
+        AsyncStorage.setItem('role', JSON.stringify(user['role']));
+        AsyncStorage.setItem('token', user['access_token']);
         console.log(user['access_token']);
-        if(user['role'] == 0) {
+        if (user['role'] == 0) {
           navigation.replace('DrawerNavigationRoutesAdmin');
         } else {
           navigation.replace('DrawerNavigationRoutes');
@@ -105,47 +101,111 @@ const LoginScreen = ({ navigation }) => {
 
       });
   };
-  const handleSubmitPresstest = () => {
-    navigation.replace('DrawerNavigationRoutes');
+  
+  const handleSubmitForgot = () => {
+    setErrortext('');
+    if (!required(forgotEmail)) {
+      alert('Please fill Email');
+      return;
+    }
+    const dataToSend = { email: forgotEmail };
+    console.log(dataToSend);
+    fetch(baseUrl + 'repass', {
+      method: 'POST',
+      body: JSON.stringify(dataToSend),
+      headers: {
+        //Header Defination
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => {
+        setLoading(false);
+        if (response.ok) {
+          alert("Vui lòng vào email lấy mật khẩu khôi phục!");
+          return response;
+        } else {
+          throw response;
+        }
+      })
+      .catch(error => {
+        setLoading(false);
+        error.json()
+          .then(body => {
+            console.log(body.msg);
+            alert(body.msg);
+          })
+
+      });
   }
-  const _signIn = async () => {
-    try {
-      await GoogleSignin.hasPlayServices();
-      const { accessToken, idToken } = await GoogleSignin.signIn();
-      setloggedIn(true);
-    } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
-        alert('Cancel');
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        alert('Signin in progress');
-        // operation (f.e. sign in) is in progress already
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        alert('PLAY_SERVICES_NOT_AVAILABLE');
-        // play services not available or outdated
-      } else {
-        // some other error happened
+
+
+  const testSignin = async () => {
+    GoogleSignin.hasPlayServices().then((hasPlayService) => {
+      if (hasPlayService) {
+        GoogleSignin.signIn().then((userInfo) => {
+          setLoading(true);
+          const dataToSend = { email: userInfo.user.email, googleId: userInfo.user.id };
+          console.log(dataToSend);
+          fetch(baseUrl + 'google', {
+            method: 'POST',
+            body: JSON.stringify(dataToSend),
+            headers: {
+              //Header Defination
+              'Content-Type': 'application/json',
+            },
+            credentials: "same-origin"
+          })
+            .then(response => {
+              setLoading(false);
+              if (response.ok) {
+                return response;
+              } else {
+                throw response;
+              }
+            })
+            .then(response => response.json())
+            .then((user) => {
+              AsyncStorage.setItem('login', 'true');
+              AsyncStorage.setItem('role', JSON.stringify(user['role']));
+              AsyncStorage.setItem('token', user['access_token']);
+              console.log(user['access_token']);
+              if (user['role'] == 0) {
+                navigation.replace('DrawerNavigationRoutesAdmin');
+              } else {
+                navigation.replace('DrawerNavigationRoutes');
+              }
+            })
+            .catch(error => {
+              setLoading(false);
+              error.json()
+                .then(body => {
+                  console.log(body.msg);
+                  alert(body.msg);
+                })
+
+            });
+        }).catch((e) => {
+          console.log("ERROR IS: " + JSON.stringify(e));
+        })
       }
+    }).catch((e) => {
+      console.log("ERROR IS: " + JSON.stringify(e));
+    })
+  }
+
+  const _signOut = async () => {
+
+    // Remove user session from the device.
+    try {
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+      console.log('vaodaychua');
+      // Removing user Info
+    } catch (error) {
+      console.error(error);
     }
   };
-  // const useEffect = () => {
-  //   GoogleSignin.configure({
-  //     scopes: ['email'], // what API you want to access on behalf of the user, default is email and profile
-  //     webClientId:
-  //       '596103486514-r7alopf3vgk17cov7nq8bcao1dqmaqt6.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
-  //     offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-  //   });
-  // }, [];
-  // const signOut = async () => {
-  //   try {
-  //     await GoogleSignin.revokeAccess();
-  //     await GoogleSignin.signOut();
-  //     setloggedIn(false);
-  //     setuserInfo([]);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+
   return (
     <View style={styles.mainBody}>
 
@@ -170,9 +230,7 @@ const LoginScreen = ({ navigation }) => {
                   }
                   placeholder="UserEmail"
                   placeholderTextColor="#8b9cb5"
-                  autoCapitalize="none"
                   keyboardType="email-address"
-                  returnKeyType="next"
                   onSubmitEditing={() =>
                     passwordInputRef.current &&
                     passwordInputRef.current.focus()
@@ -210,19 +268,69 @@ const LoginScreen = ({ navigation }) => {
                 onPress={handleSubmitPress}>
                 <Text style={styles.buttonTextStyle}>LOGIN</Text>
               </TouchableOpacity>
-              <Text style={styles.quen}>Quên mật khẩu?</Text>
+
+              <TouchableOpacity onPress={() => setModalVisible(true)}>
+                <Text style={styles.quen}>Quên mật khẩu?</Text>
+              </TouchableOpacity>
+
+              <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <ScrollView>
+                  <View style={styles.modalView}>
+                    <Text>Email</Text>
+                    <TextInput
+                      style={styles.inputStyle}
+                      onChangeText={(forgotEmail) =>
+                        setForgotEmail(forgotEmail)
+                      }
+                      placeholder="Email"
+                      placeholderTextColor="#8b9cb5"
+                      autoCapitalize="none"
+                      keyboardType="email-address"
+                      returnKeyType="next"
+                      underlineColorAndroid="#f000"
+                      onSubmitEditing={() =>
+                        passwordInputRef.current &&
+                        passwordInputRef.current.focus()
+                      }
+                      blurOnSubmit={false}
+                      autoComplete='email'
+                    />
+                    <TouchableOpacity
+                      style={styles.buttonStyle}
+                      activeOpacity={0.5}
+                      onPress={handleSubmitForgot}>
+                      <Text style={styles.buttonTextStyle}>SUBMIT</Text>
+                    </TouchableOpacity>
+                    <Pressable
+                      style={[styles.button, styles.buttonClose]}
+                      onPress={() => setModalVisible(!modalVisible)}
+                    >
+                      <Text style={styles.textStyle}>CLOSE</Text>
+                    </Pressable>
+
+                  </View>
+                </ScrollView>
+              </Modal>
+
               <TouchableOpacity
                 style={styles.registerStyle}
                 onPress={() => navigation.navigate('RegisterScreen')}>
                 <Text style={styles.buttonTextStyle}>REGISTER</Text>
               </TouchableOpacity>
               {/* <Text style={{textAlign: 'center'}} >OR</Text> */}
-              {/* <GoogleSigninButton 
-              style={{ width: 192, height: 48, alignItems: 'center' }}
-              size={GoogleSigninButton.Size.Wide}
-              color={GoogleSigninButton.Color.Dark}>
-              onPress={_signIn}
-            </GoogleSigninButton> */}
+              <GoogleSigninButton
+                style={{ width: 312, height: 48 }}
+                size={GoogleSigninButton.Size.Wide}
+                color={GoogleSigninButton.Color.Light}
+                onPress={testSignin}
+              />
             </KeyboardAvoidingView>
 
           </View>
@@ -307,5 +415,26 @@ const styles = StyleSheet.create({
   quen: {
     marginLeft: '60%',
     marginBottom: 20,
+    color: 'black'
+  },
+  modalView: {
+    height: '80%',
+    marginVertical: "10%",
+    backgroundColor: "white",
+    flexWrap: 'wrap',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  textStyle: {
+      color: 'black'
   }
 });

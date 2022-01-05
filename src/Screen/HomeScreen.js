@@ -98,10 +98,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: "center",
     margin: 10,
-    marginTop: 20,
-    borderTopLeftRadius:15,
-    borderTopRightRadius:15,
-    borderRadius: 15
+    marginTop: 20
   },
   HeaderStyle: {
     flexDirection: 'row'
@@ -115,7 +112,5 @@ const styles = StyleSheet.create({
   ImageStyle: {
     width: '100%',
     height: 120,
-    borderTopLeftRadius:15,
-    borderTopRightRadius:15,
   }
 })

@@ -12,6 +12,7 @@ import UploadFileComponent from '../../components/UploadArtifactComponent';
 import { Searchbar, Checkbox, DataTable, Button } from 'react-native-paper';
 import DocumentPicker from 'react-native-document-picker';
 import { baseUrl } from '../../../config';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Stack = createStackNavigator();
 
@@ -32,7 +33,12 @@ const ArtifactScreen = () => {
     const to = Math.min((page + 1) * itemsPerPage, artifacts.length);
 
     React.useEffect(() => {
-        fetch(baseUrl + 'artifacts')
+        AsyncStorage.getItem("token").then(token => {
+            fetch(baseUrl + 'artifacts', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
             .then((res) => {
                 if (res.ok) {
                     return res;
@@ -51,14 +57,20 @@ const ArtifactScreen = () => {
                         alert(body.message);
                     })
             });
+        })
+        
     }, []);
 
     React.useEffect(() => {
         if (modalVisible === false) {
             setNameArtifact(null);
             setDesArtifact(null);
-
-            fetch(baseUrl + 'artifacts')
+            AsyncStorage.getItem("token").then(token => {
+                fetch(baseUrl + 'artifacts', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
                 .then((res) => {
                     if (res.ok) {
                         return res;
@@ -77,6 +89,8 @@ const ArtifactScreen = () => {
                             alert(body.message);
                         })
                 });
+            })
+            
         }
     }, [modalVisible, deleted]);
 
@@ -87,38 +101,41 @@ const ArtifactScreen = () => {
     const onChangeSearch = query => setSearchQuery(query);
 
     const handleClickDelete = (artifact) => {
-        fetch(baseUrl + 'artifact/' + artifact.ArtifactId, {
-            method: 'delete',
-            headers: {
-                "Content-Type": "application/json",
-              },
-        })
-        .then(response => {
-            if (response.ok) {
-                return response;
-            } else {
-                throw response;
-            }
-        })
-        .then(res => {
-            setDeleted(!deleted);
-            alert('Đã xóa');
-        })
-        .catch(error => {
-            error.json().then(body => {
-                alert(body.message);
+        AsyncStorage.getItem("token").then(token => {
+            fetch(baseUrl + 'artifact/' + artifact.ArtifactId, {
+                method: 'delete',
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`
+                  },
             })
-        });
+            .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    throw response;
+                }
+            })
+            .then(res => {
+                setDeleted(!deleted);
+                alert('Đã xóa');
+            })
+            .catch(error => {
+                error.json().then(body => {
+                    alert(body.message);
+                })
+            });
+        })
+        
     }
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flex: 1, padding: 16 }}>
-
-                <View style={{marginBottom: 14}}>
-                    <Text>Artifact</Text>
+                <View>
+                    <Text style={styles.textStyle}>Hiện vật bảo tàng</Text>
                 </View>
-                <Button icon="plus" mode='contained' style={{ width: 40, backgroundColor: '#F9A606', borderRadius: 10, marginBottom: 12 }} onPress={() => setModalVisible(true)}>ADD</Button>
+                <Button icon="plus" mode='contained' style={{ width: 40, backgroundColor: '#F9A606' }} onPress={() => setModalVisible(true)}>ADD</Button>
                 <Modal
                     animationType="slide"
                     transparent={true}
@@ -152,23 +169,19 @@ const ArtifactScreen = () => {
 
                     </View>
                 </Modal>
-                <Searchbar
-                    placeholder="Search"
-                    onChangeText={onChangeSearch}
-                    value={searchQuery}
-                />
+                
                 <ScrollView>
                 <DataTable>
                     <DataTable.Header>
-                        <DataTable.Title style={{ flex: 1 }}>Id</DataTable.Title>
-                        <DataTable.Title style={{ flex: 6}}>Name</DataTable.Title>
-                        <DataTable.Title style={{ flex: 2 }}>Xóa</DataTable.Title>
+                        <DataTable.Title style={{ flex: 1, backgroundColor: 'black' }}>Id</DataTable.Title>
+                        <DataTable.Title style={{ flex: 6, backgroundColor: 'black'}}>Name</DataTable.Title>
+                        <DataTable.Title style={{ flex: 2, backgroundColor: 'black' }}>Xóa</DataTable.Title>
                     </DataTable.Header>
                     {artifacts.slice(from, to).map(artifact =>
                         <DataTable.Row key={artifact.ArtifactId}>
-                            <DataTable.Cell style={{ flex: 1 }}>{artifact.ArtifactId}</DataTable.Cell>
-                            <DataTable.Cell style={{ flex: 6 }}>{artifact.Name}</DataTable.Cell>
-                            <DataTable.Cell style={{ flex: 2 }}>
+                            <DataTable.Cell style={{ flex: 1, backgroundColor: 'black' }}>{artifact.ArtifactId}</DataTable.Cell>
+                            <DataTable.Cell style={{ flex: 6, backgroundColor: 'black' }}>{artifact.Name}</DataTable.Cell>
+                            <DataTable.Cell style={{ flex: 2, backgroundColor: 'black' }}>
                                 <Button icon="delete" mode="contained" onPress={() => handleClickDelete(artifact)} style={styles.deleteStyle}></Button>
                             </DataTable.Cell>
                         </DataTable.Row>
@@ -227,8 +240,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
 
     },
-    text: {
+    textStyle: {
         marginLeft: 20,
+        color: 'black'
     },
     modalView: {
         backgroundColor: "#FFFCDC",

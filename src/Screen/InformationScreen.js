@@ -2,7 +2,8 @@
 
 // Import React and Component
 import React from 'react';
-import { View, Text, SafeAreaView, Image, StyleSheet } from 'react-native';
+import { View, Text, SafeAreaView, Image, StyleSheet, ScrollView } from 'react-native';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 // Import Navigators from React Navigation
 import { createStackNavigator } from '@react-navigation/stack';
@@ -15,21 +16,48 @@ import bottomTab from '../navigation/bottomTab';
 const Stack = createStackNavigator();
 
 const InformationScreen = () => {
+  const images = [{
+    url: '',
+    props: {
+      // Or you can set source directory.
+      source: require('../assets/baotang.jpg')
+    }
+  },
+  {
+    url: '',
+    props: {
+      // Or you can set source directory.
+      source: require('../assets/thongtin.jpg')
+    }
+  },
+  {
+    url: '',
+    props: {
+      // Or you can set source directory.
+      source: require('../assets/baotang2.jpg')
+    }
+  }
+  ]
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    
       <View style={{ flex: 1, padding: 16 }}>
         <View>
-          <Text style = {{marginBottom: 12, fontSize: 18}}>
-            Thông tin bảo tàng
+          <Text style={styles.TextStyle}>
+            Giới thiệu chung
           </Text>
         </View>
+        <ImageViewer
+          imageUrls={images}
+        />
         <View>
-          <Image style={styles.ImageStyle} source={require('../assets/thongtin.jpg')} />
-          <Text style={{fontSize: 16 }}>
-            Bảo tàng Lịch sử quốc gia là công trình văn hóa tọa lạc ở khu vực trung tâm của Thủ đô Hà Nội, gần với nhiều di tích linh thiêng của Thủ đô như Tháp Rùa - Hồ Gươm; Cầu Thê Húc - Đền Ngọc Sơn - Bút tháp… Bảo tàng lưu giữ, trưng bày, giới thiệu lịch sử Việt Nam từ thời Tiền sử đến ngày nay thông qua hệ thống tài liệu, hiện vật vô cùng đồ sộ, quý giá, trong đó có nhiều hiện vật là Bảo vật quốc gia.          </Text>
+          <Text style={styles.TextStyle}>
+            Bảo tàng Lịch sử quốc gia là công trình văn hóa tọa lạc ở khu vực trung tâm của Thủ đô Hà Nội, gần với nhiều di tích linh thiêng của Thủ đô như Tháp Rùa - Hồ Gươm; Cầu Thê Húc - Đền Ngọc Sơn - Bút tháp… Bảo tàng lưu giữ, trưng bày, giới thiệu lịch sử Việt Nam từ thời Tiền sử đến ngày nay thông qua hệ thống tài liệu, hiện vật vô cùng đồ sộ, quý giá, trong đó có nhiều hiện vật là Bảo vật quốc gia.
+          </Text>
+          <Text style={styles.TextStyle}>
+          Đến với Bảo tàng Lịch sử quốc gia, quý khách sẽ có nhiều trải nghiệm thú vị, hiểu biết thêm về lịch sử văn hóa lâu đời và truyền thống đấu tranh anh dũng, kiên cường trong quá trình dựng nước và giữ nước của dân tộc Việt Nam.
+          </Text>
         </View>
       </View>
-    </SafeAreaView>
   );
 };
 
@@ -81,11 +109,10 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center',
     marginBottom: 16,
+    color: 'black'
   },
   ImageStyle: {
     width: '100%',
     height: 150,
-    borderRadius: 12,
-    marginBottom: 12
   }
 })

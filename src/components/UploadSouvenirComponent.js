@@ -10,7 +10,7 @@ import {
 // Import Document Picker
 import DocumentPicker from 'react-native-document-picker';
 import { baseUrl } from '../../config.js';
-
+import AsyncStorage from '@react-native-community/async-storage';
 const UploadFileComponent = (props) => {
     const [singleFile, setSingleFile] = useState(null);
 
@@ -33,26 +33,31 @@ const UploadFileComponent = (props) => {
                     method: 'post',
                     body: data,
                     headers: {
-                        //'Content-Type': 'multipart/form-data; ',
+                        'Content-Type': 'multipart/form-data',
                     },
                 }
             );
             let responseJson = await res.json();
-            alert(responseJson.message);
+            console.log(responseJson);
+            alert(responseJson.msg);
             const dataToSend = {
                 Name: props.name,
                 Description: props.description,
                 Price: props.price,
                 ImageId: responseJson.ImageId
             }
-            await fetch(baseUrl + 'souvenir', {
-                method: 'post',
-                body: JSON.stringify(dataToSend),
-                headers: {
-                    //Header Defination
-                    'Content-Type': 'application/json',
-                  },
+            await AsyncStorage.getItem("token").then(token => {
+                fetch(baseUrl + 'souvenir', {
+                    method: 'post',
+                    body: JSON.stringify(dataToSend),
+                    headers: {
+                        //Header Defination
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                      },
+                })
             })
+            
             setSingleFile(null);
             props.setModalVisible(false);
         } else {

@@ -13,6 +13,7 @@ import PushNotification from 'react-native-push-notification';
 //import { LocalNotification } from '../services/PushNotification';
 import { baseUrl } from '../../config';
 import AsyncStorage from '@react-native-community/async-storage';
+import Momo from './MomoScreen';
 
 const Stack = createStackNavigator();
 
@@ -72,8 +73,11 @@ class TicketScreen extends Component {
         console.log(res['artifacts'][0].Price);
       })
       .catch(error => {
-        console.log(error);
-      })
+        error.json()
+          .then(body => {
+            alert(body.message);
+          })
+      });
   }
 
   handleNotification = () => {
@@ -123,8 +127,11 @@ class TicketScreen extends Component {
           this.setState({ amountTicket1: 0, amountTicket2: 0, amountTicket3: 0 });
         })
         .catch(error => {
-          console.log(error);
-        })
+          error.json()
+            .then(body => {
+              alert(body.message);
+            })
+        });
     })
 
     PushNotification.localNotificationSchedule(notification2)
@@ -163,8 +170,11 @@ class TicketScreen extends Component {
           return
         })
         .catch(error => {
-          console.log(error);
-        })
+          error.json()
+            .then(body => {
+              alert(body.message);
+            })
+        });
     })
   }
 
@@ -175,12 +185,12 @@ class TicketScreen extends Component {
       <SafeAreaView style={{ flex: 1 }}>
         <View style={{ flex: 1, padding: 16 }}>
           <View>
-            <Text style={{marginBottom: 14}}>
-              Event Ticket
+            <Text style={styles.textStyle}>
+              Event Tickett
             </Text>
 
           </View>
-          <View style={{marginBottom: 15}}>
+          <View>
             <CalendarStrip
               //scrollable
               style={{ height: 100, paddingTop: 20, paddingBottom: 10 }}
@@ -191,35 +201,35 @@ class TicketScreen extends Component {
               iconContainer={{ flex: 0.1 }}
               selectedDate={new Date().getTime()}
               onDateSelected={(date) => this.onDateSelected(date.toISOString())}
-              daySelectionAnimation={{ type: 'background', duration: 300, highlightColor: 'red' }}
+              daySelectionAnimation={{ type: 'background', duration: 300, highlightColor: '#9265DC' }}
             />
           </View>
           <View>
             <View style={styles.TimeStyle}>
-              <Text style={styles.textStyleHead}>Loại vé</Text>
-              {/* <Text style={styles.textStyle}>Giá vé</Text> */}
-              <Text style={styles.textStyleHead}>Số lượng</Text>
+              <Text style={styles.textStyle}>Loại vé</Text>
+              <Text style={styles.textStyle}>Giá vé</Text>
+              <Text style={styles.textStyle}>Số lượng</Text>
             </View>
             <View style={styles.TimeStyle}>
               <Pressable style={styles.ButtonStyle}>
                 <Text style={styles.textStyle}>Trẻ em</Text>
                 <Text style={styles.textStyle}>{this.state.ticketChildrenPrice} VNĐ</Text>
               </Pressable>
-              <NumericInput iconStyle={{color: 'black'}} type='up-down' minValue={0} onChange={(value) => this.setState({ amountTicket1: value })} />
+              <NumericInput iconStyle={{ color: 'black' }} type='up-down' minValue={0} onChange={(value) => this.setState({ amountTicket1: value })} />
             </View>
             <View style={styles.TimeStyle}>
               <Pressable style={styles.ButtonStyle}>
                 <Text style={styles.textStyle}>Người lớn</Text>
                 <Text style={styles.textStyle}>{this.state.ticketAdultPrice} VNĐ</Text>
               </Pressable>
-              <NumericInput iconStyle={{color: 'black'}} type='up-down' minValue={0} onChange={(value) => this.setState({ amountTicket2: value })} />
+              <NumericInput iconStyle={{ color: 'black' }} type='up-down' minValue={0} onChange={(value) => this.setState({ amountTicket2: value })} />
             </View>
             <View style={styles.TimeStyle}>
               <Pressable style={styles.ButtonStyle}>
                 <Text style={styles.textStyle}>Người già</Text>
                 <Text style={styles.textStyle}>{this.state.ticketElderlyPrice} VNĐ</Text>
               </Pressable>
-              <NumericInput iconStyle={{color: 'black'}} type='up-down' minValue={0} onChange={(value) => this.setState({ amountTicket3: value })} />
+              <NumericInput iconStyle={{ color: 'black' }} type='up-down' minValue={0} onChange={(value) => this.setState({ amountTicket3: value })} />
             </View>
           </View>
 
@@ -239,7 +249,7 @@ class TicketScreen extends Component {
               </Pressable>
             </View>
           </View>
-          
+
           <Modal
             animationType="slide"
             transparent={true}
@@ -282,7 +292,7 @@ class TicketScreen extends Component {
               this.setModal2Visible(!this.state.modal2Visible);
             }}
           >
-            <View style={styles.modalView}>
+            {/* <View style={styles.modalView}>
               <Text style={styles.textStyle}>Màn hình thanh toán</Text>
               <Pressable onPress={async () => {
                 await this.handleSubmit();
@@ -291,7 +301,7 @@ class TicketScreen extends Component {
                 this.setModal3Visible(!this.state.modal3Visible)
 
               }}>
-                <Text style={styles.textStyle}>Thanh toán</Text>
+                <Text style={styles.textStyle}>Vui lòng click vào đây để thanh toán</Text>
               </Pressable>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
@@ -302,7 +312,16 @@ class TicketScreen extends Component {
               >
                 <Text style={styles.textStyle}>HỦY</Text>
               </Pressable>
-            </View>
+            </View> */}
+            <Momo
+              modal2Visible={this.state.modal2Visible}
+              modal3Visible={this.state.modal3Visible}
+              setModal2Visible={(e) => this.setModal2Visible(e)} 
+              setModal3Visible={(e) => this.setModal3Visible(e)} 
+              handleSubmit={() => this.handleSubmit()} 
+              handleNotification={() => this.handleNotification()}
+              total={this.state.total}
+              />
           </Modal>
 
           <Modal
@@ -319,9 +338,9 @@ class TicketScreen extends Component {
               {this.state.done && <View>
                 <Image style={{ width: 100, height: 100 }} source={this.state.qrImage} />
               </View>}
-              <Pressable onPress={async () => {
-                await this.handleSubmit();
-                this.handleNotification();
+              <Pressable onPress={() => {
+                // await this.handleSubmit();
+                // this.handleNotification();
                 this.setModal3Visible(false);
                 this.props.navigation.replace("OrderTicketScreen");
               }}>
@@ -378,11 +397,6 @@ const ticketScreenStack = ({ navigation }) => {
 export default ticketScreenStack;
 
 const styles = StyleSheet.create({
-  textStyleHead: {
-    marginLeft: 15,
-    marginRight: 15,
-    marginBottom: 10
-  },
   TimeStyle: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -399,9 +413,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   modalView: {
-    marginVertical: '80%',
+    //marginVertical: '80%',
     backgroundColor: "white",
-    height: '70%',
+    height: '100%',
     borderRadius: 20,
     padding: 35,
     alignItems: "center",

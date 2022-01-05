@@ -1,19 +1,25 @@
 import React, {useState} from 'react';
-import {View, Button, Text, Platform, TextInput} from 'react-native';
+import {View, Button, Platform} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 const UploadDateTime = (props) => {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
-
+  const [type, setType] = useState('');
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
-    setShow(Platform.Android === 'android');
-    setDate(currentDate);
-    props.openTime = currentDate
-    props.closeTime = currentDate
-    props.openDate = currentDate
+    setShow(Platform.OS === 'ios');
+    if (mode == 'time') {
+      if(type == 'time1') {
+        props.setOTimeEvent(currentDate);
+      } else {
+        props.setCTimeEvent(currentDate);
+      }
+    } else {
+      setDate(currentDate);
+      props.setODateEvent(currentDate);
+    }
   };
 
   const showMode = (currentMode) => {
@@ -25,17 +31,23 @@ const UploadDateTime = (props) => {
     showMode('date');
   };
 
-  const showTimepicker = () => {
+  const showTimepicker1 = () => {
     showMode('time');
+    setType('time1')
+  };
+
+  const showTimepicker2 = () => {
+    showMode('time');
+    setType('time2')
   };
 
   return (
     <View>
       <View>
-        <Button onPress={showTimepicker} title="Open Time"/>
+        <Button onPress={showTimepicker1} title="Open Time" />
       </View>
       <View>
-        <Button onPress={showTimepicker} title="Close Time" />
+        <Button onPress={showTimepicker2} title="Close Time" />
       </View>
       <View>
         <Button onPress={showDatepicker} title="Open Date" />
@@ -53,5 +65,4 @@ const UploadDateTime = (props) => {
     </View>
   );
 };
-
 export default UploadDateTime;

@@ -10,6 +10,7 @@ import UserButton from '../components/userButton';
 import TicketButton from '../components/ticketButton';
 
 import { baseUrl } from '../../config';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Stack = createStackNavigator();
 
@@ -23,7 +24,12 @@ class ShowArtifactScreen extends React.Component {
   }
 
   componentDidMount = async () => {
-    await fetch(baseUrl + 'artifacts')
+    await AsyncStorage.getItem('token').then(token => {
+      fetch(baseUrl + 'artifacts', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
       .then((res) => {
         if (res.ok) {
           return res;
@@ -40,15 +46,16 @@ class ShowArtifactScreen extends React.Component {
           .then(body => {
             alert(body.message);
           })
-
       });
+    })
+    
   }
 
   render() {
     const artifacts = this.state.artifacts;
 
     return (
-      <ScrollView style={{backgroundColor: '#FBCF8DD9'}}>
+      <ScrollView>
         {artifacts.map((artifact) =>
           <ArtifactComponent key={artifact.ArtifactId} artifact={artifact} /> 
         )}
@@ -101,7 +108,7 @@ const showArtifactScreenStack = ({ navigation }) => {
         name="ShowArtifactScreenChild"
         component={ShowArtifactScreen}
         options={{
-          title: 'Artifact', //Set Header Title
+          title: 'Hiện vật', //Set Header Title
         }}
       />
     </Stack.Navigator>

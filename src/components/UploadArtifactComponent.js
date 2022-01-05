@@ -10,6 +10,7 @@ import {
 // Import Document Picker
 import DocumentPicker from 'react-native-document-picker';
 import { baseUrl } from '../../config.js';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const UploadFileComponent = (props) => {
     const [singleFile, setSingleFile] = useState(null);
@@ -33,44 +34,48 @@ const UploadFileComponent = (props) => {
                     method: 'post',
                     body: data,
                     headers: {
-                        //'Content-Type': 'multipart/form-data; ',
+                        'Content-Type': 'multipart/form-data',
                     },
                 }
             );
             let responseJson = await res.json();
-            alert(responseJson.message);
+            alert(responseJson.msg);
             const dataToSend = {
                 Name: props.name,
                 Description: props.description,
                 ImageId: responseJson.ImageId,
                 Level: 1
             }
-            await fetch(baseUrl + 'artifact', {
-                method: 'post',
-                body: JSON.stringify(dataToSend),
-                headers: {
-                    //Header Defination
-                    'Content-Type': 'application/json',
-                  },
-            })
-            .then(res => {
-                if(res.ok) {
-                    const notification = {
-                        AccountId: 1,
-                        Title: "Đã thêm hiện vật mới",
-                        Content: props.name,
-                        Time: new Date(),
-                        Unread: 1,
+            await AsyncStorage.getItem('token').then(token => {
+                fetch(baseUrl + 'artifact', {
+                    method: 'post',
+                    body: JSON.stringify(dataToSend),
+                    headers: {
+                        //Header Defination
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                      },
+                })
+                .then(res => {
+                    if(res.ok) {
+                        const notification = {
+                            AccountId: 1,
+                            Title: "Đã thêm hiện vật mới",
+                            Content: props.name,
+                            Time: new Date(),
+                            Unread: 1,
+                        }
+                        fetch(baseUrl + 'notification', {
+                            method: 'post',
+                            body: JSON.stringify(notification),
+                            headers: {
+                                "Content-Type": "application/json",
+                              },
+                        })
                     }
-                    fetch(baseUrl + 'notification', {
-                        method: 'post',
-                        body: JSON.stringify(notification),
-                        headers: {
-                            "Content-Type": "application/json",
-                          },
-                    })
-                }
+                })
             })
+            
             setSingleFile(null);
             props.setModalVisible(false);
         } else {

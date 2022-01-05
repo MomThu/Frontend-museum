@@ -3,100 +3,49 @@
 
 // Import React and Component
 import React, {useEffect, useState, Component} from 'react';
-import {View, Text, SafeAreaView, StyleSheet, AppRegistry, Linking, TouchableOpacity} from 'react-native';
-import QRCodeScanner from 'react-native-qrcode-scanner';
-import { RNCamera } from 'react-native-camera';
+import {View, Text, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
 
 // Import Navigators from React Navigation
 import {createStackNavigator} from '@react-navigation/stack';
 import NavigationDrawerHeader from './NavigationDrawerHeader';
 import UserButton from '../components/userButton';
 import TicketButton from '../components/ticketButton';
-import SouvenirComponent from '../components/SouvenirComponent';
+import OrderSouvenirComponent from '../components/OrderSouvenirComponent';
+
+import { baseUrl } from '../../config';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Stack = createStackNavigator();
 
-// const CartScreen = () => {
-//   const [souvenirs, setSouvenirs] = useState([])
-//   useEffect( () => {
-//     async function getSouvenir() {
-//       var souvenir = await AsyncStorage.getItem('souvenir');
-//       souvenir = JSON.parse(souvenir);
-//       console.log(souvenir);
-//       setSouvenirs(souvenir);
-//       console.log(souvenirs);
-//     }
-//     getSouvenir()
-//   }, []);
-  
-//   return (
-//     <SafeAreaView style={{flex: 1}}>
-//       <View style={{flex: 1, padding: 16}}>
-//         <View>
-//           {souvenirs.map(souvenir => 
-//           <View style={styles.souvenir}>
-//             <Text>{souvenir.Name}</Text>
-//             <Text style={styles.text}>{souvenir.Price}$</Text>
-//           </View>
-//           )}
-//         </View>
-        
-        
-//       </View>
-//     </SafeAreaView>
-//   );
-// };
 
-class CartScreen extends Component {
-  onSuccess = e => {
-    Linking.openURL(e.data).catch(err =>
-      console.error('An error occured', err)
-    );
-  };
+const CartScreen  = () => {
+  const [souvenirs, setSouvenirs] = useState([]);
 
-  render() {
-    return (
-      <QRCodeScanner
-        onRead={this.onSuccess}
-        reactivate={true}
-        showMarker={true}
-        flashMode={RNCamera.Constants.FlashMode.torch}
-        topContent={
-          <Text style={styles.centerText}>
-            Go to{' '}
-            <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on
-            your computer and scan the QR code.thu
-          </Text>
-        }
-        bottomContent={
-          <TouchableOpacity style={styles.buttonTouchable}>
-            <Text style={styles.buttonText}>OK. Got it!</Text>
-          </TouchableOpacity>
-        }
-      />
-    );
-  }
-}
+  useEffect(() => {
+      AsyncStorage.getItem('token').then(token => {
+          fetch(baseUrl + 'souvenirorders', {
+              headers: {
+                  'Authorization': `Bearer ${token}`
+              }
+          })
+              .then(res => res.json())
+              .then(res => {
+                  setSouvenirs(res['orders']);
+              })
+          console.log(souvenirs);
+      });
+  }, [])
+  return (
+      <SafeAreaView style={{ flex: 1 }}>
+          <ScrollView>
+              {souvenirs.map((souvenir) =>
+                  <OrderSouvenirComponent key={souvenir.OrderId} souvenir={souvenir} />
+              )}
+          </ScrollView>
+      </SafeAreaView>
+  );
+};
 
-const styles = StyleSheet.create({
-  // centerText: {
-  //   flex: 1,
-  //   fontSize: 18,
-  //   padding: 32,
-  //   color: '#777'
-  // },
-  // textBold: {
-  //   fontWeight: '500',
-  //   color: '#000'
-  // },
-  // buttonText: {
-  //   fontSize: 21,
-  //   color: 'rgb(0,122,255)'
-  // },
-  // buttonTouchable: {
-  //   padding: 16
-  // }
-});
 
 const cartScreenStack = ({navigation}) => {
   return (
@@ -134,12 +83,12 @@ const cartScreenStack = ({navigation}) => {
 };
 export default cartScreenStack;
 
-// const styles = StyleSheet.create({
-//   souvenir: {
-//     flexDirection: 'row',
+const styles = StyleSheet.create({
+  souvenir: {
+    flexDirection: 'row',
     
-//   },
-//   text: {
-//     marginLeft: 20,
-//   }
-// })
+  },
+  text: {
+    marginLeft: 20,
+  }
+})

@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import { Image, Text, View, StyleSheet, TouchableOpacity, Alert, Modal, Pressable, ScrollView } from 'react-native'
 import { baseUrl } from "../../config";
 import AsyncStorage from "@react-native-community/async-storage"; 
-export default OrderTicketComponent = (props) => {
-    const [imageUrl, setImageUrl] = useState("");
+
+export default OrderSouvenirComponent = (props) => {
+    const [imageUrl, setImageUrl] = useState(null);
     
     useEffect(() => {
         AsyncStorage.getItem('token').then(token => {
-            fetch(baseUrl + 'ticketorders/' + props.ticket.OrderId, {
+            fetch(baseUrl + 'souvenirorders/' + props.souvenir.OrderId, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             })
                 .then((res) => {
                     if (res.ok) {
-                        
                         return res;
                     } else {
                         throw res;
@@ -22,12 +22,13 @@ export default OrderTicketComponent = (props) => {
                 })
                 .then((res) => res.json())
                 .then((res) => {
+                    console.log(res);
                     setImageUrl({ uri: baseUrl + res['urlImage'] });
                 })
                 .catch(error => {
                     error.json()
                         .then(body => {
-                            console.log(body.message);
+                            console.log(body);
                             alert(body.message);
                         })
 
@@ -36,21 +37,21 @@ export default OrderTicketComponent = (props) => {
     }, [])
 
     
-    const ticket = props.ticket;
+    const souvenir = props.souvenir;
 
     return (
         
             <View style={styles.container}>
                 
-                <Text style={styles.textStyle}>Mã vé: {ticket.OrderId}</Text>
-                <Text style={styles.textStyle}>Ngày đi: {ticket.OrderDate}</Text>
-                <Text style={styles.textStyle}>Ngày đặt: {ticket.CreatedAt}</Text>
-                <Text style={styles.textStyle}>Thành tiền: {ticket.TotalPrice}VNĐ</Text>
+                <Text style={styles.textStyle}>Mã đơn hàng: {souvenir.OrderId}</Text>
+                <Text style={styles.textStyle}>Ngày nhận: {souvenir.OrderDate}</Text>
+                <Text style={styles.textStyle}>Ngày đặt: {souvenir.CreatedAt}</Text>
+                <Text style={styles.textStyle}>Thành tiền: {souvenir.TotalPrice}VNĐ</Text>
                 <Text style={styles.textStyle}>Mã QR</Text>
-                <Image style={{ width: 100, height: 100 }} source={imageUrl} />
+                {imageUrl && <Image style={{ width: 100, height: 100 }} source={imageUrl} />}
             </View>
 
-       
+        
 
     )
 

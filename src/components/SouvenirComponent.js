@@ -1,22 +1,62 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import { black } from "react-native-paper/lib/typescript/styles/colors";
+import NumericInput from 'react-native-numeric-input';
+
+import { baseUrl } from "../../config";
 
 export default function SouvenirComponent(props) {
-    //const { product, onAddToCartClick} = props;
-    const product = props.souvenir;
-    const onAddToCartClick = props.cart;
+    const [imageUrl, setImageUrl] = useState({});
+
+    const souvenir = props.souvenir;
+    // const souvenirs = props.souvenirs;
+    // const setSouvenirs = props.setSouvenirs;
+
+    useEffect(() => {
+        fetch(baseUrl + 'image/' + souvenir.ImageId)
+      .then((res) => {
+        if (res.ok) {
+          return res;
+        } else {
+          throw res;
+        }
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        setImageUrl({uri: baseUrl + res.Path});
+        console.log(imageUrl);
+      })
+      .catch(error => {
+        error.json()
+          .then(body => {
+            console.log(body.message);
+            alert(body.message);
+          })
+
+      });
+    },[])
+
+    const onChange = (value) => {
+        var souvenirs = props.souvenirs;
+        for (let i = 0; i < souvenirs.length; i++) {
+            if (souvenirs[i]['SouvenirId'] == souvenir['SouvenirId']) {
+                souvenirs[i]['amount'] = value;
+                break;
+            } 
+        }
+        props.setSouvenirs(souvenirs);
+    }
+
     return (
         <View style = {styles.shadow}>
             <View style = {styles.container}>
-                
+            <Image style={styles.img} source={imageUrl} />
                 <View style = {styles.info}>
-                    <Text style = {styles.name}> {product.Name}</Text>
+                    <Text style = {styles.name}> {souvenir.Name}</Text>
                     <View style = {styles.priceRow}>
-                        <Text style={styles.price}>{/*formatPrice(product.price)*/ product.Price}$</Text>
-                        <TouchableOpacity onPress={onAddToCartClick}>
-                            <Text style= {styles.cartText}>MUA+</Text>
-                        </TouchableOpacity>
+                        <Text style={styles.price}>{/*formatPrice(product.price)*/ souvenir.Price}VNĐ</Text>
+                        <NumericInput iconStyle={{ color: 'black' }} type='up-down' minValue={0} onChange={(value) => onChange(value)} />
+
                     </View>
                 </View>
             </View>

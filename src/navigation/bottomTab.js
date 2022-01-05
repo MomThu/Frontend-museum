@@ -48,7 +48,7 @@ class bottomTab extends Component {
                     })
 
             })
-        }, 9000000);
+        }, 100000000);
         return () => clearInterval(interval);
     };
 

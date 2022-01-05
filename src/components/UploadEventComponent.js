@@ -4,15 +4,21 @@ import {
     StyleSheet,
     Text,
     View,
-    TouchableOpacity
+    TouchableOpacity,
+    Platform,
+    ScrollView
 } from 'react-native';
 
 // Import Document Picker
 import DocumentPicker from 'react-native-document-picker';
-import { baseUrl } from '../../config.js';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
+import { baseUrl } from '../../config.js';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-community/async-storage';
 const UploadFileComponent = (props) => {
     const [singleFile, setSingleFile] = useState(null);
+    
 
     const uploadImage = async () => {
         // Check if any file is selected or not
@@ -33,12 +39,13 @@ const UploadFileComponent = (props) => {
                     method: 'post',
                     body: data,
                     headers: {
-                        //'Content-Type': 'multipart/form-data; ',
+                        // 'Content-Type': 'multipart/form-data',
                     },
                 }
             );
+            console.log(res);
             let responseJson = await res.json();
-            alert(responseJson.message);
+            alert(responseJson.msg);
             const dataToSend = {
                 Name: props.name,
                 Description: props.description,
@@ -47,16 +54,21 @@ const UploadFileComponent = (props) => {
                 EventDate: props.openDate,
                 Poster: responseJson.ImageId,
             }
-            await fetch(baseUrl + 'event', {
+            console.log(dataToSend);
+            await AsyncStorage.getItem('token').then(token => {
+                fetch(baseUrl + 'event', {
                 method: 'post',
                 body: JSON.stringify(dataToSend),
                 headers: {
                     //Header Defination
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                   },
             })
+        })
             setSingleFile(null);
             props.setModalVisible(false);
+        
         } else {
             // If no file selected the show alert
             alert('Please fill data');
@@ -69,13 +81,7 @@ const UploadFileComponent = (props) => {
         try {
             const res = await DocumentPicker.pick({
                 // Provide which type of file you want user to pick
-                //type: [DocumentPicker.types.allFiles],
-                // There can me more options as well
-                // DocumentPicker.types.allFiles
                 type: [DocumentPicker.types.images]
-                // DocumentPicker.types.plainText
-                // DocumentPicker.types.audio
-                // DocumentPicker.types.pdf
             });
             // Printing the log realted to the file
             console.log('res : ' + JSON.stringify(res));
@@ -95,6 +101,7 @@ const UploadFileComponent = (props) => {
         }
     };
     return (
+        // <ScrollView>
         <View style={styles.mainBody}>
             {/*Showing the data of selected Single file*/}
             {singleFile != null ? (
@@ -115,6 +122,8 @@ const UploadFileComponent = (props) => {
                 <Text style={styles.buttonTextStyle}>Submit</Text>
             </TouchableOpacity>
         </View>
+        
+        // </ScrollView>
     );
 };
 

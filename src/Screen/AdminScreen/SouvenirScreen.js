@@ -1,5 +1,3 @@
-
-
 // Import React and Component
 import React, { useEffect, useState } from 'react';
 import { View, Text, SafeAreaView, StyleSheet, Modal, Pressable, TextInput, ScrollView } from 'react-native';
@@ -10,7 +8,7 @@ import NavigationDrawerHeader from './NavigationDrawerHeader';
 import UploadFileComponent from '../../components/UploadSouvenirComponent';
 
 import { Searchbar, Checkbox, DataTable, Button } from 'react-native-paper';
-import DocumentPicker from 'react-native-document-picker';
+import AsyncStorage from '@react-native-community/async-storage';
 import { baseUrl } from '../../../config';
 
 const Stack = createStackNavigator();
@@ -20,7 +18,7 @@ const SouvenirScreen = () => {
     const [page, setPage] = React.useState(0);
     const [optionsPerPage] = React.useState([2, 3, 4, 200]);
     const [itemsPerPage, setItemsPerPage] = React.useState(optionsPerPage[0]);
-    
+
     const [souvenirs, setSouvenirs] = React.useState([]);
     const [deleted, setDeleted] = React.useState(false);
     const [modalVisible, setModalVisible] = React.useState(false);
@@ -33,34 +31,12 @@ const SouvenirScreen = () => {
     const to = Math.min((page + 1) * itemsPerPage, souvenirs.length);
 
     React.useEffect(() => {
-        fetch(baseUrl + 'souvenirs')
-            .then((res) => {
-                if (res.ok) {
-                    return res;
-                } else {
-                    throw res;
+        AsyncStorage.getItem("token").then(token => {
+            fetch(baseUrl + 'souvenirs', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
                 }
             })
-            .then(res => res.json())
-            .then((res) => {
-                setSouvenirs(res['souvenirs']);
-                console.log(souvenirs);
-            })
-            .catch(error => {
-                error.json()
-                    .then(body => {
-                        alert(body.message);
-                    })
-            });
-    }, []);
-
-    React.useEffect(() => {
-        if (modalVisible === false) {
-            setNameSouvenir(null);
-            setDesSouvenir(null);
-            setPriceSouvenir(null);
-
-            fetch(baseUrl + 'souvenirs')
                 .then((res) => {
                     if (res.ok) {
                         return res;
@@ -79,6 +55,42 @@ const SouvenirScreen = () => {
                             alert(body.message);
                         })
                 });
+            })
+        }, []);
+    
+
+
+    React.useEffect(() => {
+        if (modalVisible === false) {
+            setNameSouvenir(null);
+            setDesSouvenir(null);
+            setPriceSouvenir(null);
+            AsyncStorage.getItem("token").then(token => {
+                fetch(baseUrl + 'souvenirs', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                    .then((res) => {
+                        if (res.ok) {
+                            return res;
+                        } else {
+                            throw res;
+                        }
+                    })
+                    .then(res => res.json())
+                    .then((res) => {
+                        setSouvenirs(res['souvenirs']);
+                        console.log(souvenirs);
+                    })
+                    .catch(error => {
+                        error.json()
+                            .then(body => {
+                                alert(body.message);
+                            })
+                    });
+            })
+
         }
     }, [modalVisible, deleted]);
 
@@ -86,31 +98,34 @@ const SouvenirScreen = () => {
         setPage(0);
     }, [itemsPerPage]);
 
-    const onChangeSearch = query => setSearchQuery(query);
 
     const handleClickDelete = (souvenir) => {
-        fetch(baseUrl + 'souvenir/' + souvenir.SouvenirId, {
-            method: 'delete',
-            headers: {
-                "Content-Type": "application/json",
-              },
-        })
-        .then(response => {
-            if (response.ok) {
-                return response;
-            } else {
-                throw response;
-            }
-        })
-        .then(res => {
-            setDeleted(!deleted);
-            alert('Đã xóa');
-        })
-        .catch(error => {
-            error.json().then(body => {
-                alert(body.message);
+        AsyncStorage.getItem("token").then(token => {
+            fetch(baseUrl + 'souvenir/' + souvenir.SouvenirId, {
+                method: 'delete',
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`
+                },
             })
-        });
+                .then(response => {
+                    if (response.ok) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                })
+                .then(res => {
+                    setDeleted(!deleted);
+                    alert('Đã xóa');
+                })
+                .catch(error => {
+                    error.json().then(body => {
+                        alert(body.message);
+                    })
+                });
+        })
+
     }
 
     return (
@@ -129,72 +144,72 @@ const SouvenirScreen = () => {
                         setModalVisible(!modalVisible);
                     }}
                 >
-                    <View style={styles.modalView}>
-                        <TextInput
-                            value={nameSouvenir}
-                            onChangeText={setNameSouvenir}
-                            style={styles.input}
-                            placeholder='Name'
-                        />
-                        <TextInput
-                            value={desSouvenir}
-                            onChangeText={setDesSouvenir}
-                            style={styles.inputArea}
-                            placeholder='Description'
-                            multiline={true}
-                            numberOfLines={10}
-                        />
-                        <TextInput
-                            value={priceSouvenir}
-                            onChangeText={setPriceSouvenir}
-                            style={styles.input}
-                            placeholder='Price'
-                            keyboardType='numeric'
-                        />
-                        <UploadFileComponent name={nameSouvenir} description={desSouvenir} price={priceSouvenir} modalVisible={modalVisible} setModalVisible={setModalVisible} />
-                        <Pressable
-                            style={[styles.button, styles.buttonClose]}
-                            onPress={() => setModalVisible(!modalVisible)}
-                        >
-                            <Text style={styles.textStyle}>Hide Modal</Text>
-                        </Pressable>
+                    <ScrollView>
+                        <View style={styles.modalView}>
+                            <TextInput
+                                value={nameSouvenir}
+                                onChangeText={setNameSouvenir}
+                                style={styles.input}
+                                placeholder='Name'
+                            />
+                            <TextInput
+                                value={desSouvenir}
+                                onChangeText={setDesSouvenir}
+                                style={styles.inputArea}
+                                placeholder='Description'
+                                multiline={true}
+                                numberOfLines={10}
+                                placeholderTextColor='black'
+                            />
+                            <TextInput
+                                value={priceSouvenir}
+                                onChangeText={setPriceSouvenir}
+                                style={styles.input}
+                                placeholder='Price'
+                                placeholderTextColor='black'
+                                keyboardType='numeric'
+                            />
+                            <UploadFileComponent name={nameSouvenir} description={desSouvenir} price={priceSouvenir} modalVisible={modalVisible} setModalVisible={setModalVisible} />
+                            <Pressable
+                                style={[styles.button, styles.buttonClose]}
+                                onPress={() => setModalVisible(!modalVisible)}
+                            >
+                                <Text style={styles.textStyle}>Hide Modal</Text>
+                            </Pressable>
 
-                    </View>
+                        </View>
+                    </ScrollView>
                 </Modal>
-                <Searchbar
-                    placeholder="Search"
-                    onChangeText={onChangeSearch}
-                    value={searchQuery}
-                />
-                <ScrollView>
-                <DataTable>
-                    <DataTable.Header>
-                        <DataTable.Title style={{ flex: 1 }}>Id</DataTable.Title>
-                        <DataTable.Title style={{ flex: 6}}>Name</DataTable.Title>
-                        <DataTable.Title style={{ flex: 2 }}>Xóa</DataTable.Title>
-                    </DataTable.Header>
-                    {souvenirs.slice(from, to).map(souvenir =>
-                        <DataTable.Row key={souvenir.SouvenirId}>
-                            <DataTable.Cell style={{ flex: 1 }}>{souvenir.SouvenirId}</DataTable.Cell>
-                            <DataTable.Cell style={{ flex: 6 }}>{souvenir.Name}</DataTable.Cell>
-                            <DataTable.Cell style={{ flex: 2 }}>
-                                <Button icon="delete" mode="contained" onPress={() => handleClickDelete(souvenir)} style={styles.deleteStyle}></Button>
-                            </DataTable.Cell>
-                        </DataTable.Row>
-                    )}
 
-                    <DataTable.Pagination
-                        page={page}
-                        numberOfPages={Math.ceil(souvenirs.length / itemsPerPage)}
-                        onPageChange={(page) => setPage(page)}
-                        label={`${from + 1}-${to} of ${souvenirs.length}`}
-                        numberOfItemsPerPage={itemsPerPage}
-                        onItemsPerPageChange={setItemsPerPage}
-                        showFastPagination
-                        selectPageDropdownLabel={'Rows per page'}
-                        numberOfItemsPerPageList={optionsPerPage}
-                    />
-                </DataTable>
+                <ScrollView>
+                    <DataTable>
+                        <DataTable.Header>
+                            <DataTable.Title style={{ flex: 1, backgroundColor: 'black' }}>Id</DataTable.Title>
+                            <DataTable.Title style={{ flex: 6, backgroundColor: 'black' }}>Name</DataTable.Title>
+                            <DataTable.Title style={{ flex: 2, backgroundColor: 'black' }}>Xóa</DataTable.Title>
+                        </DataTable.Header>
+                        {souvenirs.slice(from, to).map(souvenir =>
+                            <DataTable.Row key={souvenir.SouvenirId}>
+                                <DataTable.Cell style={{ flex: 1, backgroundColor: 'black' }}>{souvenir.SouvenirId}</DataTable.Cell>
+                                <DataTable.Cell style={{ flex: 6, backgroundColor: 'black' }}>{souvenir.Name}</DataTable.Cell>
+                                <DataTable.Cell style={{ flex: 2, backgroundColor: 'black' }}>
+                                    <Button icon="delete" mode="contained" onPress={() => handleClickDelete(souvenir)} style={styles.deleteStyle}></Button>
+                                </DataTable.Cell>
+                            </DataTable.Row>
+                        )}
+
+                        <DataTable.Pagination
+                            page={page}
+                            numberOfPages={Math.ceil(souvenirs.length / itemsPerPage)}
+                            onPageChange={(page) => setPage(page)}
+                            label={`${from + 1}-${to} of ${souvenirs.length}`}
+                            numberOfItemsPerPage={itemsPerPage}
+                            onItemsPerPageChange={setItemsPerPage}
+                            showFastPagination
+                            selectPageDropdownLabel={'Rows per page'}
+                            numberOfItemsPerPageList={optionsPerPage}
+                        />
+                    </DataTable>
                 </ScrollView>
             </View>
         </SafeAreaView>
@@ -258,6 +273,7 @@ const styles = StyleSheet.create({
         width: '100%',
         margin: 10,
         borderWidth: 1,
+        color: 'black'
         //padding: 10,
     },
     inputArea: {
@@ -265,7 +281,8 @@ const styles = StyleSheet.create({
         width: '100%',
         margin: 10,
         borderWidth: 1,
-        textAlignVertical: 'top'
+        textAlignVertical: 'top',
+        color: 'black'
         //padding: 10,
     },
     buttonStyle: {
@@ -283,5 +300,8 @@ const styles = StyleSheet.create({
     deleteStyle: {
         backgroundColor: 'red',
         padding: 0
+    },
+    textStyle: {
+        color: 'black'
     }
-})
+}) 
