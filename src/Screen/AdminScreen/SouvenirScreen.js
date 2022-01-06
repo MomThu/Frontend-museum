@@ -133,9 +133,9 @@ const SouvenirScreen = () => {
             <View style={{ flex: 1, padding: 16 }}>
 
                 <View>
-                    <Text>Souvenir</Text>
+                    <Text style={styles.textHeader}>Đồ Lưu Niệm</Text>
                 </View>
-                <Button icon="plus" mode='contained' style={{ width: 40, backgroundColor: '#F9A606' }} onPress={() => setModalVisible(true)}>ADD</Button>
+                <Button icon="plus" mode='contained' style={{ width: 40, backgroundColor: '#F9A606', borderRadius: 10, marginBottom: 12, marginLeft: 18 }} onPress={() => setModalVisible(true)}>ADD</Button>
                 <Modal
                     animationType="slide"
                     transparent={true}
@@ -247,6 +247,11 @@ const souvenirScreenStack = ({ navigation }) => {
 export default souvenirScreenStack;
 
 const styles = StyleSheet.create({
+    textHeader:{
+        color: 'black',
+        marginBottom: 12,
+        fontSize: 18
+    },
     souvenir: {
         flexDirection: 'row',
 

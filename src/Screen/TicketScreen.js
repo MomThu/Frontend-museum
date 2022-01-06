@@ -185,12 +185,12 @@ class TicketScreen extends Component {
       <SafeAreaView style={{ flex: 1 }}>
         <View style={{ flex: 1, padding: 16 }}>
           <View>
-            <Text style={styles.textStyle}>
-              Event Tickett
+            <Text style={styles.titleTicket}>
+              Event Ticket
             </Text>
 
           </View>
-          <View>
+          <View style={{marginBottom: 14}}>
             <CalendarStrip
               //scrollable
               style={{ height: 100, paddingTop: 20, paddingBottom: 10 }}
@@ -201,14 +201,14 @@ class TicketScreen extends Component {
               iconContainer={{ flex: 0.1 }}
               selectedDate={new Date().getTime()}
               onDateSelected={(date) => this.onDateSelected(date.toISOString())}
-              daySelectionAnimation={{ type: 'background', duration: 300, highlightColor: '#9265DC' }}
+              daySelectionAnimation={{ type: 'background', duration: 300, highlightColor: 'red' }}
             />
           </View>
           <View>
             <View style={styles.TimeStyle}>
-              <Text style={styles.textStyle}>Loại vé</Text>
-              <Text style={styles.textStyle}>Giá vé</Text>
-              <Text style={styles.textStyle}>Số lượng</Text>
+              <Text style={styles.textStyleHead}>Loại vé</Text>
+              {/* <Text style={styles.textStyle}>Giá vé</Text> */}
+              <Text style={styles.textStyleHead}>Số lượng</Text>
             </View>
             <View style={styles.TimeStyle}>
               <Pressable style={styles.ButtonStyle}>
@@ -397,6 +397,15 @@ const ticketScreenStack = ({ navigation }) => {
 export default ticketScreenStack;
 
 const styles = StyleSheet.create({
+  textStyleHead: {
+    marginLeft: 15,
+    marginRight: 15,
+    marginBottom: 10
+  },
+  titleTicket: {
+    color: '#000',
+    marginBottom: 14
+  },
   TimeStyle: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -409,7 +418,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 20,
     borderRadius: 4,
-    marginVertical: 5,
+    marginVertical: 3,
     marginHorizontal: 10,
   },
   modalView: {

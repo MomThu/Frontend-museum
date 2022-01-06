@@ -155,7 +155,7 @@ const ShowSouvenirScreen = ({ navigation }) => {
   }
 
   return (
-    <ScrollView>
+    <ScrollView style={{backgroundColor: '#FBCF8DD9'}}>
       <View>
         <Button onPress={() => setShow(true)} title="Chọn ngày nhận hàng" />
       </View>

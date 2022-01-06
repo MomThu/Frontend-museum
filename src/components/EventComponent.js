@@ -74,18 +74,24 @@ export default function EventComponent(props) {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
+    shadowColor: '#000',
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 0 },
     borderRadius: 10,
-    backgroundColor: '#fbfbfb',
-    marginBottom: 16,
+    backgroundColor: '#fff',
+    margin: 26,
+    width: 336
   },
   DieuKhacImage: {
     width: 336,
-    height: 148,
-    borderRadius: 10
+    height: 138,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius:10,
   },
   title: {
-    textTransform: 'uppercase',
-    marginBottom: 8,
+    // textTransform: 'uppercase',
+    marginBottom: 6,
     fontWeight: '700',
     color: 'black'
   },

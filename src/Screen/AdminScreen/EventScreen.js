@@ -130,9 +130,9 @@ const EventScreen = () => {
             <View style={{ flex: 1, padding: 16 }}>
 
                 <View>
-                    <Text>Event</Text>
+                    <Text style={styles.textHeader}>Sự kiện</Text>
                 </View>
-                <Button icon="plus" mode='contained' style={{ width: 40, backgroundColor: '#F9A606' }} onPress={() => setModalVisible(true)}>ADD</Button>
+                <Button icon="plus" mode='contained' style={{ width: 40, backgroundColor: '#F9A606', borderRadius: 10, marginBottom: 12, marginLeft: 18 }} onPress={() => setModalVisible(true)}>ADD</Button>
                 <Modal
                     animationType="slide"
                     transparent={true}
@@ -241,6 +241,11 @@ const eventScreenStack = ({ navigation }) => {
 export default eventScreenStack;
 
 const styles = StyleSheet.create({
+    textHeader:{
+        color: 'black',
+        marginBottom: 12,
+        fontSize: 18
+    },
     souvenir: {
         flexDirection: 'row',
 

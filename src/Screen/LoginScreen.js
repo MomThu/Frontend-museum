@@ -326,7 +326,7 @@ const LoginScreen = ({ navigation }) => {
               </TouchableOpacity>
               {/* <Text style={{textAlign: 'center'}} >OR</Text> */}
               <GoogleSigninButton
-                style={{ width: 312, height: 48 }}
+                style={{ width: 300, height: 48, marginLeft: 45 }}
                 size={GoogleSigninButton.Size.Wide}
                 color={GoogleSigninButton.Color.Light}
                 onPress={testSignin}

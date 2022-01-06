@@ -111,7 +111,7 @@ const UserScreen = ({ navigation }) => {
             User
           </Text>
           <TouchableOpacity onPress={() => setModalVisible(true)}>
-            <Text style={styles.textStyle}>Đổi mật khẩu</Text>
+            <Text style={styles.ChangePassword}>Đổi mật khẩu</Text>
           </TouchableOpacity>
           <Modal
             animationType="slide"
@@ -208,6 +208,9 @@ const userScreenStack = ({ navigation }) => {
 export default userScreenStack;
 
 const styles = StyleSheet.create({
+  ChangePassword:{
+    color: 'blue'
+  },
   imageStyle: {
     width: 100,
     height: 100,
@@ -217,6 +220,8 @@ const styles = StyleSheet.create({
     borderBottomColor: '#000'
   },
   textStyle: {
-    color: 'black'
+    padding: 8,
+    color: 'black',
+    fontSize: 18
   }
 })

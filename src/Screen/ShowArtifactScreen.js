@@ -55,7 +55,7 @@ class ShowArtifactScreen extends React.Component {
     const artifacts = this.state.artifacts;
 
     return (
-      <ScrollView>
+      <ScrollView style={styles.background}>
         {artifacts.map((artifact) =>
           <ArtifactComponent key={artifact.ArtifactId} artifact={artifact} /> 
         )}
@@ -67,6 +67,9 @@ class ShowArtifactScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  background: {
+    backgroundColor: '#FBCF8DD9'
+  },
   container: {
     flex: 1,
     alignItems: 'stretch',

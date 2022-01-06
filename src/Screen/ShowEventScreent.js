@@ -56,7 +56,7 @@ class ShowEventScreen extends React.Component {
     const events = this.state.events;
 
     return (
-      <ScrollView>
+      <ScrollView style={styles.background}>
         {events.map((event) =>
           <EventComponent key={event.EventId} event={event} /> 
         )}
@@ -68,6 +68,9 @@ class ShowEventScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  background: {
+    backgroundColor: '#FBCF8DD9'
+  },
   container: {
     flex: 1,
     alignItems: 'stretch',
