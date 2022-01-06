@@ -54,7 +54,7 @@ export default function SouvenirComponent(props) {
                 <View style = {styles.info}>
                     <Text style = {styles.name}> {souvenir.Name}</Text>
                     <View style = {styles.priceRow}>
-                        <Text style={styles.price}>{/*formatPrice(product.price)*/ souvenir.Price}VNĐ</Text>
+                        <Text style={styles.price}>{souvenir.Price}VNĐ</Text>
                         <NumericInput iconStyle={{ color: 'black' }} type='up-down' minValue={0} onChange={(value) => onChange(value)} />
 
                     </View>
@@ -81,7 +81,10 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         bordorRadius:4,
         backgroundColor: '#FFF',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        width: '90%',
+        marginLeft: 20,
+        borderRadius: 20
     },
     info: {
         width: '40%',
@@ -92,13 +95,14 @@ const styles = StyleSheet.create({
         //alignSelf: "center",
         height: 150,
         width: '50%',
-        borderTopLeftRadius: 4,
-        borderBottomLeftRadius:4
+        borderTopLeftRadius: 20,
+        borderBottomLeftRadius: 20
     },
     name: {
         fontSize: 16,
         marginBottom:8,
-        color: "black"
+        color: "black",
+        justifyContent: 'center'
     },
     price: {
         fontSize: 16,
