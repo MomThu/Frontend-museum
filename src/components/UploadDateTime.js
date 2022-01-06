@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, Button, Platform} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { StyleSheet } from 'react-native';
 
 const UploadDateTime = (props) => {
   const [date, setDate] = useState(new Date());
@@ -43,13 +44,13 @@ const UploadDateTime = (props) => {
 
   return (
     <View>
-      <View>
+      <View style= {styles.TextStyle}>
         <Button onPress={showTimepicker1} title="Open Time" />
       </View>
-      <View>
+      <View style= {styles.TextStyle}>
         <Button onPress={showTimepicker2} title="Close Time" />
       </View>
-      <View>
+      <View style= {styles.TextStyle}>
         <Button onPress={showDatepicker} title="Open Date" />
       </View>
       {show && (
@@ -66,3 +67,10 @@ const UploadDateTime = (props) => {
   );
 };
 export default UploadDateTime;
+
+const styles = StyleSheet.create({
+      TextStyle: {
+        marginBottom: 10,
+        borderRadius: 12
+      }
+})

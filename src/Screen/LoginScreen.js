@@ -283,9 +283,8 @@ const LoginScreen = ({ navigation }) => {
               >
                 <ScrollView>
                   <View style={styles.modalView}>
-                    <Text>Email</Text>
                     <TextInput
-                      style={styles.inputStyle}
+                      style={styles.inputStyle1}
                       onChangeText={(forgotEmail) =>
                         setForgotEmail(forgotEmail)
                       }
@@ -303,7 +302,7 @@ const LoginScreen = ({ navigation }) => {
                       autoComplete='email'
                     />
                     <TouchableOpacity
-                      style={styles.buttonStyle}
+                      style={styles.buttonStyle1}
                       activeOpacity={0.5}
                       onPress={handleSubmitForgot}>
                       <Text style={styles.buttonTextStyle}>SUBMIT</Text>
@@ -355,6 +354,19 @@ const styles = StyleSheet.create({
     marginLeft: 35,
     marginRight: 35,
     margin: 10,
+  },
+  buttonStyle1:{
+    backgroundColor: '#F9A606',
+    borderWidth: 0,
+    color: '#000',
+    height: 40,
+    alignItems: 'center',
+    borderRadius: 7,
+    marginLeft: 200,
+    marginRight: 35,
+    marginTop: 20,
+    marginBottom: 25,
+    
   },
   buttonStyle: {
     backgroundColor: '#F9A606',
@@ -415,10 +427,12 @@ const styles = StyleSheet.create({
   quen: {
     marginLeft: '60%',
     marginBottom: 20,
-    color: 'black'
+    color: 'blue'
   },
   modalView: {
     height: '80%',
+    width: '95%',
+    marginLeft: 10,
     marginVertical: "10%",
     backgroundColor: "white",
     flexWrap: 'wrap',

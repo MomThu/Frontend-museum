@@ -176,17 +176,17 @@ const EventScreen = () => {
                 <ScrollView>
                     <DataTable>
                         <DataTable.Header>
-                            <DataTable.Title style={{ flex: 1, backgroundColor: 'black' }}>Id</DataTable.Title>
-                            <DataTable.Title style={{ flex: 2, backgroundColor: 'black' }}>Name</DataTable.Title>
-                            <DataTable.Title style={{ flex: 1, backgroundColor: 'black' }}>OpenDate</DataTable.Title>
-                            <DataTable.Title numeric style={{ flex: 2, backgroundColor: 'black' }}>Xóa</DataTable.Title>
+                            <DataTable.Title style={{ flex: 1, backgroundColor: 'white' }}>Id</DataTable.Title>
+                            <DataTable.Title style={{ flex: 2, backgroundColor: 'white' }}>Name</DataTable.Title>
+                            <DataTable.Title style={{ flex: 1, backgroundColor: 'white' }}>OpenDate</DataTable.Title>
+                            <DataTable.Title numeric style={{ flex: 2, backgroundColor: 'white' }}>Xóa</DataTable.Title>
                         </DataTable.Header>
                         {events.slice(from, to).map(event =>
                             <DataTable.Row key={event.EventId}>
-                                <DataTable.Cell style={{ flex: 1, backgroundColor: 'black' }}>{event.EventId}</DataTable.Cell>
-                                <DataTable.Cell style={{ flex: 2, backgroundColor: 'black' }}>{event.Name}</DataTable.Cell>
-                                <DataTable.Cell style={{ flex: 1, backgroundColor: 'black' }}>{event.EventDate}</DataTable.Cell>
-                                <DataTable.Cell numeric style={{ flex: 2, backgroundColor: 'black' }}>
+                                <DataTable.Cell style={{ flex: 1, backgroundColor: 'white' }}>{event.EventId}</DataTable.Cell>
+                                <DataTable.Cell style={{ flex: 2, backgroundColor: 'white' }}>{event.Name}</DataTable.Cell>
+                                <DataTable.Cell style={{ flex: 1, backgroundColor: 'white' }}>{event.EventDate}</DataTable.Cell>
+                                <DataTable.Cell numeric style={{ flex: 2, backgroundColor: 'white' }}>
                                     <Button icon="delete" mode="contained" onPress={() => handleClickDelete(event)} style={styles.deleteStyle}></Button>
                                 </DataTable.Cell>
                             </DataTable.Row>

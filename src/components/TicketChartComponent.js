@@ -128,15 +128,15 @@ export default TicketChart = () => {
                 <TouchableOpacity onPress={() => {
                     setFilter(true);
                     setShow(true);
-                }}>
-                    <Image source={require('../assets/icons/filter.png')} style={{ width: 25, height: 25, marginLeft: 5 }} />
+                }} style={styles.cssButton}>
+                    <Image source={require('../assets/icons/filter.png')} style={{ width: 25, height: 25, marginLeft: 5, marginTop: 5 }} />
                     <Text style={styles.labelStyle}>Thống kê theo ngày</Text>
                 </TouchableOpacity>
             </View>}
             {filter && <View>
                 <Text style={styles.labelStyle}>Tổng thu nhập: {total} VNĐ</Text>
-                <TouchableOpacity onPress={() => satisticAll()}>
-                    <Image source={require('../assets/icons/filter.png')} style={{ width: 25, height: 25, marginLeft: 5 }} />
+                <TouchableOpacity onPress={() => satisticAll()} style={styles.cssButton}>
+                    <Image source={require('../assets/icons/filter.png')} style={{ width: 25, height: 25, marginLeft: 5, marginTop: 5 }} />
                     <Text style={styles.labelStyle}>Thống kê tất cả</Text>
                 </TouchableOpacity>
             </View>}
@@ -170,7 +170,7 @@ export default TicketChart = () => {
                     }}
                     accessor="amount"
 
-                    style={{ marginVertical: 8, marginHorizontal: 38, paddingLeft: 20 }}
+                    style={{ marginVertical: 8, marginHorizontal: 30, paddingLeft: 20 }}
                 />
             </View>
         </SafeAreaView>
@@ -181,5 +181,12 @@ export default TicketChart = () => {
 const styles = StyleSheet.create({
     labelStyle: {
         color: 'black'
+    },
+    cssButton: {
+        backgroundColor: '#F9A606',
+        height: 60,
+        width: 150,
+        alignItems: 'center',
+        borderRadius: 10
     }
 })

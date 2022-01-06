@@ -144,44 +144,46 @@ const ArtifactScreen = () => {
                         setModalVisible(!modalVisible);
                     }}
                 >
-                    <View style={styles.modalView}>
-                        <TextInput
-                            value={nameArtifact}
-                            onChangeText={setNameArtifact}
-                            style={styles.input}
-                            placeholder='Name'
-                        />
-                        <TextInput
-                            value={desArtifact}
-                            onChangeText={setDesArtifact}
-                            style={styles.inputArea}
-                            placeholder='Description'
-                            multiline={true}
-                            numberOfLines={10}
-                        />
-                        <UploadFileComponent name={nameArtifact} description={desArtifact} modalVisible={modalVisible} setModalVisible={setModalVisible} />
-                        <Pressable
-                            style={[styles.button, styles.buttonClose]}
-                            onPress={() => setModalVisible(!modalVisible)}
-                        >
-                            <Text style={styles.textStyle}>Hide Modal</Text>
-                        </Pressable>
+                    <ScrollView>
+                        <View style={styles.modalView}>
+                            <TextInput
+                                value={nameArtifact}
+                                onChangeText={setNameArtifact}
+                                style={styles.input}
+                                placeholder='Name'
+                            />
+                            <TextInput
+                                value={desArtifact}
+                                onChangeText={setDesArtifact}
+                                style={styles.inputArea}
+                                placeholder='Description'
+                                multiline={true}
+                                numberOfLines={10}
+                            />
+                            <UploadFileComponent name={nameArtifact} description={desArtifact} modalVisible={modalVisible} setModalVisible={setModalVisible} />
+                            <Pressable
+                                style={[styles.button, styles.buttonClose]}
+                                onPress={() => setModalVisible(!modalVisible)}
+                            >
+                                <Text style={{color: 'black', justifyContent: 'center'}}>Hide Modal</Text>
+                            </Pressable>
 
-                    </View>
+                        </View>
+                    </ScrollView>
                 </Modal>
                 
                 <ScrollView>
                 <DataTable>
                     <DataTable.Header>
-                        <DataTable.Title style={{ flex: 1, backgroundColor: 'black' }}>Id</DataTable.Title>
-                        <DataTable.Title style={{ flex: 6, backgroundColor: 'black'}}>Name</DataTable.Title>
-                        <DataTable.Title style={{ flex: 2, backgroundColor: 'black' }}>Xóa</DataTable.Title>
+                        <DataTable.Title style={{ flex: 1, backgroundColor: 'white' }}>Id</DataTable.Title>
+                        <DataTable.Title style={{ flex: 6, backgroundColor: 'white'}}>Name</DataTable.Title>
+                        <DataTable.Title style={{ flex: 2, backgroundColor: 'white' }}>Xóa</DataTable.Title>
                     </DataTable.Header>
                     {artifacts.slice(from, to).map(artifact =>
                         <DataTable.Row key={artifact.ArtifactId}>
-                            <DataTable.Cell style={{ flex: 1, backgroundColor: 'black' }}>{artifact.ArtifactId}</DataTable.Cell>
-                            <DataTable.Cell style={{ flex: 6, backgroundColor: 'black' }}>{artifact.Name}</DataTable.Cell>
-                            <DataTable.Cell style={{ flex: 2, backgroundColor: 'black' }}>
+                            <DataTable.Cell style={{ flex: 1, backgroundColor: 'white' }}>{artifact.ArtifactId}</DataTable.Cell>
+                            <DataTable.Cell style={{ flex: 6, backgroundColor: 'white' }}>{artifact.Name}</DataTable.Cell>
+                            <DataTable.Cell style={{ flex: 2, backgroundColor: 'white' }}>
                                 <Button icon="delete" mode="contained" onPress={() => handleClickDelete(artifact)} style={styles.deleteStyle}></Button>
                             </DataTable.Cell>
                         </DataTable.Row>

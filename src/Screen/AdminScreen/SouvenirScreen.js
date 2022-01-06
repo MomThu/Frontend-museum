@@ -184,15 +184,15 @@ const SouvenirScreen = () => {
                 <ScrollView>
                     <DataTable>
                         <DataTable.Header>
-                            <DataTable.Title style={{ flex: 1, backgroundColor: 'black' }}>Id</DataTable.Title>
-                            <DataTable.Title style={{ flex: 6, backgroundColor: 'black' }}>Name</DataTable.Title>
-                            <DataTable.Title style={{ flex: 2, backgroundColor: 'black' }}>Xóa</DataTable.Title>
+                            <DataTable.Title style={{ flex: 1, backgroundColor: 'white' }}>Id</DataTable.Title>
+                            <DataTable.Title style={{ flex: 6, backgroundColor: 'white' }}>Name</DataTable.Title>
+                            <DataTable.Title style={{ flex: 2, backgroundColor: 'white' }}>Xóa</DataTable.Title>
                         </DataTable.Header>
                         {souvenirs.slice(from, to).map(souvenir =>
                             <DataTable.Row key={souvenir.SouvenirId}>
-                                <DataTable.Cell style={{ flex: 1, backgroundColor: 'black' }}>{souvenir.SouvenirId}</DataTable.Cell>
-                                <DataTable.Cell style={{ flex: 6, backgroundColor: 'black' }}>{souvenir.Name}</DataTable.Cell>
-                                <DataTable.Cell style={{ flex: 2, backgroundColor: 'black' }}>
+                                <DataTable.Cell style={{ flex: 1, backgroundColor: 'white' }}>{souvenir.SouvenirId}</DataTable.Cell>
+                                <DataTable.Cell style={{ flex: 6, backgroundColor: 'white' }}>{souvenir.Name}</DataTable.Cell>
+                                <DataTable.Cell style={{ flex: 2, backgroundColor: 'white' }}>
                                     <Button icon="delete" mode="contained" onPress={() => handleClickDelete(souvenir)} style={styles.deleteStyle}></Button>
                                 </DataTable.Cell>
                             </DataTable.Row>

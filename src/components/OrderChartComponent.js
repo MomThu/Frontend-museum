@@ -126,14 +126,14 @@ export default OrderChart = () => {
                 <TouchableOpacity onPress={() => {
                     setFilter(true);
                     setShow(true);
-                }}>
-                    <Image source={require('../assets/icons/filter.png')} style={{ width: 25, height: 25, marginLeft: 5 }} />
+                }} style={styles.cssButton}>
+                    <Image source={require('../assets/icons/filter.png')} style={{ width: 25, height: 25, marginLeft: 5, marginTop: 5 }} />
                     <Text style={styles.labelStyle}>Thống kê theo ngày</Text>
                 </TouchableOpacity>
             </View>}
             {filter && <View>
-                <TouchableOpacity onPress={() => satisticAll()}>
-                    <Image source={require('../assets/icons/filter.png')} style={{ width: 25, height: 25, marginLeft: 5 }} />
+                <TouchableOpacity onPress={() => satisticAll()} style={styles.cssButton}>
+                    <Image source={require('../assets/icons/filter.png')} style={{ width: 25, height: 25, marginLeft: 5, marginTop: 5 }} />
                     <Text style={styles.labelStyle}>Thống kê tất cả</Text>
                 </TouchableOpacity>
             </View>}
@@ -148,11 +148,11 @@ export default OrderChart = () => {
                 />
             )}
             <View>
-                <Text style={styles.labelStyle}>Đơn hàng đã đặt</Text>
+                <Text style={styles.Total}>Đơn hàng đã đặt</Text>
                 <DataTable>
                     <DataTable.Header>
-                        <DataTable.Title style={{ flex: 6, backgroundColor: 'black'}}>Tên</DataTable.Title>
-                        <DataTable.Title style={{ flex: 2, backgroundColor: 'black'}}>Số lượng</DataTable.Title>
+                        <DataTable.Title style={{ flex: 6, backgroundColor: 'white'}}>Tên</DataTable.Title>
+                        <DataTable.Title style={{ flex: 2, backgroundColor: 'white'}}>Số lượng</DataTable.Title>
                     </DataTable.Header>
                     {souvenirs.map(souvenir =>
                         <DataTable.Row key={souvenir.name}>
@@ -171,6 +171,20 @@ export default OrderChart = () => {
 
 const styles = StyleSheet.create({
     labelStyle: {
-        color: 'black'
+        color: 'black',
+        marginBottom: 12
+    },
+    Total: {
+        marginLeft: 25,
+        color: 'black',
+        marginTop: 10,
+        marginBottom: 10
+    },
+    cssButton: {
+        backgroundColor: '#F9A606',
+        height: 60,
+        width: 150,
+        alignItems: 'center',
+        borderRadius: 10
     }
 })

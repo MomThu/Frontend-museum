@@ -147,13 +147,13 @@ const UserScreen = ({ navigation }) => {
                   style={styles.input}
                   placeholder='Nhập lại mật khẩu'
                 />
+                <TouchableOpacity
+                  style={styles.buttonStyle}
+                  activeOpacity={0.5}
+                  onPress={changePass}>
+                  <Text style={styles.buttonTextStyle}>SUBMIT</Text>
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                style={styles.buttonStyle}
-                activeOpacity={0.5}
-                onPress={changePass}>
-                <Text style={styles.buttonTextStyle}>SUBMIT</Text>
-              </TouchableOpacity>
             </ScrollView>
           </Modal>
 
@@ -223,5 +223,43 @@ const styles = StyleSheet.create({
     padding: 8,
     color: 'black',
     fontSize: 18
+  },
+  modalView: {
+    height: '80%',
+    width: '90%',
+    marginVertical: "10%",
+    backgroundColor: "white",
+    flexWrap: 'wrap',
+    borderRadius: 20,
+    padding: 35,
+    marginLeft: 20
+  },
+  input: {
+    marginLeft: 80
+  },
+  buttonStyle: {
+    marginTop: 28,
+    marginLeft: 95,
+    backgroundColor:'blue',
+    width: 60,
+    height: 30,
+    borderRadius: 7
+  },
+  buttonTextStyle:{
+    marginTop: 5,
+    marginLeft: 2,
+    color: 'white',
+    width: 55,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  buttonClose:{
+    backgroundColor: 'red',
+    width: 40,
+    height: 40,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginLeft: 250
   }
 })
