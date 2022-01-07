@@ -115,7 +115,7 @@ const showEventScreenStack = ({ navigation }) => {
         name="ShowEventScreenChild"
         component={ShowEventScreen}
         options={{
-          title: 'Event', //Set Header Title
+          title: 'Sự kiện', //Set Header Title
         }}
       />
     </Stack.Navigator>

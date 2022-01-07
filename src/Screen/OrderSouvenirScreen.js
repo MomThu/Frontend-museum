@@ -66,7 +66,7 @@ const orderSouvenirScreenStack = ({ navigation }) => {
                 name="OrderSouvenirScreenChild"
                 component={OrderSouvenirScreen}
                 options={{
-                    title: 'Danh sách vé đặt', //Set Header Title
+                    title: 'Danh sách đơn đặt', //Set Header Title
                 }}
             />
         </Stack.Navigator>

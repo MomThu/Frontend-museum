@@ -137,8 +137,8 @@ class Momo extends Component {
                 await this.momoHandleResponse(dataPayment);
                 console.log("data_request_payment " + dataPayment.status);
                 await this.props.handleSubmit();
-                await this.props.handleNotification();
                 this.props.setModal2Visible(!this.props.modal2Visible);
+                this.props.handleNotification();
                 this.props.setModal3Visible(!this.props.modal3Visible)
             } else {
                 RNMomosdk.requestPayment(JSON.stringify(jsonData));

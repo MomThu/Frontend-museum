@@ -186,14 +186,14 @@ class TicketScreen extends Component {
         <View style={{ flex: 1, padding: 16 }}>
           <View>
             <Text style={styles.titleTicket}>
-              Event Ticket
+              Vui lòng chọn loại vé với số lượng tương ứng để đặt vé bạn nhé!
             </Text>
 
           </View>
           <View style={{marginBottom: 14}}>
             <CalendarStrip
               //scrollable
-              style={{ height: 100, paddingTop: 20, paddingBottom: 10 }}
+              style={{ height: 150, paddingTop: 20, paddingBottom: 10 }}
               calendarColor={'#3343CE'}
               calendarHeaderStyle={{ color: 'white' }}
               dateNumberStyle={{ color: 'white' }}
@@ -235,7 +235,7 @@ class TicketScreen extends Component {
 
           <View>
             <View style={styles.TimeStyle}>
-              <Pressable style={styles.ButtonStyle} onPress={() => {
+              <Pressable style={styles.ButtonStyleSubmit} onPress={() => {
                 if (this.state.amountTicket1 + this.state.amountTicket2 + this.state.amountTicket3 > 0) {
                   this.setState({ total: this.state.ticketChildrenPrice * this.state.amountTicket1 + this.state.ticketAdultPrice * this.state.amountTicket2 + this.state.ticketElderlyPrice * this.state.amountTicket3 });
                   this.setModalVisible(!modalVisible);
@@ -260,14 +260,14 @@ class TicketScreen extends Component {
             }}
           >
             <View style={styles.modalView}>
-              <Text style={styles.textStyle}>Thông tin vé</Text>
-              <Text style={styles.textStyle}>Tour tham quan bảo tàng diễn ra ngày {this.convertTime(this.state.selectedDate)}</Text>
-              <Text style={styles.textStyle}>Số lượng vé:</Text>
-              <Text style={styles.textStyle}>Trẻ em: {this.state.amountTicket1}</Text>
-              <Text style={styles.textStyle}>Người lớn: {this.state.amountTicket2}</Text>
-              <Text style={styles.textStyle}>Người già: {this.state.amountTicket3}</Text>
-              <Text style={styles.textStyle}>Giá tiền: {this.state.total} VNĐ</Text>
-              <Pressable style={styles.ButtonStyle} onPress={() => {
+              <Text style={styles.textModal}>Thông tin vé</Text>
+              <Text style={styles.textModal}>Tour tham quan bảo tàng diễn ra ngày {this.convertTime(this.state.selectedDate)}</Text>
+              <Text style={styles.textModal}>Số lượng vé:</Text>
+              <Text style={styles.textModal}>Trẻ em: {this.state.amountTicket1}</Text>
+              <Text style={styles.textModal}>Người lớn: {this.state.amountTicket2}</Text>
+              <Text style={styles.textModal}>Người già: {this.state.amountTicket3}</Text>
+              <Text style={styles.textModal}>Giá tiền: {this.state.total} VNĐ</Text>
+              <Pressable style={styles.ButtonStyleSubmit} onPress={() => {
                 this.setModalVisible(!this.state.modalVisible)
                 this.setModal2Visible(!this.state.modal2Visible)
                 this.setState({ done: true })
@@ -421,6 +421,26 @@ const styles = StyleSheet.create({
     marginVertical: 3,
     marginHorizontal: 10,
   },
+  ButtonStyleSubmit: {
+    backgroundColor: '#4CAF50',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 15,
+    paddingHorizontal: 25,
+    borderRadius: 4,
+    marginVertical: 10,
+    marginHorizontal: 10,
+  },
+  buttonClose: {
+    backgroundColor: 'red',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 15,
+    paddingHorizontal: 25,
+    borderRadius: 4,
+    marginVertical: 10,
+    marginHorizontal: 10,
+  },
   modalView: {
     //marginVertical: '80%',
     backgroundColor: "white",
@@ -439,5 +459,10 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: '#000'
+  },
+  textModal: {
+    color: '#000',
+    //fontWeight: 'bold',
+    fontSize: 18
   }
 })

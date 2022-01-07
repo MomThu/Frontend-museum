@@ -118,7 +118,7 @@ const ShowSouvenirScreen = ({ navigation }) => {
       channelId: "test-channel",
       title: "Đặt hàng thành công",
       message: "Bạn đã đặt hàng thành công",
-      bigText: "Tham quan bảo tàng online.",
+      bigText: "Đặt hàng bảo tàng online.",
       color: "red",
     }
     
@@ -191,7 +191,7 @@ const ShowSouvenirScreen = ({ navigation }) => {
         <View style={styles.modalView}>
           <Text style={styles.textStyle}>Đây là mã QR của bạn. Vui lòng giữ mã của bạn để xác thực vé.</Text>
           {done && <View>
-            <Image style={{ width: 100, height: 100 }} source={imageUrl} />
+            <Image style={{ width: 200, height: 200 }} source={imageUrl} />
           </View>}
           <Pressable onPress={() => {
             setModalVisible(false);

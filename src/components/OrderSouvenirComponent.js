@@ -46,7 +46,6 @@ export default OrderSouvenirComponent = (props) => {
                 <Text style={styles.textStyle}>Mã đơn hàng: {souvenir.OrderId}</Text>
                 <Text style={styles.textStyle}>Ngày nhận: {souvenir.OrderDate}</Text>
                 <Text style={styles.textStyle}>Ngày đặt: {souvenir.CreatedAt}</Text>
-                <Text style={styles.textStyle}>Thành tiền: {souvenir.TotalPrice}VNĐ</Text>
                 <Text style={styles.textStyle}>Mã QR</Text>
                 {imageUrl && <Image style={{ width: 100, height: 100 }} source={imageUrl} />}
             </View>

@@ -83,7 +83,7 @@ const notificationScreenStack = ({navigation}) => {
         name="NotificationScreen"
         component={NotificationScreen}
         options={{
-          title: 'Notification', //Set Header Title
+          title: 'Thông báo', //Set Header Title
         }}
       />
     </Stack.Navigator>

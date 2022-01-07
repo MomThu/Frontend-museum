@@ -89,7 +89,7 @@ console.log(scanResult);
         {!scan && !scanResult &&
                         <View style={styles.cardView} >
                             <TouchableOpacity onPress={() => activeQR()} style={styles.buttonTouchable}>
-                                <Text style={styles.buttonText}>Click to Scan !</Text>
+                                <Text style={styles.buttonText}>Click vào đây để scan!</Text>
                             </TouchableOpacity>
 
                         </View>
@@ -129,7 +129,7 @@ console.log(scanResult);
                             </View>}
                                 
                                 <TouchableOpacity onPress={() => scanAgain()} style={styles.buttonTouchable}>
-                                    <Text style={styles.buttonText}>Click to Scan !</Text>
+                                    <Text style={styles.buttonText}>Click vào đây để scan!</Text>
                                 </TouchableOpacity>
 
                             </View>
@@ -145,9 +145,7 @@ console.log(scanResult);
           flashMode={RNCamera.Constants.FlashMode.off}
           topContent={
             <Text style={styles.centerText}>
-              Go to{' '}
-              <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on
-              your computer and scan the QR code.thu
+              Scan để kiểm tra thông tin vé hoặc đơn hàng
             </Text>
           }
           bottomContent={
@@ -177,15 +175,24 @@ const styles = StyleSheet.create({
     color: '#777'
   },
   textBold: {
-    fontWeight: '500',
-    color: '#000'
+    fontWeight: 'bold',
+    color: '#000',
+    fontSize: 18,
+    marginTop: 5,
+    marginLeft: 10
   },
   buttonText: {
     fontSize: 21,
-    color: 'rgb(0,122,255)'
+    color: 'black'
   },
   buttonTouchable: {
-    padding: 16
+    padding: 16,
+    backgroundColor: '#F7A440',
+    marginTop: 50,
+    width: '60%',
+    alignContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: '20%'
   }
 });
 

@@ -174,7 +174,7 @@ const SouvenirScreen = () => {
                                 style={[styles.button, styles.buttonClose]}
                                 onPress={() => setModalVisible(!modalVisible)}
                             >
-                                <Text style={styles.textStyle}>Hide Modal</Text>
+                                <Text style={styles.textStyle}>HỦY</Text>
                             </Pressable>
 
                         </View>
@@ -238,7 +238,7 @@ const souvenirScreenStack = ({ navigation }) => {
                 name="SouvenirScreen"
                 component={SouvenirScreen}
                 options={{
-                    title: 'Souvenir', //Set Header Title
+                    title: 'Quản lý lưu niệm', //Set Header Title
                 }}
             />
         </Stack.Navigator>
@@ -307,6 +307,16 @@ const styles = StyleSheet.create({
         padding: 0
     },
     textStyle: {
-        color: 'black'
-    }
+        padding: 8,
+        color: 'black',
+        fontSize: 18,
+
+    },
+    buttonClose:{
+        backgroundColor: 'red',
+        width: 60,
+        height: 40,
+        borderRadius: 10,
+        alignItems: 'center',
+      }
 }) 

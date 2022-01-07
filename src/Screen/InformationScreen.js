@@ -42,7 +42,7 @@ const InformationScreen = () => {
     
       <View style={{ flex: 1, padding: 16 }}>
         <View>
-          <Text style={styles.TextStyle}>
+          <Text style={styles.TextStyleInfo}>
             Giới thiệu chung
           </Text>
         </View>
@@ -110,6 +110,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 16,
     color: 'black'
+  },
+  TextStyleInfo: {
+    fontSize: 20,
+    textAlign: 'center',
+    marginBottom: 16,
+    color: 'black',
+    fontWeight: 'bold'
   },
   ImageStyle: {
     width: '100%',

@@ -75,7 +75,7 @@ const cartScreenStack = ({navigation}) => {
         name="CartScreen"
         component={CartScreen}
         options={{
-          title: 'Cart', //Set Header Title
+          title: 'Giỏ hàng', //Set Header Title
         }}
       />
     </Stack.Navigator>
