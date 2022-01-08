@@ -151,8 +151,8 @@ export default OrderChart = () => {
                 <Text style={styles.Total}>Đơn hàng đã đặt</Text>
                 <DataTable>
                     <DataTable.Header>
-                        <DataTable.Title style={{ flex: 6, backgroundColor: 'white'}}>Tên</DataTable.Title>
-                        <DataTable.Title style={{ flex: 2, backgroundColor: 'white'}}>Số lượng</DataTable.Title>
+                        <DataTable.Title style={{ flex: 6, backgroundColor: 'black'}}>Tên</DataTable.Title>
+                        <DataTable.Title style={{ flex: 2, backgroundColor: 'black'}}>Số lượng</DataTable.Title>
                     </DataTable.Header>
                     {souvenirs.map(souvenir =>
                         <DataTable.Row key={souvenir.name}>

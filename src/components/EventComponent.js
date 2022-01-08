@@ -97,7 +97,8 @@ const styles = StyleSheet.create({
     color: 'black'
   },
   modalView: {
-    marginVertical: '50%',
+    //marginVertical: '50%',
+    marginTop: 320,
     backgroundColor: "white",
     flexWrap: 'wrap',
     borderRadius: 20,

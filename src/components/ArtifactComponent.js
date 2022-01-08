@@ -53,7 +53,8 @@ export default ArtifactComponent = (props) => {
                             style={[styles.button, styles.buttonClose]}
                             onPress={() => setModalVisible(!modalVisible)}
                         >
-                            <Text style={styles.textStyle}>X</Text>
+                            {/* <Text style={styles.textStyle}>X</Text> */}
+                            <Image source={require('../assets/icons/close.png')} style={{ width: 20, height: 20, marginLeft: 5, marginTop: 5, backgroundColor: '#fff', }} />
                         </Pressable>
                         <Image style={styles.DieuKhacImage} source={imageUrl} />
                         <Text style={styles.textStyle}>{artifact.Description}</Text>
@@ -93,9 +94,9 @@ const styles = StyleSheet.create({
     },
     modalView: {
         backgroundColor: "#FFFCDC",
-        marginVertical: '15%',
+        marginTop: '15%',
         marginHorizontal: '5%',
-        height: '80%',
+        height: 900,
         borderRadius: 20,
         padding: 35,
         alignItems: "center",
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
     button: {
         marginRight: 0,
         marginLeft: '95%',
-        backgroundColor: 'gray',
+        //backgroundColor: 'gray',
         width: 30,
         height: 30,
         marginBottom: 5,

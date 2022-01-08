@@ -138,8 +138,9 @@ class Momo extends Component {
                 console.log("data_request_payment " + dataPayment.status);
                 await this.props.handleSubmit();
                 this.props.setModal2Visible(!this.props.modal2Visible);
-                this.props.handleNotification();
                 this.props.setModal3Visible(!this.props.modal3Visible)
+                this.props.handleNotification();
+                
             } else {
                 RNMomosdk.requestPayment(JSON.stringify(jsonData));
             }
@@ -247,38 +248,6 @@ class Momo extends Component {
     }
 }
 
-// const momoScreenStack = ({ navigation }) => {
-//     return (
-//         <Stack.Navigator
-//             initialRouteName="MomoScreen"
-//             screenOptions={{
-//                 headerRight: () => (
-//                     //<NavigationDrawerHeader navigationProps={navigation} />
-//                     <HomeButton navigationProps={navigation} />
-//                 ),
-
-//                 headerStyle: {
-//                     backgroundColor: '#F9A606', //Set Header color
-//                 },
-//                 headerTintColor: '#fff', //Set Header text color
-//                 headerTitleStyle: {
-//                     fontWeight: 'bold', //Set Header text style
-//                 },
-//                 headerTitleAlign: 'center',
-
-//             }}>
-//             <Stack.Screen
-//                 name="MomoScreenChild"
-//                 component={Momo}
-//                 options={{
-//                     title: 'Momo', //Set Header Title
-//                 }}
-//             />
-//         </Stack.Navigator>
-//     );
-// };
-
-// export default momoScreenStack;
 export default Momo;
 const styles = StyleSheet.create({
     container: {

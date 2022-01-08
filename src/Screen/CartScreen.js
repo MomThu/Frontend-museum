@@ -56,7 +56,7 @@ const cartScreenStack = ({navigation}) => {
           <NavigationDrawerHeader navigationProps={navigation} />
         ),
         headerRight: () => (
-          <View>
+          <View style={{flexDirection: 'row'}}>
               <UserButton navigationProps={navigation} />
               <TicketButton navigationProps={navigation} />
           </View>

@@ -80,6 +80,8 @@ const Stack = createStackNavigator();
 const scanAgain = () => {
   setScan(true);
   setScanResult(false);
+  setNotScannedTicket(false);
+  setNotScannedSou(false);
 }
 console.log(scanResult);
     return (

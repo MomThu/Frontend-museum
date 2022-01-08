@@ -283,6 +283,7 @@ const LoginScreen = ({ navigation }) => {
               >
                 <ScrollView>
                   <View style={styles.modalView}>
+                    <Text style={{color: 'black'}}>Vui lòng nhập email của bạn để lấy lại mật khẩu</Text>
                     <TextInput
                       style={styles.inputStyle1}
                       onChangeText={(forgotEmail) =>
@@ -293,7 +294,7 @@ const LoginScreen = ({ navigation }) => {
                       autoCapitalize="none"
                       keyboardType="email-address"
                       returnKeyType="next"
-                      underlineColorAndroid="#f000"
+                      underlineColorAndroid="#000"
                       onSubmitEditing={() =>
                         passwordInputRef.current &&
                         passwordInputRef.current.focus()
@@ -311,7 +312,7 @@ const LoginScreen = ({ navigation }) => {
                       style={[styles.button, styles.buttonClose]}
                       onPress={() => setModalVisible(!modalVisible)}
                     >
-                      <Text style={{color: 'black', marginTop: 5}}>CLOSE</Text>
+                      <Text style={styles.textStyle}>CLOSE</Text>
                     </Pressable>
 
                   </View>
@@ -341,11 +342,6 @@ const LoginScreen = ({ navigation }) => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
-  buttonClose: {
-    backgroundColor: 'red',
-    height: 30,
-    borderRadius: 7
-  },
   mainBody: {
     flex: 1,
     justifyContent: 'center',
@@ -369,8 +365,9 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     marginLeft: 200,
     marginRight: 35,
-    marginTop: 25,
+    marginTop: 20,
     marginBottom: 25,
+    
   },
   buttonStyle: {
     backgroundColor: '#F9A606',
@@ -387,7 +384,7 @@ const styles = StyleSheet.create({
   buttonTextStyle: {
     color: '#000',
     paddingVertical: 10,
-    fontSize: 15,
+    fontSize: 16,
   },
   inputStyle: {
     flex: 1,
@@ -397,6 +394,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 30,
     borderColor: '#dadae8',
+  },
+  inputStyle1: {
+    backgroundColor: '#FBCF8DD9',
+    width: 250,
+    //borderRadius: 30
   },
   registerTextStyle: {
     color: '#000',
@@ -435,10 +437,10 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   modalView: {
-    height: '80%',
+    height: 300,
     width: '95%',
     marginLeft: 10,
-    marginVertical: "10%",
+    marginVertical: "50%",
     backgroundColor: "white",
     flexWrap: 'wrap',
     borderRadius: 20,
@@ -455,10 +457,5 @@ const styles = StyleSheet.create({
   },
   textStyle: {
       color: 'black'
-  },
-  inputStyle1: {
-    backgroundColor: '#FBCF8DD9',
-    width: 250,
-    borderRadius: 30
   }
 });

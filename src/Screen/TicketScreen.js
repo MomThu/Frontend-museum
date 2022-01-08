@@ -91,8 +91,8 @@ class TicketScreen extends Component {
     const notification2 = {
       channelId: "test-channel",
       title: "Lưu ý",
-      message: "Còn 1 ngày nữa là đến sự kiện bạn nhé, bạn chú ý đem theo vé online để vào bảo tàng nhé!",
-      bigText: "Tham quan bảo tàng online.",
+      bigText: "Còn 1 ngày nữa là đến sự kiện bạn nhé, bạn chú ý đem theo vé online để vào bảo tàng nhé!",
+      message: "Tham quan bảo tàng online.",
       color: "blue",
       //date: new Date(Date.now() + 10 * 1000),
       date: new Date(new Date(Date.parse(this.state.selectedDate)).getTime() - 9360 * 1000)
@@ -201,7 +201,7 @@ class TicketScreen extends Component {
               iconContainer={{ flex: 0.1 }}
               selectedDate={new Date().getTime()}
               onDateSelected={(date) => this.onDateSelected(date.toISOString())}
-              daySelectionAnimation={{ type: 'background', duration: 300, highlightColor: 'red' }}
+              daySelectionAnimation={{ type: 'background', duration: 300, highlightColor: '#9265DC' }}
             />
           </View>
           <View>
@@ -336,7 +336,7 @@ class TicketScreen extends Component {
             <View style={styles.modalView}>
               <Text style={styles.textStyle}>Đây là mã QR của bạn. Vui lòng giữ mã của bạn để xác thực vé.</Text>
               {this.state.done && <View>
-                <Image style={{ width: 100, height: 100 }} source={this.state.qrImage} />
+                <Image style={{ width: 200, height: 200 }} source={this.state.qrImage} />
               </View>}
               <Pressable onPress={() => {
                 // await this.handleSubmit();
@@ -400,7 +400,10 @@ const styles = StyleSheet.create({
   textStyleHead: {
     marginLeft: 15,
     marginRight: 15,
-    marginBottom: 10
+    marginBottom: 10,
+    color: 'black',
+    fontSize: 18,
+    fontWeight: '700'
   },
   titleTicket: {
     color: '#000',

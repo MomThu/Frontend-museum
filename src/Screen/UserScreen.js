@@ -1,7 +1,7 @@
 
 
 // Import React and Component
-import React, { useState } from 'react';
+import React, { useState, createRef } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, Alert, Image, StyleSheet, Button, TextInput, Modal, Pressable, ScrollView } from 'react-native';
 
 // Import Navigators from React Navigation
@@ -11,7 +11,6 @@ import HomeButton from '../components/homeButton';
 
 import AsyncStorage from '@react-native-community/async-storage';
 import { baseUrl } from '../../config';
-import { ScaleFromCenterAndroid } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionPresets';
 
 const Stack = createStackNavigator();
 
@@ -134,19 +133,28 @@ const UserScreen = ({ navigation }) => {
                   value={password}
                   onChangeText={setPassword}
                   style={styles.input}
+                  secureTextEntry={true}
                   placeholder='Mật khẩu'
+                  placeholderTextColor='black'
+                  underlineColorAndroid="#000"
                 />
                 <TextInput
                   value={newPassword}
                   onChangeText={setNewPassword}
                   style={styles.input}
+                  secureTextEntry={true}
                   placeholder='Mật khẩu mới'
+                  placeholderTextColor='black'
+                  underlineColorAndroid="#000"
                 />
                 <TextInput
                   value={renew}
                   onChangeText={setReNew}
                   style={styles.input}
+                  secureTextEntry={true}
                   placeholder='Nhập lại mật khẩu'
+                  placeholderTextColor='black'
+                  underlineColorAndroid="#000"
                 />
                 <TouchableOpacity
                   style={styles.buttonStyle}
@@ -227,31 +235,27 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   modalView: {
-    height: '80%',
+    height: 700,
     width: '90%',
-    marginVertical: "10%",
-    backgroundColor: "white",
+    marginVertical: "15%",
+    backgroundColor: "#FFFCDC",
     flexWrap: 'wrap',
     borderRadius: 20,
     padding: 35,
     marginLeft: 20
   },
   input: {
-    marginLeft: 80,
-    width: 130,
-    height: 35,
-    backgroundColor: '#FBCF8DD9',
-    border: '5px',
-    marginBottom: 10,
-    borderRadius: 10
+    marginLeft: 20,
+    color: 'black'
   },
   buttonStyle: {
-    marginTop: 28,
-    marginLeft: 125,
-    backgroundColor:'blue',
+    marginTop: 35,
+    marginLeft: 95,
+    backgroundColor:'green',
     width: 60,
     height: 30,
-    borderRadius: 7
+    borderRadius: 7,
+    textAlign: 'center'
   },
   buttonTextStyle:{
     marginTop: 5,
@@ -259,8 +263,7 @@ const styles = StyleSheet.create({
     color: 'white',
     width: 55,
     height: 30,
-    alignItems: 'center',
-    justifyContent: 'center'
+    textAlign: 'center'
   },
   buttonClose:{
     backgroundColor: 'red',
@@ -269,5 +272,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     marginLeft: 250
-  }
+  },
+  // inputStyle: {
+  //   flex: 1,
+  //   color: '#000',
+  //   paddingLeft: 15,
+  //   paddingRight: 15,
+  //   borderWidth: 1,
+    
+  //   borderColor: '#dadae8',
+  // },
 })

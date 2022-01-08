@@ -43,7 +43,7 @@ const UploadDateTime = (props) => {
   };
 
   return (
-    <View>
+    <View style={{flexDirection: 'row'}}>
       <View style= {styles.TextStyle}>
         <Button onPress={showTimepicker1} title="Open Time" />
       </View>
@@ -70,7 +70,7 @@ export default UploadDateTime;
 
 const styles = StyleSheet.create({
       TextStyle: {
-        marginBottom: 10,
+        //marginBottom: 10,
         borderRadius: 12
       }
 })

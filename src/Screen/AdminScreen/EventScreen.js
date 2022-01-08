@@ -176,17 +176,17 @@ const EventScreen = () => {
                 <ScrollView>
                     <DataTable>
                         <DataTable.Header>
-                            <DataTable.Title style={{ flex: 1, backgroundColor: 'white' }}>Id</DataTable.Title>
-                            <DataTable.Title style={{ flex: 2, backgroundColor: 'white' }}>Name</DataTable.Title>
-                            <DataTable.Title style={{ flex: 1, backgroundColor: 'white' }}>OpenDate</DataTable.Title>
-                            <DataTable.Title numeric style={{ flex: 2, backgroundColor: 'white' }}>Xóa</DataTable.Title>
+                            <DataTable.Title style={{ flex: 1, backgroundColor: '#541212' }}>Id</DataTable.Title>
+                            <DataTable.Title style={{ flex: 2, backgroundColor: '#541212' }}>Name</DataTable.Title>
+                            <DataTable.Title style={{ flex: 1, backgroundColor: '#541212' }}>OpenDate</DataTable.Title>
+                            <DataTable.Title numeric style={{ flex: 1, backgroundColor: '#541212' }}>Xóa</DataTable.Title>
                         </DataTable.Header>
                         {events.slice(from, to).map(event =>
                             <DataTable.Row key={event.EventId}>
-                                <DataTable.Cell style={{ flex: 1, backgroundColor: 'white' }}>{event.EventId}</DataTable.Cell>
-                                <DataTable.Cell style={{ flex: 2, backgroundColor: 'white' }}>{event.Name}</DataTable.Cell>
-                                <DataTable.Cell style={{ flex: 1, backgroundColor: 'white' }}>{event.EventDate}</DataTable.Cell>
-                                <DataTable.Cell numeric style={{ flex: 2, backgroundColor: 'white' }}>
+                                <DataTable.Cell style={{ flex: 1, backgroundColor: '#541212' }}>{event.EventId}</DataTable.Cell>
+                                <DataTable.Cell style={{ flex: 2, backgroundColor: '#541212' }}>{event.Name}</DataTable.Cell>
+                                <DataTable.Cell style={{ flex: 1, backgroundColor: '#541212' }}>{event.EventDate}</DataTable.Cell>
+                                <DataTable.Cell numeric style={{ flex: 1, backgroundColor: '#541212' }}>
                                     <Button icon="delete" mode="contained" onPress={() => handleClickDelete(event)} style={styles.deleteStyle}></Button>
                                 </DataTable.Cell>
                             </DataTable.Row>
@@ -202,6 +202,7 @@ const EventScreen = () => {
                             showFastPagination
                             selectPageDropdownLabel={'Rows per page'}
                             numberOfItemsPerPageList={optionsPerPage}
+                            style={styles.page}
                         />
                     </DataTable>
                 </ScrollView>
@@ -316,5 +317,9 @@ const styles = StyleSheet.create({
         height: 40,
         borderRadius: 10,
         alignItems: 'center',
-      }
+      },
+    page: {
+        backgroundColor: '#000',
+        margin: 15
+    }
 })
