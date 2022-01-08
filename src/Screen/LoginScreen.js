@@ -311,7 +311,7 @@ const LoginScreen = ({ navigation }) => {
                       style={[styles.button, styles.buttonClose]}
                       onPress={() => setModalVisible(!modalVisible)}
                     >
-                      <Text style={styles.textStyle}>CLOSE</Text>
+                      <Text style={{color: 'black', marginTop: 5}}>CLOSE</Text>
                     </Pressable>
 
                   </View>
@@ -341,6 +341,11 @@ const LoginScreen = ({ navigation }) => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
+  buttonClose: {
+    backgroundColor: 'red',
+    height: 30,
+    borderRadius: 7
+  },
   mainBody: {
     flex: 1,
     justifyContent: 'center',
@@ -364,9 +369,8 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     marginLeft: 200,
     marginRight: 35,
-    marginTop: 20,
+    marginTop: 25,
     marginBottom: 25,
-    
   },
   buttonStyle: {
     backgroundColor: '#F9A606',
@@ -383,7 +387,7 @@ const styles = StyleSheet.create({
   buttonTextStyle: {
     color: '#000',
     paddingVertical: 10,
-    fontSize: 16,
+    fontSize: 15,
   },
   inputStyle: {
     flex: 1,
@@ -450,5 +454,10 @@ const styles = StyleSheet.create({
   },
   textStyle: {
       color: 'black'
+  },
+  inputStyle1: {
+    backgroundColor: '#FBCF8DD9',
+    width: 250,
+    borderRadius: 30
   }
 });

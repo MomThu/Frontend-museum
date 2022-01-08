@@ -11,6 +11,7 @@ import HomeButton from '../components/homeButton';
 
 import AsyncStorage from '@react-native-community/async-storage';
 import { baseUrl } from '../../config';
+import { ScaleFromCenterAndroid } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionPresets';
 
 const Stack = createStackNavigator();
 
@@ -235,11 +236,17 @@ const styles = StyleSheet.create({
     marginLeft: 20
   },
   input: {
-    marginLeft: 80
+    marginLeft: 80,
+    width: 130,
+    height: 35,
+    backgroundColor: '#FBCF8DD9',
+    border: '5px',
+    marginBottom: 10,
+    borderRadius: 10
   },
   buttonStyle: {
     marginTop: 28,
-    marginLeft: 95,
+    marginLeft: 125,
     backgroundColor:'blue',
     width: 60,
     height: 30,
