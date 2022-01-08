@@ -431,7 +431,8 @@ const styles = StyleSheet.create({
   quen: {
     marginLeft: '60%',
     marginBottom: 20,
-    color: 'blue'
+    color: '#595260',
+    fontSize: 18
   },
   modalView: {
     height: '80%',

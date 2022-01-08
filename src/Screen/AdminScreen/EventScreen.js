@@ -143,12 +143,7 @@ const EventScreen = () => {
                 >
                     <ScrollView>
                     <View style={styles.modalView}>
-                        <Pressable
-                            style={[styles.button, styles.buttonClose]}
-                            onPress={() => setModalVisible(!modalVisible)}
-                        >
-                            <Text style={styles.textStyle}>X</Text>
-                        </Pressable>
+                        
                         <TextInput
                             value={nameEvent}
                             onChangeText={setNameEvent}
@@ -167,7 +162,12 @@ const EventScreen = () => {
                         />
                         <UploadDateTime setOTimeEvent={setOTimeEvent} setCTimeEvent={setCTimeEvent} setODateEvent={setODateEvent} />
                         <UploadFileComponent name={nameEvent} description={desEvent} openTime={openTimeEvent} closeTime={closeTimeEvent} openDate={openDateEvent} modalVisible={modalVisible} setModalVisible={setModalVisible} />
-
+                        <Pressable
+                            style={[styles.button, styles.buttonClose]}
+                            onPress={() => setModalVisible(!modalVisible)}
+                        >
+                            <Text style={styles.textStyle}>HỦY</Text>
+                        </Pressable>
 
                     </View>
                     </ScrollView>
@@ -232,7 +232,7 @@ const eventScreenStack = ({ navigation }) => {
                 name="EventScreen"
                 component={EventScreen}
                 options={{
-                    title: 'Event', //Set Header Title
+                    title: 'Quản lý sự kiện', //Set Header Title
                 }}
             />
         </Stack.Navigator>
@@ -306,6 +306,15 @@ const styles = StyleSheet.create({
         padding: 0
     },
     textStyle: {
-        color: 'black'
-    }
+        padding: 8,
+        color: 'black',
+        fontSize: 18
+      },
+    buttonClose:{
+        backgroundColor: 'red',
+        width: 40,
+        height: 40,
+        borderRadius: 10,
+        alignItems: 'center',
+      }
 })

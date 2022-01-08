@@ -165,7 +165,7 @@ const ArtifactScreen = () => {
                                 style={[styles.button, styles.buttonClose]}
                                 onPress={() => setModalVisible(!modalVisible)}
                             >
-                                <Text style={{color: 'black', justifyContent: 'center'}}>Hide Modal</Text>
+                                <Text style={styles.textStyle}>HỦY</Text>
                             </Pressable>
 
                         </View>
@@ -229,7 +229,7 @@ const artifactScreenStack = ({ navigation }) => {
                 name="ArtifactScreen"
                 component={ArtifactScreen}
                 options={{
-                    title: 'Artifact', //Set Header Title
+                    title: 'Quản lý hiện vật', //Set Header Title
                 }}
             />
         </Stack.Navigator>
@@ -248,8 +248,9 @@ const styles = StyleSheet.create({
 
     },
     textStyle: {
-        marginLeft: 20,
-        color: 'black'
+        padding: 8,
+        color: 'black',
+        fontSize: 18
     },
     modalView: {
         backgroundColor: "#FFFCDC",
@@ -295,5 +296,12 @@ const styles = StyleSheet.create({
     deleteStyle: {
         backgroundColor: 'red',
         padding: 0
-    }
+    },
+    buttonClose:{
+        backgroundColor: 'red',
+        width: 60,
+        height: 40,
+        borderRadius: 10,
+        alignItems: 'center',
+      }
 })

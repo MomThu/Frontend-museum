@@ -7,7 +7,8 @@ export default function EventComponent(props) {
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    fetch(baseUrl + 'image/' + props.event.ImageId)
+    console.log(props.event.Poster);
+    fetch(baseUrl + 'image/' + props.event.Poster)
       .then((res) => {
         if (res.ok) {
           return res;
@@ -112,6 +113,15 @@ const styles = StyleSheet.create({
     elevation: 5
   },
   textStyle: {
-    color: 'black'
+    padding: 8,
+    color: 'black',
+    fontSize: 18
+  },
+  buttonClose:{
+    backgroundColor: 'red',
+    width: 40,
+    height: 40,
+    borderRadius: 10,
+    alignItems: 'center',
   }
 });

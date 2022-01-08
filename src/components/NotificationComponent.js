@@ -50,12 +50,22 @@ export default NotificationComponent = (props) => {
         <SafeAreaView>
             <View style={styles.container}>
                 <TouchableOpacity onPress={() => handleClick()}>
-                    {!notification.Unread && <Text style={styles.title}>{notification.Title}</Text>}
-                    {notification.Unread && <Text style={styles.titleRead}>{notification.Title}</Text>}
+                    {!notification.Unread && 
+                    <View style={{backgroundColor:'pink'}}>
+                        <Text style={styles.title}>{notification.Title}</Text>
+                        <Text style={styles.textStyle}>{notification.Time}</Text>
+                    </View>
+                    }
+                    {notification.Unread && 
+                    <View>
+                        <Text style={styles.titleRead}>{notification.Title}</Text>
+                        <Text style={styles.textStyle}>{notification.Time}</Text>
+                    </View>
+                    }
                 </TouchableOpacity>
                 {read &&
                 <View>
-                    <Text style={styles.textStyle}>{notification.Time}</Text>
+                    
                     <Text style={styles.textStyle}>{notification.Content}</Text>
                     
                 </View>
@@ -68,14 +78,15 @@ export default NotificationComponent = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: "center",
+        //alignItems: "center",
         shadowColor: '#000',
         shadowOpacity: 0.3,
         shadowRadius: 10,
         shadowOffset: { width: 0, height: 0 },
-        borderRadius: 10,
+        //borderRadius: 10,
         backgroundColor: '#fbfbfb',
         marginBottom: 16,
+        
     },
     DieuKhacImage: {
         width: 336,
@@ -86,7 +97,7 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
         marginBottom: 8,
         fontWeight: '700',
-        backgroundColor: 'red'
+        color: 'red'
     },
     titleRead: {
         textTransform: 'uppercase',

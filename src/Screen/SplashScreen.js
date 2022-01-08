@@ -5,7 +5,7 @@ import {
   View,
   StyleSheet,
   Image,
-  ImageBackground
+  ImageBackground, Text
 } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
@@ -38,17 +38,16 @@ const SplashScreen = ({navigation}) => {
   }, []);
 
   return (
-    <View>
-      <ImageBackground
-        source={require('../assets/anh2.png')}
-        style={{resizeMode: 'cover', flex: 1, justifyContent: "center", alignItems: "center"}}
-      />
-      <ActivityIndicator
+    <View style={styles.viewStyles}>
+      
+      {/* <ActivityIndicator
         animating={animating}
         color="#FFFFFF"
         size="large"
         style={styles.activityIndicator}
-      />
+      /> */}
+      <Text style={styles.textStyles}>Blink Blink</Text>
+      <Text style={{fontSize: 20, textAlign: 'center'}}>Ứng dụng tham quan bảo tàng quốc gia Việt Nam</Text>
     </View>
   );
 };
@@ -60,10 +59,22 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+   
   },
   activityIndicator: {
     alignItems: 'center',
     height: 80,
+  },
+  viewStyles: {
+    backgroundColor: 'orange',
+    height: '100%' 
+  },
+  textStyles: {
+    color: 'white',
+    fontSize: 40,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: '20%'
   },
 });
 

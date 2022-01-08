@@ -65,6 +65,27 @@ const UploadFileComponent = (props) => {
                     'Authorization': `Bearer ${token}`
                   },
             })
+            .then(res => {
+                if(res.ok) {
+                    const notification = {
+                        AccountId: 1,
+                        Title: "Bảo tàng vừa thêm sự kiện mới",
+                        Content: props.name,
+                        Time: new Date(),
+                        Unread: 1,
+                    }
+                    AsyncStorage.getItem('token').then(token => {
+                    fetch(baseUrl + 'notificationsAll', {
+                        method: 'post',
+                        body: JSON.stringify(notification),
+                        headers: {
+                            "Content-Type": "application/json",
+                            'Authorization': `Bearer ${token}`
+                          },
+                    })
+                })
+                }
+            })
         })
             setSingleFile(null);
             props.setModalVisible(false);

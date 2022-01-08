@@ -47,7 +47,7 @@ export default OrderTicketComponent = (props) => {
                 <Text style={styles.textStyle}>Ngày đặt: {ticket.CreatedAt}</Text>
                 <Text style={styles.textStyle}>Thành tiền: {ticket.TotalPrice}VNĐ</Text>
                 <Text style={styles.textStyle}>Mã QR</Text>
-                <Image style={{ width: 100, height: 100 }} source={imageUrl} />
+                <Image style={{ width: 200, height: 200 }} source={imageUrl} />
             </View>
 
        

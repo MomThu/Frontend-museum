@@ -199,7 +199,7 @@ const userScreenStack = ({ navigation }) => {
         name="UserScreenChild"
         component={UserScreen}
         options={{
-          title: 'User', //Set Header Title
+          title: 'Người dùng', //Set Header Title
         }}
       />
     </Stack.Navigator>
@@ -210,7 +210,8 @@ export default userScreenStack;
 
 const styles = StyleSheet.create({
   ChangePassword:{
-    color: 'blue'
+    color: '#595260',
+    fontSize: 18
   },
   imageStyle: {
     width: 100,

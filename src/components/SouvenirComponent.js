@@ -54,7 +54,7 @@ export default function SouvenirComponent(props) {
                 <View style = {styles.info}>
                     <Text style = {styles.name}> {souvenir.Name}</Text>
                     <View style = {styles.priceRow}>
-                        <Text style={styles.price}>{souvenir.Price}VNĐ</Text>
+                        <Text style={styles.price}>{souvenir.Price}000 VNĐ</Text>
                         <NumericInput iconStyle={{ color: 'black' }} type='up-down' minValue={0} onChange={(value) => onChange(value)} />
 
                     </View>
